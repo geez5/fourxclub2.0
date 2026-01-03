@@ -1,5 +1,314 @@
-[00:00:01.059] Server  LOG     ✓ Ready in 765ms
-[00:00:13.391] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:13.505] Browser WARN    Image with src "http://localhost:3000/vercel.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:00:16.380] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:16.484] Browser WARN    Image with src "http://localhost:3000/vercel.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:00:01.769] Server  LOG     ✓ Ready in 1381ms
+[00:00:27.349] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:22.253] Server  LOG     ✓ Compiled in 54ms
+[00:13:38.106] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:18:45.156] Server  LOG     ✓ Compiled in 197ms
+[00:23:24.089] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:24:20.255] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:25:58.392] Server  LOG     ✓ Compiled in 54ms
+[00:29:20.235] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:02:14.633] Server  LOG     ✓ Compiled in 42ms
+[01:02:42.937] Server  LOG     ✓ Compiled in 54ms
+[01:02:48.603] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:04:24.700] Server  LOG     ✓ Compiled in 36ms
+[01:23:05.408] Server  LOG     ✓ Compiled in 36ms
+[01:26:22.342] Server  LOG     ✓ Compiled in 31ms
+[01:27:00.409] Server  LOG     ✓ Compiled in 44ms
+[01:47:01.729] Server  LOG     ✓ Compiled in 63ms
+[01:49:13.626] Server  LOG     ✓ Compiled in 52ms
+[01:49:17.957] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:49:40.411] Server  LOG     ✓ Compiled in 33ms
+[01:58:33.594] Server  LOG     ✓ Compiled in 43ms
+[01:59:23.535] Server  LOG     ✓ Compiled in 37ms
+[02:00:59.325] Server  LOG     ✓ Compiled in 35ms
+[02:01:59.464] Server  LOG     ✓ Compiled in 33ms
+[02:07:13.695] Server  LOG     ✓ Compiled in 27ms
+[02:09:10.530] Server  LOG     ✓ Compiled in 116ms
+[02:09:32.155] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:10:32.254] Server  LOG     ✓ Compiled in 36ms
+[02:23:36.962] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[02:27:27.640] Server  LOG     ✓ Compiled in 55ms
+[02:34:29.755] Server  LOG     ✓ Compiled in 30ms
+[02:40:22.344] Server  LOG     ✓ Compiled in 42ms
+[03:52:30.910] Server  LOG     ✓ Compiled in 52ms
+[03:53:09.868] Server  LOG     ✓ Compiled in 29ms
+[03:54:14.864] Server  LOG     ✓ Compiled in 50ms
+[04:00:07.271] Server  LOG     ✓ Compiled in 46ms
+[04:00:34.745] Server  LOG     ✓ Compiled in 41ms
+[04:04:20.726] Server  LOG     ✓ Compiled in 48ms
+[04:08:23.412] Server  LOG     ✓ Compiled in 38ms
+[04:10:48.309] Server  LOG     ✓ Compiled in 46ms
+[04:10:59.773] Server  LOG     ✓ Compiled in 36ms
+[04:12:24.573] Server  LOG     ✓ Compiled in 38ms
+[04:13:34.522] Server  LOG     ✓ Compiled in 35ms
+[04:15:49.305] Server  LOG     ✓ Compiled in 43ms
+[04:15:53.544] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:02:35.116] Server  LOG     ✓ Compiled in 96ms
+[06:20:58.484] Server  LOG     ✓ Compiled in 36ms
+[06:21:44.389] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:33:31.174] Server  LOG     ✓ Compiled in 38ms
+[06:38:31.705] Server  LOG     ✓ Compiled in 32ms
+[06:42:26.476] Server  LOG     ✓ Compiled in 40ms
+[06:42:45.330] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[06:54:39.245] Server  LOG     ✓ Compiled in 90ms
+[06:54:39.352] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[06:56:15.241] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[06:56:15.241] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[06:57:18.350] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[06:57:18.350] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[07:00:56.421] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[07:00:56.421] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[07:39:37.853] Server  LOG     ✓ Compiled in 294ms
+[07:39:37.959] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[07:40:12.422] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[07:41:13.434] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component]
+[07:41:49.829] Server  LOG     ✓ Compiled in 258ms
+[07:41:50.537] Server  ERROR   ⨯ Error: The default export is not a React Component in "/page"
+[07:41:50.738] Server  ERROR   ⨯ Error: The default export is not a React Component in "/page"
+[07:41:50.956] Server  ERROR   ⨯ Error: The default export is not a React Component in "/page"
+[07:41:51.130] Server  ERROR   ⨯ Error: The default export is not a React Component in "/page"
+[07:41:51.515] Browser ERROR   uncaughtError: Error: The default export is not a React Component in "/page"
+[07:41:55.427] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+[07:42:02.426] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+[07:42:26.431] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+[07:42:42.052] Browser ERROR   ./src/app/page.tsx:152:13
+Parsing ecmascript source code failed
+  150 |               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
+  151 |               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
+> 152 |             ].map((item, i) => (
+      |             ^
+  153 |               <div
+  154 |                 key={i}
+  155 |                 className="p-6 rounded-xl border border-gray-200 bg-white hover:border-blue-300 transition-all duration-300 hover:shadow-xl group"
+
+Expected '</', got ']'
+[07:44:14.812] Server  LOG     ✓ Compiled in 73ms
+[07:44:15.226] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[07:59:29.816] Server  LOG     ✓ Compiled in 66ms
+[08:01:21.397] Server  LOG     ✓ Compiled in 62ms
+[08:02:35.806] Server  LOG     ✓ Compiled in 39ms
+[08:05:07.871] Server  LOG     ✓ Compiled in 31ms
+[08:08:20.060] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[08:09:49.531] Server  LOG     ✓ Compiled in 34ms
+[08:18:08.458] Server  LOG     ✓ Compiled in 37ms
+[08:20:12.513] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
