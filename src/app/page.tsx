@@ -203,8 +203,8 @@ We are a transparent, skill-focused trading community built by professionals wit
                   <div className="flex items-center gap-4 text-sm text-gray-600">
                     <div className="flex items-center gap-1">
                       <Video className="w-4 h-4" />
-                      <span className="line-through text-gray-500">INR 3499</span>
-                      <span className="ml-2 font-semibold text-gray-900">INR 1499</span>
+                      
+                      <span className="ml-2 font-semibold text-gray-900">10 videos</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Lock className="w-4 h-4" />
@@ -344,7 +344,7 @@ If your friend subscribes using your code, both of you get 15 extra days of free
               </div>
               <div className="mb-6">
                 
-                <span className="line-through text-gray-500">INR 1999</span>
+                <span className="line-through text-gray-500">INR 3000</span>
                       <span className="text-4xl font-bold">INR 1499</span>
                 <div className="text-sm text-gray-600">one-time payment</div>
               </div>
@@ -374,7 +374,7 @@ If your friend subscribes using your code, both of you get 15 extra days of free
                 <p className="text-gray-600 leading-relaxed">Join the Discord family</p>
               </div>
               <div className="mb-4">
-                <div className="text-4xl font-bold">INR 1999</div>
+                <div className="text-4xl font-bold">INR 2000</div>
                 <div className="text-sm text-gray-600">per month</div>
               </div>
               <div className="inline-block px-3 py-1 mb-6 rounded-full bg-purple-50 text-purple-600 border border-purple-200 text-sm font-medium">
@@ -408,14 +408,15 @@ If your friend subscribes using your code, both of you get 15 extra days of free
               </div>
               <div className="mb-4">
                 <div className="text-4xl font-bold">INR 2499</div>
-                <div className="text-sm text-gray-600">one-time + INR 1999/mo</div>
+                <div className="text-sm text-gray-600">one-time + INR 2000/mo</div>
               </div>
               <div className="inline-block px-3 py-1 mb-6 rounded-full bg-blue-50 text-blue-600 border border-blue-200 text-sm font-medium">
-                Save INR 999
+                Save INR 1000
               </div>
               <ul className="space-y-3 mb-6">
                 {[
-                  "Full 10-video course access",
+                  "1st month of Discord free",
+                  "Lifetime course access",
                   "Private Discord subscription",
                   "Priority community support",
                   "1-on-1 mentorship sessions",
