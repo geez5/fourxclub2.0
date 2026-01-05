@@ -74,6 +74,51 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../src/app/api/discord/link/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/discord/link">> = Specific
+  const handler = {} as typeof import("../../../src/app/api/discord/link/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/api/referrals/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/referrals">> = Specific
+  const handler = {} as typeof import("../../../src/app/api/referrals/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/api/user/dashboard/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/user/dashboard">> = Specific
+  const handler = {} as typeof import("../../../src/app/api/user/dashboard/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/api/videos/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/videos">> = Specific
+  const handler = {} as typeof import("../../../src/app/api/videos/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/api/webhooks/clerk/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/webhooks/clerk">> = Specific
+  const handler = {} as typeof import("../../../src/app/api/webhooks/clerk/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../src/app/api/webhooks/stripe/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/webhooks/stripe">> = Specific

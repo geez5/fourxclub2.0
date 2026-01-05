@@ -11,6 +11,11 @@ export default function HomePage() {
   const [copied, setCopied] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
 
+  // Course access UI state
+  const [showCourseModal, setShowCourseModal] = useState(false);
+  const [hasCourseAccess, setHasCourseAccess] = useState(false);
+  const [isProcessingPurchase, setIsProcessingPurchase] = useState(false);
+
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') setShowTerms(false);
@@ -34,6 +39,13 @@ export default function HomePage() {
       // ignore clipboard errors
     }
   };
+
+  const videos = Array.from({ length: 10 }).map((_, i) => ({
+    id: i + 1,
+    title: `Video ${i + 1}`,
+    // placeholder encrypted paths - replace with your secure endpoints
+    src: `/encrypted/course/video-${i + 1}.mp4`,
+  }));
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -67,7 +79,10 @@ export default function HomePage() {
               <button className="px-4 py-2 text-sm font-medium hover:bg-gray-100 rounded-lg transition-colors">
                 Sign In
               </button>
-              <button className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+              <button
+                onClick={() => setShowCourseModal(true)}
+                className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              >
                 Get Started <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -99,7 +114,10 @@ export default function HomePage() {
               Learn how institutional traders read the market — with structured strategies, real chart breakdowns, and disciplined risk management. No hype. No signals. Just skill.
             </p>
             <div className="flex items-center justify-center">
-              <button className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-5 py-3 text-white text-sm font-medium hover:bg-blue-700 transition-colors">
+              <button
+                onClick={() => setShowCourseModal(true)}
+                className="inline-flex items-center gap-2 rounded-md bg-blue-600 px-5 py-3 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+              >
                 Join Now
                 <ArrowRight className="w-4 h-4" />
               </button>
@@ -362,7 +380,10 @@ If your friend subscribes using your code, both of you get 15 extra days of free
                   </li>
                 ))}
               </ul>
-              <button className="w-full px-4 py-2 font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+              <button
+                onClick={() => setShowCourseModal(true)}
+                className="w-full px-4 py-2 font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+              >
                 Get Started
               </button>
             </div>
@@ -390,7 +411,10 @@ If your friend subscribes using your code, both of you get 15 extra days of free
                   ),
                 )}
               </ul>
-              <button className="w-full px-4 py-2 font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+              <button
+                onClick={() => setShowCourseModal(true)}
+                className="w-full px-4 py-2 font-medium bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+              >
                 Access Community
               </button>
             </div>
@@ -428,7 +452,10 @@ If your friend subscribes using your code, both of you get 15 extra days of free
                   </li>
                 ))}
               </ul>
-              <button className="w-full px-4 py-2 font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30">
+              <button
+                onClick={() => setShowCourseModal(true)}
+                className="w-full px-4 py-2 font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30"
+              >
                 Get Full Access 
               </button>
             </div>
@@ -693,6 +720,109 @@ If your friend subscribes using your code, both of you get 15 extra days of free
               <p className="mt-2">By using FourXclub, you acknowledge that you understand the risks involved in trading and that you are solely responsible for your actions and decisions. If you do not agree with any part of these Terms, please discontinue use of the platform immediately.</p>
 
               <p className="mt-4 font-semibold">FourXclub</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Course Access Modal */}
+      {showCourseModal && (
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 flex items-start justify-center p-6 sm:p-10">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowCourseModal(false)} />
+          <div className="relative z-10 max-w-5xl w-full bg-white rounded-xl shadow-xl overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b">
+              <div>
+                <h2 className="text-xl font-bold">FourXclub Core Course</h2>
+                <p className="text-sm text-gray-600">10 secure, encrypted videos — playback only</p>
+              </div>
+              <div className="flex gap-3 items-center">
+                {!hasCourseAccess ? (
+                  <span className="px-3 py-1 rounded-full bg-yellow-50 text-yellow-800 border border-yellow-200 text-sm font-medium">
+                    Locked
+                  </span>
+                ) : (
+                  <span className="px-3 py-1 rounded-full bg-green-50 text-green-800 border border-green-200 text-sm font-medium">
+                    Access granted
+                  </span>
+                )}
+                <button onClick={() => setShowCourseModal(false)} aria-label="Close" className="text-sm px-3 py-1 rounded hover:bg-gray-100">
+                  Close
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 max-h-[70vh] overflow-y-auto space-y-6">
+              {!hasCourseAccess ? (
+                <>
+                  <p className="text-sm text-gray-600">You can preview the titles below. Purchase to unlock secure playback. Downloading, sharing or screen recording is prohibited.</p>
+                  <ul className="space-y-2 mt-4">
+                    {videos.map((v) => (
+                      <li key={v.id} className="flex items-center justify-between px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded bg-gray-200 flex items-center justify-center text-xs font-medium text-gray-700">
+                            {v.id}
+                          </div>
+                          <div className="text-sm font-medium">{v.title}</div>
+                        </div>
+                        <div className="flex items-center gap-3 text-sm text-gray-500">
+                          <Lock className="w-4 h-4" />
+                          <span>Locked</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-gray-600">All course videos are encrypted and available for streaming only. Downloading is disabled and screen-recording is prohibited.</p>
+                  <div className="grid gap-4 sm:grid-cols-2 mt-4">
+                    {videos.map((v) => (
+                      <div key={v.id} className="relative bg-black rounded overflow-hidden">
+                        <video
+                          src={v.src}
+                          controls
+                          controlsList="nodownload noremoteplayback"
+                          disablePictureInPicture
+                          onContextMenu={(e) => e.preventDefault()}
+                          className="w-full h-48 object-cover bg-black"
+                        />
+                        <div className="absolute top-2 left-2 px-2 py-1 rounded bg-white/80 text-xs font-medium text-gray-900">Encrypted</div>
+                        <div className="absolute bottom-2 left-2 px-2 py-1 rounded bg-white/30 text-xs font-medium text-white pointer-events-none">{v.title}</div>
+                        {/* simple watermark */}
+                        <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-10 text-4xl font-bold select-none text-white">FourXclub</div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="p-6 border-t flex items-center justify-between gap-4">
+              {!hasCourseAccess ? (
+                <div className="flex items-center gap-4">
+                  <div>
+                    <div className="text-sm text-gray-500">Course price</div>
+                    <div className="text-xl font-bold">INR 1499</div>
+                  </div>
+                  <div>
+                    <button
+                      disabled={isProcessingPurchase}
+                      onClick={async () => {
+                        setIsProcessingPurchase(true);
+                        // simulate payment flow - replace with real integration
+                        await new Promise((r) => setTimeout(r, 1500));
+                        setHasCourseAccess(true);
+                        setIsProcessingPurchase(false);
+                      }}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      {isProcessingPurchase ? 'Processing…' : 'Purchase & Unlock'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-sm text-gray-600">You now have access to all course videos. Playback-only mode is enabled to prevent downloading.</div>
+              )}
             </div>
           </div>
         </div>

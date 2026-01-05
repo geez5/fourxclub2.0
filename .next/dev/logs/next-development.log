@@ -1,6 +1,119 @@
-[00:00:01.129] Server  LOG      ✓ Ready in 822ms
-[00:00:10.331] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:14.116] Server  LOG      ✓ Compiled in 39ms
-[00:01:52.071] Server  LOG      ✓ Compiled in 52ms
-[00:04:24.919] Server  LOG      ✓ Compiled in 34ms
-[00:05:36.893] Server  LOG      ✓ Compiled in 55ms
+[00:00:01.537] Server  ERROR    ⨯ ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:01.539] Server  ERROR    ⨯ ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:01.540] Server  ERROR    ⨯ ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:01.588] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:01.798] Server  LOG      ✓ Ready in 1397ms
+[00:00:18.619] Server  ERROR    ⨯ Error: Cannot find module '@clerk/nextjs/server'
+[00:00:19.736] Server  ERROR    ⨯ Error: Cannot find module '@clerk/nextjs/server'
+[00:00:19.957] Browser ERROR   uncaughtError: Error: ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[00:00:20.575] Browser ERROR   ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+https://nextjs.org/docs/messages/module-not-found
+[00:00:21.471] Browser ERROR   ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+https://nextjs.org/docs/messages/module-not-found
+[00:08:07.768] Browser ERROR   ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+https://nextjs.org/docs/messages/module-not-found
+[00:08:19.693] Browser ERROR   ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+https://nextjs.org/docs/messages/module-not-found
+[00:08:26.558] Browser ERROR   ./src/middleware.ts:3:1
+Module not found: Can't resolve '@clerk/nextjs/server'
+  1 | import { NextResponse } from 'next/server'
+  2 | import type { NextRequest } from 'next/server'
+> 3 | import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | // Rate limiting store (in production, use Redis)
+  6 | const rateLimit = new Map<string, { count: number; resetTime: number }>()
+
+https://nextjs.org/docs/messages/module-not-found
