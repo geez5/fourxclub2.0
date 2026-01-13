@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs'
-import { stripe, PRICES } from '@/lib/stripe'
+import { auth } from '@clerk/nextjs/server'
+import { razorpay, PRICES } from '@/lib/razorpay'
 import { supabaseAdmin } from '@/lib/supabase'
 import { logAudit } from '@/lib/auditLog'
 
@@ -76,8 +76,8 @@ export async function POST(req: Request) {
       ? PRICES.DISCORD.USD 
       : PRICES.DISCORD.INR
     
-    // Create Stripe checkout session for subscription
-    const session = await stripe.checkout.sessions.create({
+    // Create razorpay checkout session for subscription
+    const session = await razorpay.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {

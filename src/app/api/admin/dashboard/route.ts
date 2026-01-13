@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { auth, currentUser } from '@clerk/nextjs'
+import { auth, currentUser } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
 // ADMIN EMAIL - Only this email can access admin dashboard
@@ -342,7 +342,7 @@ export async function POST(req: Request) {
         amount,
         currency,
         purchased_at,
-        stripe_payment_id,
+        razorpay_payment_id,
         users (email, full_name)
       `)
       .eq('status', 'completed')
@@ -358,7 +358,7 @@ export async function POST(req: Request) {
         'FourXClub Course',
         (p.amount / 100).toFixed(2),
         p.currency.toUpperCase(),
-        p.stripe_payment_id
+        p.razorpay_payment_id
       ].join(','))
     ].join('\n')
     

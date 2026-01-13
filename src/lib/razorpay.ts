@@ -1,7 +1,7 @@
 import Razorpay from 'razorpay'
 import crypto from 'crypto'
 
-// Export the Razorpay instance (THIS WAS MISSING!)
+// Export the Razorpay instance
 export const razorpay = new Razorpay({
   key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
   key_secret: process.env.RAZORPAY_KEY_SECRET!
@@ -39,15 +39,17 @@ export function verifyWebhookSignature(payload: string, signature: string) {
 }
 
 // Course prices
-export const COURSE_PRICES = {
-  INR: {
-    amount: 149900, // ₹1,499 in paise
-    currency: 'INR',
-  },
-  USD: {
-    amount: 1800, // $18 in cents
-    currency: 'USD',
-  },
+export const PRICES = {
+  COURSE: {
+    INR: {
+      amount: 149900, // ₹1,499 in paise
+      currency: 'INR',
+    },
+    USD: {
+      amount: 1800, // $18 in cents
+      currency: 'USD',
+    },
+  }
 }
 
 // Discord subscription plan IDs
