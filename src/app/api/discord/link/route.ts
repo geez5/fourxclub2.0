@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
-import { addUserToDiscord } from '@/lib/discord-bot'
-import { logAudit } from '@/lib/auditLog'
+import { addUserToDiscord } from '@/lib/discord-bots'
+import { logAudit } from '@/lib/auditLogs'
 
 // Link Discord account
 export async function POST(req: Request) {
   try {
-    const { userId } = auth()
+    const { userId } = await auth()
     
     if (!userId) {
       return NextResponse.json(
@@ -87,7 +87,7 @@ export async function POST(req: Request) {
 // Unlink Discord account
 export async function DELETE(req: Request) {
   try {
-    const { userId } = auth()
+    const { userId } = await auth()
     
     if (!userId) {
       return NextResponse.json(

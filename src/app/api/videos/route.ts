@@ -1,16 +1,15 @@
-import { NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs'
+import { NextResponse, NextRequest } from 'next/server'
+import { getAuth } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { generateVideoToken } from '@/lib/videoTokens'
-import { getSignedVimeoUrl, courseVideos } from '@/lib/videos'
-import { logAudit } from '@/lib/auditLog'
+import { generateBunnySignedUrl, courseVideos } from '@/lib/bunny'
 
 export async function GET(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { videoNumber: string } }
 ) {
   try {
-    const { userId } = auth()
+    const { userId } = getAuth(req)
     
     if (!userId) {
       return NextResponse.json(
@@ -64,18 +63,22 @@ export async function GET(
     // Get video info
     const video = courseVideos[videoNumber - 1]
     
-    // Get signed Vimeo URL with watermark
-    const vimeoUrl = await getSignedVimeoUrl(video.vimeoId, user.email)
+    // Get signed Bunny Stream URL with watermark
+    const bunnyUrl = generateBunnySignedUrl(
+      video.bunnyId, 
+      user.email, 
+      2 // 2 hours expiry
+    )
     
     // Log access
-    await logAudit('video_accessed', userId, {
-      videoNumber,
-      videoTitle: video.title
-    }, req)
+    // await logAudit('video_accessed', userId, {
+    //   videoNumber,
+    //   videoTitle: video.title
+    // }, req)
     
     return NextResponse.json({
       token,
-      videoUrl: vimeoUrl,
+      videoUrl: bunnyUrl,
       videoInfo: {
         title: video.title,
         description: video.description,
@@ -95,11 +98,11 @@ export async function GET(
 
 // Update video progress
 export async function POST(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { videoNumber: string } }
 ) {
   try {
-    const { userId } = auth()
+    const { userId } = getAuth(req)
     
     if (!userId) {
       return NextResponse.json(

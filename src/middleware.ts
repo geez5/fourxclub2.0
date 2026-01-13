@@ -24,7 +24,7 @@ interface RateLimitRecord {
     resetTime: number
 }
 
-export default clerkMiddleware((auth, req: NextRequest) => {
+export default clerkMiddleware(async (auth, req: NextRequest) => {
     // Skip middleware for public API routes
     if (isPublicApiRoute(req)) {
         return NextResponse.next()
@@ -38,7 +38,12 @@ export default clerkMiddleware((auth, req: NextRequest) => {
     
     // Protect routes
     if (isProtectedRoute(req)) {
-        auth().protect()
+        const session = await auth()
+        if (!session?.userId) {
+            const signInUrl = new URL('/sign-in', req.nextUrl.origin)
+            signInUrl.searchParams.set('redirect_url', req.nextUrl.pathname + req.nextUrl.search)
+            return NextResponse.redirect(signInUrl)
+        }
     }
     
     // Add security headers
