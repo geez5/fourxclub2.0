@@ -17,7 +17,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "ignoreDeprecations": "6.0",
     "baseUrl": "src",
     "paths": {
       "@/*": [
@@ -36,7 +35,8 @@
     "**/*.tsx",
     "src/types/**/*.d.ts",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    "src/components/PayUCheckout.tsx"
   ],
   "exclude": [
     "node_modules"

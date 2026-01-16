@@ -1,139 +1,80 @@
-import { Client, GatewayIntentBits, REST, Routes } from 'discord.js'
+import { REST } from '@discordjs/rest'
+import { Routes } from 'discord-api-types/v10'
 
-// Initialize Discord client
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
-  ],
-})
+const DISCORD_TOKEN = process.env.DISCORD_BOT_TOKEN!
+const GUILD_ID = process.env.DISCORD_GUILD_ID!
+const ROLE_ID = process.env.DISCORD_PREMIUM_ROLE_ID!
 
-// Login bot
-client.login(process.env.DISCORD_BOT_TOKEN)
+const rest = new REST({ version: '10' }).setToken(DISCORD_TOKEN)
 
-// Bot ready event
-client.once('ready', () => {
-  console.log(`✅ Discord bot logged in as ${client.user?.tag}`)
-})
-
-// Add user to Discord server with Premium role
-export async function addUserToDiscord(discordUserId: string): Promise<boolean> {
+// Add user to Discord server and assign role
+export async function addUserToDiscord(userId: string, accessToken: string) {
   try {
-    const guild = await client.guilds.fetch(process.env.DISCORD_GUILD_ID!)
-    const member = await guild.members.fetch(discordUserId)
-    
-    if (!member) {
-      console.error(`Member ${discordUserId} not found in guild`)
-      return false
-    }
-    
-    // Get Premium Member role
-    const role = guild.roles.cache.find(r => r.name === 'Premium Member')
-    
-    if (!role) {
-      console.error('Premium Member role not found')
-      return false
-    }
-    
-    // Add role
-    await member.roles.add(role)
-    
-    // Send welcome DM
-    try {
-      await member.send({
-        content: `🎉 Welcome to FourXClub Premium Discord!
-        
-Your subscription is now active. You have access to:
-✅ Exclusive trading channels
-✅ Live market analysis
-✅ Direct mentor support
-✅ Premium trading signals
+    // Add user to guild using their access token
+    await rest.put(
+      Routes.guildMember(GUILD_ID, userId),
+      {
+        body: {
+          access_token: accessToken,
+        },
+      }
+    )
 
-Enjoy your membership! 🚀`
-      })
-    } catch (dmError) {
-      console.log('Could not send DM to user (DMs might be disabled)')
-    }
-    
-    console.log(`✅ Added premium role to ${member.user.tag}`)
-    return true
-    
+    // Assign premium role
+    await addRoleToMember(userId, ROLE_ID)
+
+    return { success: true }
   } catch (error) {
-    console.error('Error adding user to Discord:', error)
-    return false
+    console.error('Failed to add user to Discord:', error)
+    return { success: false, error }
   }
 }
 
-// Remove user from Discord (remove Premium role)
-export async function removeUserFromDiscord(discordUserId: string): Promise<boolean> {
+export async function addRoleToMember(userId: string, roleId: string = ROLE_ID) {
   try {
-    const guild = await client.guilds.fetch(process.env.DISCORD_GUILD_ID!)
-    const member = await guild.members.fetch(discordUserId)
-    
-    if (!member) {
-      console.error(`Member ${discordUserId} not found in guild`)
-      return false
-    }
-    
-    // Get Premium Member role
-    const role = guild.roles.cache.find(r => r.name === 'Premium Member')
-    
-    if (!role) {
-      console.error('Premium Member role not found')
-      return false
-    }
-    
-    // Remove role
-    await member.roles.remove(role)
-    
-    // Send cancellation DM
-    try {
-      await member.send({
-        content: `Your FourXClub Premium subscription has ended.
-
-We hope you enjoyed your time with us! You can resubscribe anytime at https://fourxclub.in/discord
-
-Thank you for being a member! 💙`
-      })
-    } catch (dmError) {
-      console.log('Could not send DM to user')
-    }
-    
-    console.log(`✅ Removed premium role from ${member.user.tag}`)
-    return true
-    
+    await rest.put(
+      Routes.guildMemberRole(GUILD_ID, userId, roleId)
+    )
+    return { success: true }
   } catch (error) {
-    console.error('Error removing user from Discord:', error)
-    return false
+    console.error('Failed to add role:', error)
+    return { success: false, error }
   }
 }
 
-// Check if user is in server
-export async function isUserInDiscord(discordUserId: string): Promise<boolean> {
+export async function removeRoleFromMember(userId: string, roleId: string = ROLE_ID) {
   try {
-    const guild = await client.guilds.fetch(process.env.DISCORD_GUILD_ID!)
-    const member = await guild.members.fetch(discordUserId)
-    return !!member
-  } catch {
-    return false
-  }
-}
-
-// Get Discord server stats
-export async function getDiscordStats() {
-  try {
-    const guild = await client.guilds.fetch(process.env.DISCORD_GUILD_ID!)
-    const role = guild.roles.cache.find(r => r.name === 'Premium Member')
-    
-    return {
-      totalMembers: guild.memberCount,
-      premiumMembers: role?.members.size || 0,
-      onlineMembers: guild.members.cache.filter(m => m.presence?.status !== 'offline').size
-    }
+    await rest.delete(
+      Routes.guildMemberRole(GUILD_ID, userId, roleId)
+    )
+    return { success: true }
   } catch (error) {
-    console.error('Error getting Discord stats:', error)
-    return null
+    console.error('Failed to remove role:', error)
+    return { success: false, error }
   }
 }
 
-export { client }
+export async function getMemberRoles(userId: string) {
+  try {
+    const member = await rest.get(
+      Routes.guildMember(GUILD_ID, userId)
+    ) as any
+    return { success: true, roles: member.roles }
+  } catch (error) {
+    console.error('Failed to get member:', error)
+    return { success: false, error }
+  }
+}
+
+export async function kickMember(userId: string, reason?: string) {
+  try {
+    await rest.delete(
+      Routes.guildMember(GUILD_ID, userId),
+      { reason }
+    )
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to kick member:', error)
+    return { success: false, error }
+  }
+}

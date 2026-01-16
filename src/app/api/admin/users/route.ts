@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { auth, currentUser, clerkClient } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
-import { razorpay } from '@/lib/razorpay'
+// import { PayU } from '@/lib/PayU' // Temporarily disabled
 
 const ADMIN_EMAIL = 'hello@fourxclub.in'
 
@@ -146,10 +146,10 @@ async function grantCourseAccess(userId: string) {
     return NextResponse.json({ error: 'User already has access' }, { status: 400 })
   }
   
-  // Grant access (changed payment_id field for Razorpay)
+  // Grant access (changed payment_id field for PayU)
   await supabaseAdmin.from('course_purchases').insert({
     user_id: user.id,
-    razorpay_payment_id: `admin_grant_${Date.now()}`,
+    PayU_payment_id: `admin_grant_${Date.now()}`,
     amount: 0,
     currency: 'INR',
     status: 'completed'
@@ -177,16 +177,17 @@ async function cancelDiscordSubscription(userId: string) {
   // Get subscription
   const { data: sub } = await supabaseAdmin
     .from('discord_subscriptions')
-    .select('razorpay_subscription_id')
+    .select('PayU_subscription_id')
     .eq('user_id', userId)
     .single()
   
-  if (!sub || !sub.razorpay_subscription_id) {
+  if (!sub || !sub.PayU_subscription_id) {
     return NextResponse.json({ error: 'No subscription found' }, { status: 404 })
   }
   
-  // Cancel in Razorpay
-  await razorpay.subscriptions.cancel(sub.razorpay_subscription_id)
+  // TODO: Re-enable when payment integration is ready
+  // Cancel in PayU
+  // await PayU.subscriptions.cancel(sub.PayU_subscription_id)
   
   // Update database
   await supabaseAdmin
@@ -196,7 +197,7 @@ async function cancelDiscordSubscription(userId: string) {
   
   return NextResponse.json({ 
     success: true, 
-    message: 'Subscription cancelled' 
+    message: 'Subscription cancelled in database (PayU cancellation disabled)' 
   })
 }
 
@@ -204,37 +205,38 @@ async function refundPayment(userId: string, paymentId: string) {
   // Get payment
   const { data: purchase } = await supabaseAdmin
     .from('course_purchases')
-    .select('razorpay_payment_id, razorpay_order_id, amount')
+    .select('PayU_payment_id, PayU_order_id, amount')
     .eq('user_id', userId)
-    .eq('razorpay_payment_id', paymentId)
+    .eq('PayU_payment_id', paymentId)
     .single()
   
   if (!purchase) {
     return NextResponse.json({ error: 'Payment not found' }, { status: 404 })
   }
   
-  // Get payment details from Razorpay
-  const payment = await razorpay.payments.fetch(purchase.razorpay_payment_id)
+  // TODO: Re-enable when payment integration is ready
+  // Get payment details from PayU
+  // const payment = await PayU.payments.fetch(purchase.PayU_payment_id)
   
   // Create refund (amount in paise)
-  await razorpay.payments.refund(purchase.razorpay_payment_id, {
-    amount: payment.amount, // Full refund
-    speed: 'normal',
-    notes: {
-      reason: 'Admin refund',
-      refunded_by: 'admin'
-    }
-  })
+  // await PayU.payments.refund(purchase.PayU_payment_id, {
+  //   amount: payment.amount, // Full refund
+  //   speed: 'normal',
+  //   notes: {
+  //     reason: 'Admin refund',
+  //     refunded_by: 'admin'
+  //   }
+  // })
   
   // Update database
   await supabaseAdmin
     .from('course_purchases')
     .update({ status: 'refunded' })
-    .eq('razorpay_payment_id', paymentId)
+    .eq('PayU_payment_id', paymentId)
   
   return NextResponse.json({ 
     success: true, 
-    message: 'Payment refunded' 
+    message: 'Payment marked as refunded in database (PayU refund disabled)' 
   })
 }
 
@@ -263,13 +265,18 @@ async function banUser(userId: string) {
   // Cancel Discord subscription if exists
   const { data: sub } = await supabaseAdmin
     .from('discord_subscriptions')
-    .select('razorpay_subscription_id')
+    .select('PayU_subscription_id')
     .eq('user_id', userId)
     .single()
   
-  if (sub && sub.razorpay_subscription_id) {
+  if (sub && sub.PayU_subscription_id) {
     try {
-      await razorpay.subscriptions.cancel(sub.razorpay_subscription_id)
+      // TODO: Re-enable when payment integration is ready
+      // await PayU.subscriptions.cancel(sub.PayU_subscription_id)
+      await supabaseAdmin
+        .from('discord_subscriptions')
+        .update({ status: 'cancelled' })
+        .eq('user_id', userId)
     } catch (error) {
       console.error('Failed to cancel subscription:', error)
     }

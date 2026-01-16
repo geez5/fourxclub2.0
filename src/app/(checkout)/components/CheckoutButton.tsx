@@ -6,7 +6,7 @@ export default function CheckoutButton({ amount, currency = 'INR' }: { amount: n
     try {
       const { order, keyId } = await createOrderClient(amount, currency, `rcpt_${Date.now()}`)
       console.log('Order created', order, keyId)
-      // TODO: pass order.id and keyId to Razorpay Checkout
+      // TODO: pass order.id and keyId to PayU Checkout
     } catch (err) {
       console.error('Create order error', err)
     }

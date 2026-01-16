@@ -1,262 +1,77 @@
-import { NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
-import { razorpay, PRICES } from '@/lib/razorpay'
-import { supabaseAdmin } from '@/lib/supabase'
-import { logAudit } from '@/lib/auditLogs'
+// src/app/api/checkout/course/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+
+// Disable all payment processing temporarily
+export async function POST(req: NextRequest) {
+  return NextResponse.json(
+    { error: 'Payment processing temporarily disabled. Please use access code.' },
+    { status: 503 }
+  )
+}
+
+export async function PUT(req: NextRequest) {
+  return NextResponse.json(
+    { error: 'Payment verification temporarily disabled.' },
+    { status: 503 }
+  )
+}
+
+export async function PATCH(req: NextRequest) {
+  return NextResponse.json({ ok: true }, { status: 200 })
+}
+
+/*
+// ORIGINAL PayU CODE - Keep for reference when implementing Stripe/Instamojo
+
+import { NextRequest, NextResponse } from 'next/server'
+import { PayU, toSmallestUnit } from '@/lib/PayU'
 import crypto from 'crypto'
 
-// Create Razorpay order
-export async function POST(req: Request) {
-  try {
-    const { userId } = await auth()
-    
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
-    }
-    
-    const { currency } = await req.json() // 'INR' or 'USD'
-    
-    // Check if user already purchased
-    const { data: user } = await supabaseAdmin
-      .from('users')
-      .select('id')
-      .eq('clerk_id', userId)
-      .single()
-    
-    if (user) {
-      const { data: existing } = await supabaseAdmin
-        .from('course_purchases')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('status', 'completed')
-        .single()
-      
-      if (existing) {
-        return NextResponse.json(
-          { error: 'Course already purchased' },
-          { status: 400 }
-        )
-      }
-    }
-    
-    // Get price based on currency
-    const price = currency === 'USD' 
-      ? PRICES.COURSE.USD 
-      : PRICES.COURSE.INR
+const COURSE_PRICES = {
+  INR: 999,
+  USD: 12
+}
 
-    // Create Razorpay order
-    const order = await razorpay.orders.create({
-      amount: price.amount,
-      currency: price.currency,
-      receipt: `course_${userId}_${Date.now()}`,
-      notes: {
-        userId,
-        type: 'course',
-        currency: price.currency
-      }
+export async function POST(req: NextRequest) {
+  try {
+    const { currency } = await req.json()
+    const amount = COURSE_PRICES[currency as keyof typeof COURSE_PRICES] || COURSE_PRICES.INR
+    
+    const order = await PayU.orders.create({
+      amount: toSmallestUnit(amount, currency),
+      currency,
+      receipt: `receipt_${Date.now()}`,
     })
-    
-    // Store pending order in database
-    if (user) {
-      await supabaseAdmin
-        .from('course_purchases')
-        .insert({
-          user_id: user.id,
-          order_id: order.id,
-          amount: order.amount,
-          currency: order.currency,
-          status: 'pending',
-          created_at: new Date().toISOString()
-        })
-    }
-    
-    // Log action
-    await logAudit('course_checkout_initiated', userId, {
-      orderId: order.id,
-      currency: price.currency,
-      amount: price.amount
-    }, req)
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       orderId: order.id,
       amount: order.amount,
       currency: order.currency,
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
+      key: process.env.NEXT_PUBLIC_PayU_KEY_ID,
     })
-    
   } catch (error) {
-    console.error('Checkout error:', error)
-    return NextResponse.json(
-      { error: 'Failed to create checkout order' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
   }
 }
 
-// Verify payment and complete purchase
-export async function PUT(req: Request) {
+export async function PUT(req: NextRequest) {
   try {
-    const { userId } = await auth()
+    const { PayU_order_id, PayU_payment_id, PayU_signature } = await req.json()
     
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
-    }
-    
-    const { 
-      razorpay_order_id, 
-      razorpay_payment_id, 
-      razorpay_signature 
-    } = await req.json()
-    
-    // Verify signature
-    const text = `${razorpay_order_id}|${razorpay_payment_id}`
-    const secret = process.env.RAZORPAY_KEY_SECRET!
-    const generated_signature = crypto
-      .createHmac('sha256', secret)
-      .update(text)
+    const sign = `${PayU_order_id}|${PayU_payment_id}`
+    const expectedSign = crypto
+      .createHmac('sha256', process.env.PayU_KEY_SECRET!)
+      .update(sign)
       .digest('hex')
-    
-    if (generated_signature !== razorpay_signature) {
-      await logAudit('course_payment_verification_failed', userId, {
-        orderId: razorpay_order_id,
-        paymentId: razorpay_payment_id,
-        reason: 'Invalid signature'
-      }, req)
-      
-      return NextResponse.json(
-        { error: 'Payment verification failed' },
-        { status: 400 }
-      )
-    }
-    
-    // Get user from database
-    const { data: user } = await supabaseAdmin
-      .from('users')
-      .select('id')
-      .eq('clerk_id', userId)
-      .single()
-    
-    if (!user) {
-      // Create user if doesn't exist
-      const { data: newUser } = await supabaseAdmin
-        .from('users')
-        .insert({
-          clerk_id: userId,
-          created_at: new Date().toISOString()
-        })
-        .select('id')
-        .single()
-      
-      if (!newUser) {
-        throw new Error('Failed to create user')
-      }
-    }
-    
-    // Update purchase status
-    const { error: updateError } = await supabaseAdmin
-      .from('course_purchases')
-      .update({
-        payment_id: razorpay_payment_id,
-        status: 'completed',
-        completed_at: new Date().toISOString()
-      })
-      .eq('order_id', razorpay_order_id)
-    
-    if (updateError) {
-      console.error('Failed to update purchase:', updateError)
-      throw updateError
-    }
-    
-    // Grant course access
-    const { error: accessError } = await supabaseAdmin
-      .from('users')
-      .update({
-        course_access: true,
-        updated_at: new Date().toISOString()
-      })
-      .eq('clerk_id', userId)
-    
-    if (accessError) {
-      console.error('Failed to grant course access:', accessError)
-      throw accessError
-    }
-    
-    // Log successful payment
-    await logAudit('course_payment_completed', userId, {
-      orderId: razorpay_order_id,
-      paymentId: razorpay_payment_id
-    }, req)
-    
-    return NextResponse.json({ 
-      success: true,
-      message: 'Payment verified and course access granted'
-    })
-    
-  } catch (error) {
-    console.error('Payment verification error:', error)
-    return NextResponse.json(
-      { error: 'Failed to verify payment' },
-      { status: 500 }
-    )
-  }
-}
 
-// Handle payment failure
-export async function PATCH(req: Request) {
-  try {
-    const { userId } = await auth()
-    
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    if (PayU_signature === expectedSign) {
+      // Update database with successful payment
+      return NextResponse.json({ verified: true })
     }
     
-    const { orderId, reason, error: paymentError } = await req.json()
-    
-    // Get user from database
-    const { data: user } = await supabaseAdmin
-      .from('users')
-      .select('id')
-      .eq('clerk_id', userId)
-      .single()
-    
-    if (user) {
-      // Update purchase status to failed
-      await supabaseAdmin
-        .from('course_purchases')
-        .update({
-          status: 'failed',
-          failure_reason: reason || paymentError || 'Payment failed',
-          updated_at: new Date().toISOString()
-        })
-        .eq('order_id', orderId)
-        .eq('user_id', user.id)
-    }
-    
-    // Log failed payment
-    await logAudit('course_payment_failed', userId, {
-      orderId,
-      reason: reason || paymentError || 'Payment failed'
-    }, req)
-    
-    return NextResponse.json({ 
-      success: true,
-      message: 'Payment failure recorded'
-    })
-    
+    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   } catch (error) {
-    console.error('Payment failure logging error:', error)
-    return NextResponse.json(
-      { error: 'Failed to log payment failure' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Verification failed' }, { status: 500 })
   }
 }
+*/

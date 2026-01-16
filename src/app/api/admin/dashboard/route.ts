@@ -7,7 +7,7 @@ const ADMIN_EMAIL = 'hello@fourxclub.in'
 
 export async function GET(req: Request) {
   try {
-    const { userId } = auth()
+    const { userId } = await auth() // Add await here
     const user = await currentUser()
     
     if (!userId || !user) {
@@ -237,24 +237,27 @@ async function getRecentPurchases() {
       amount,
       currency,
       purchased_at,
-      users (email, full_name)
+      users!inner (email, full_name)
     `)
     .eq('status', 'completed')
     .order('purchased_at', { ascending: false })
     .limit(10)
   
-  return data?.map(purchase => ({
-    product: 'FourXClub Course',
-    user: purchase.users.full_name || purchase.users.email.split('@')[0],
-    amount: purchase.amount,
-    currency: purchase.currency,
-    date: new Date(purchase.purchased_at).toLocaleDateString('en-IN', {
-      day: 'numeric',
-      month: 'short',
-      hour: '2-digit',
-      minute: '2-digit'
-    })
-  })) || []
+  return data?.map((purchase: any) => {
+    const user = Array.isArray(purchase.users) ? purchase.users[0] : purchase.users
+    return {
+      product: 'FourXClub Course',
+      user: user?.full_name || user?.email?.split('@')[0] || 'Unknown',
+      amount: purchase.amount,
+      currency: purchase.currency,
+      date: new Date(purchase.purchased_at).toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    }
+  }) || []
 }
 
 async function getTopReferrers() {
@@ -263,16 +266,19 @@ async function getTopReferrers() {
     .select(`
       code,
       uses_count,
-      users (email, full_name)
+      users!inner (email, full_name)
     `)
     .order('uses_count', { ascending: false })
     .limit(5)
   
-  return data?.map(ref => ({
-    name: ref.users.full_name || ref.users.email.split('@')[0],
-    code: ref.code,
-    uses: ref.uses_count
-  })) || []
+  return data?.map((ref: any) => {
+    const user = Array.isArray(ref.users) ? ref.users[0] : ref.users
+    return {
+      name: user?.full_name || user?.email?.split('@')[0] || 'Unknown',
+      code: ref.code,
+      uses: ref.uses_count
+    }
+  }) || []
 }
 
 async function getMonthlyRevenue() {
@@ -316,7 +322,7 @@ async function getMonthlyRevenue() {
 // Export CSV endpoint
 export async function POST(req: Request) {
   try {
-    const { userId } = auth()
+    const { userId } = await auth() // Add await here
     const user = await currentUser()
     
     if (!userId || !user) {
@@ -342,24 +348,34 @@ export async function POST(req: Request) {
         amount,
         currency,
         purchased_at,
-        razorpay_payment_id,
-        users (email, full_name)
+        PayU_payment_id,
+        users!inner (email, full_name)
       `)
       .eq('status', 'completed')
       .order('purchased_at', { ascending: false })
     
+    if (!purchases) {
+      return NextResponse.json(
+        { error: 'No purchases found' },
+        { status: 404 }
+      )
+    }
+    
     // Convert to CSV
     const csv = [
       ['Date', 'User', 'Email', 'Product', 'Amount', 'Currency', 'Payment ID'].join(','),
-      ...purchases.map(p => [
-        new Date(p.purchased_at).toISOString(),
-        p.users.full_name || 'N/A',
-        p.users.email,
-        'FourXClub Course',
-        (p.amount / 100).toFixed(2),
-        p.currency.toUpperCase(),
-        p.razorpay_payment_id
-      ].join(','))
+      ...purchases.map((p: any) => {
+        const user = Array.isArray(p.users) ? p.users[0] : p.users
+        return [
+          new Date(p.purchased_at).toISOString(),
+          user?.full_name || 'N/A',
+          user?.email || 'N/A',
+          'FourXClub Course',
+          (p.amount / 100).toFixed(2),
+          p.currency.toUpperCase(),
+          p.PayU_payment_id
+        ].join(',')
+      })
     ].join('\n')
     
     return new NextResponse(csv, {

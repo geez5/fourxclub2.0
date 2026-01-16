@@ -1,8 +1,3 @@
-[00:00:01.988] Server  LOG     
-[00:00:01.988] Server  LOG        We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
-[00:00:01.988] Server  LOG        The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
-
-[00:00:01.989] Server  LOG        	- plugins was updated to add { name: 'next' }
-[00:00:01.989] Server  LOG     
-[00:00:02.027] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:00:02.217] Server  LOG      ✓ Ready in 1740ms
+[00:00:01.799] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:01.985] Server  LOG      ✓ Ready in 1545ms
+[00:00:29.980] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

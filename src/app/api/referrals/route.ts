@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { generateReferralCode, applyReferralCode, getReferralStats } from '@/lib/referrals'
-import { logAudit } from '@/lib/auditLogs'
+import { logAudit } from '@/lib/auditLog'
 
 // GET - Get user's referral code and stats
 export async function GET(req: Request) {

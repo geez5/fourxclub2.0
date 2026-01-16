@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { addUserToDiscord } from '@/lib/discord-bots'
-import { logAudit } from '@/lib/auditLogs'
+import { logAudit } from '@/lib/auditLog'
 
 // Link Discord account
 export async function POST(req: Request) {
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     
     // If subscribed, add role immediately
     if (subscription) {
-      const added = await addUserToDiscord(discordId)
+      const added = await addUserToDiscord(discordId, userId)
       
       if (!added) {
         return NextResponse.json(
