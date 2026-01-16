@@ -24,10 +24,14 @@ export async function POST(req: NextRequest) {
 // Example client request
 // ✅ This works everywhere
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://fourxclub-in.vercel.app';
-fetch(`${baseUrl}/api/payments/create-order`, ...)
+fetch(`${baseUrl}/api/payments/create-order`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ amount: 99.99, currency: 'USD', receipt: 'rcpt_123' })
+})
 
 //fetch('/api/payments/create-order', {
 //method: 'POST',
 //headers: { 'Content-Type': 'application/json' },
 //body: JSON.stringify({ amount: 29.99, currency: 'USD', receipt: 'rcpt_123' })
-//}) 
+//}) )
