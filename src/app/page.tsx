@@ -56,7 +56,7 @@ export default function HomePage() {
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg">
                 <img 
-                  src="fourxclub-logo.jpeg" 
+                  src="fxclogo.webp" 
                   alt="FourXclub Logo" 
                   className="w-full h-full object-cover"
                 />
@@ -488,7 +488,7 @@ If your friend subscribes using your code, both of you get 15 extra days of free
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg">
                   <img 
-                    src="fourxclub-logo.jpeg" 
+                    src="fxclogo.webp" 
                     alt="FourXclub Logo" 
                     className="w-full h-full object-cover"
                   />
@@ -722,7 +722,8 @@ If your friend subscribes using your code, both of you get 15 extra days of free
 
               <h3 className="font-bold mt-4">13. Acknowledgement</h3>
               <p className="mt-2">By using FourXclub, you acknowledge that you understand the risks involved in trading and that you are solely responsible for your actions and decisions. If you do not agree with any part of these Terms, please discontinue use of the platform immediately.</p>
-
+              
+              <p className="mt-2">FourXclub does not facilitate, recommend, or assist in accessing any broker, exchange, trading platform, or financial service provider. Any instruments, markets, or trading examples discussed on the platform are for educational illustration only and may not be permitted for trading by residents of certain jurisdictions, including India. Users are solely responsible for ensuring that any trading activity they undertake complies with applicable laws, regulations, and guidelines, including those issued by the RBI, FEMA, and SEBI. FourXclub bears no responsibility for the legality, compliance, or consequences of users’ trading activities. </p>
               <p className="mt-4 font-semibold">FourXclub</p>
             </div>
           </div>
