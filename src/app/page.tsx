@@ -54,11 +54,13 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img 
-                src="fourxclub-logo.jpeg" 
-                alt="FourXclub Logo" 
-                className="w-8 h-8 object-contain"
-              />
+              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg">
+                <img 
+                  src="fourxclub-logo.jpeg" 
+                  alt="FourXclub Logo" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <span className="font-bold text-xl">FourXclub</span>
             </div>
             <div className="hidden md:flex items-center gap-8">
@@ -111,7 +113,7 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Learn how institutional traders read the market — with structured strategies, real chart breakdowns, and disciplined risk management. No hype. No signals. Just skill.
+              Learn how institutional traders read the market: with structured strategies, real chart breakdowns, and disciplined risk management. No hype. No signals. Just skill.
             </p>
             <div className="flex items-center justify-center">
               <button
@@ -156,15 +158,15 @@ export default function HomePage() {
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">A Trading Ecosystem</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              At FourXclub, our aim is simple — to educate traders the right way.
+              At FourXclub, our aim is simple: to educate traders the right way.
 We are a transparent, skill-focused trading community built by professionals with 7+ years of real market experience, not marketers selling false promises. Our mission is to guide learners from beginner to advanced levels through structured, affordable education that delivers real value. We envision a safe trading ecosystem where individuals become confident, self-sufficient, and capable of trading like professionals.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Zap, title: "Real-Time Market Learning", desc: "Learn by observing markets as they move. Sessions focus on structure, planning, and execution — not hindsight explanations." },
-              { icon: Users, title: "Focused Trading Community", desc: "A small, serious group of learners and traders. No signals, no promotions, no noise — only meaningful discussions." },
+              { icon: Zap, title: "Real-Time Market Learning", desc: "Learn by observing markets as they move. Sessions focus on structure, planning, and execution, not hindsight explanations." },
+              { icon: Users, title: "Focused Trading Community", desc: "A small, serious group of learners and traders. No signals, no promotions, no noise, only meaningful discussions." },
               { icon: Award, title: "Experienced Trader Access", desc: "Direct interaction with traders having 7+ years of real market experience, including one-on-one guidance and chat support when required." },
               { icon: Check, title: "Skill Over Shortcuts", desc: "No guaranteed profits or quick wins. The focus is on building discipline, risk management, and long-term trading skills." },
             ].map((item, i) => (
@@ -216,7 +218,7 @@ We are a transparent, skill-focused trading community built by professionals wit
                 <div className="p-6">
                   <h3 className="text-2xl font-bold mb-2">Professional Trading Program</h3>
                   <p className="text-gray-600 mb-4 leading-relaxed">
-                    A carefully designed video course covering market structure, strategy logic, risk management, and trading psychology — built by traders with 7+ years of real market experience.
+                    A carefully designed video course covering market structure, strategy logic, risk management, and trading psychology | built by traders with 7+ years of real market experience.
                   </p>
                   <div className="flex items-center gap-4 text-sm text-gray-600">
                     <div className="flex items-center gap-1">
@@ -267,7 +269,7 @@ We are a transparent, skill-focused trading community built by professionals wit
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Join the FourXclub Trading Community</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              A private, well-moderated trading community for serious traders — beginner-friendly, mentor-driven, and built to encourage real learning, personal guidance, and strong professional networking.
+              A private, well-moderated trading community for serious traders | beginner-friendly, mentor-driven, and built to encourage real learning, personal guidance, and strong professional networking.
             </p>
           </div>
 
@@ -281,7 +283,7 @@ We are a transparent, skill-focused trading community built by professionals wit
                   </div>
                   <h3 className="text-3xl font-bold">Live Trading Discord (Subscription-Based)</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    Get access to our exclusive Discord server where traders learn together, ask questions, and stay disciplined — guided by experienced traders.
+                    Get access to our exclusive Discord server where traders learn together, ask questions, and stay disciplined | guided by experienced traders.
                   </p>
                   <div className="space-y-3">
                     {[
@@ -289,11 +291,11 @@ We are a transparent, skill-focused trading community built by professionals wit
                       "Beginner-friendly yet structured learning environment",
                       "Direct access to experienced traders for personal guidance",
                       "Network with serious, like-minded traders",
-                      "No signals, no spam, no hype — only real learning",
+                      "No signals, no spam, no hype | only real learning",
                     ].map((feature, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <Check className="w-5 h-5 text-purple-600 flex-shrink-0" />
-                        <span>{feature}</span>
+                        <span>{feature}</span>   
                       </div>
                     ))}
                   </div>
@@ -402,7 +404,7 @@ If your friend subscribes using your code, both of you get 15 extra days of free
                 First month free
               </div>
               <ul className="space-y-3 mb-6">
-                {["Live trading sessions conducted in real market conditions", "Real-time discussion on trade planning, entries, and execution", "One-on-one interaction with traders having 7+ years of experience (chat + sessions as required)", "Opportunity to network with serious, long-term traders", "No signals, no promotions, no fake claims — only practical learning"].map(
+                {["Live trading sessions conducted in real market conditions", "Real-time discussion on trade planning, entries, and execution", "One-on-one interaction with traders having 7+ years of experience (chat + sessions as required)", "Opportunity to network with serious, long-term traders", "No signals, no promotions, no fake claims | only practical learning"].map(
                   (feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm">
                       <Check className="w-4 h-4 text-purple-600 flex-shrink-0" />
@@ -471,7 +473,7 @@ If your friend subscribes using your code, both of you get 15 extra days of free
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Learn Trading in Real Time. Not From Promises.</h2>
             <p className="text-xl mb-10 text-white/90 leading-relaxed">
               A focused trading community where learning happens live in the market. Observe real trades, discuss
-              execution, and interact directly with traders who have 7+ years of real trading experience — beginner-friendly, but only for those serious about learning.
+              execution, and interact directly with traders who have 7+ years of real trading experience: beginner-friendly, but only for those serious about learning.
             </p>
             {/* CTA buttons removed as requested */}
           </div>
@@ -484,11 +486,13 @@ If your friend subscribes using your code, both of you get 15 extra days of free
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
-                <img 
-                  src="fourxclub-logo.jpeg" 
-                  alt="FourXclub Logo" 
-                  className="w-8 h-8 object-contain"
-                />
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg">
+                  <img 
+                    src="fourxclub-logo.jpeg" 
+                    alt="FourXclub Logo" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
                 <span className="font-bold text-xl">FourXclub</span>
               </div>
               <p className="text-sm text-gray-600 leading-relaxed">
@@ -733,7 +737,7 @@ If your friend subscribes using your code, both of you get 15 extra days of free
             <div className="flex items-center justify-between p-6 border-b">
               <div>
                 <h2 className="text-xl font-bold">FourXclub Core Course</h2>
-                <p className="text-sm text-gray-600">10 secure, encrypted videos — playback only</p>
+                <p className="text-sm text-gray-600">10 secure, encrypted videos | playback only</p>
               </div>
               <div className="flex gap-3 items-center">
                 {!hasCourseAccess ? (
@@ -754,7 +758,7 @@ If your friend subscribes using your code, both of you get 15 extra days of free
             <div className="p-6 max-h-[70vh] overflow-y-auto space-y-6">
               {!hasCourseAccess ? (
                 <>
-                  <p className="text-sm text-gray-600">You can preview the titles below. Purchase to unlock secure playback. Downloading, sharing or screen recording is prohibited.</p>
+                  <p className="text-sm text-gray-600">You can preview the titles below. Purchase to unlock secure playback.</p>
                   <ul className="space-y-2 mt-4">
                     {videos.map((v) => (
                       <li key={v.id} className="flex items-center justify-between px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">
@@ -774,14 +778,14 @@ If your friend subscribes using your code, both of you get 15 extra days of free
                 </>
               ) : (
                 <>
-                  <p className="text-sm text-gray-600">All course videos are encrypted and available for streaming only. Downloading is disabled and screen-recording is prohibited.</p>
+                  <p className="text-sm text-gray-600">All course videos are encrypted and available for streaming only.</p>
                   <div className="grid gap-4 sm:grid-cols-2 mt-4">
                     {videos.map((v) => (
                       <div key={v.id} className="relative bg-black rounded overflow-hidden">
                         <video
                           src={v.src}
                           controls
-                          controlsList="nodownload noremoteplayback"
+                          controlsList="no download, lifetime access"
                           disablePictureInPicture
                           onContextMenu={(e) => e.preventDefault()}
                           className="w-full h-48 object-cover bg-black"
