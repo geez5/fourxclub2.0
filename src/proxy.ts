@@ -24,7 +24,8 @@ interface RateLimitRecord {
     resetTime: number
 }
 
-export default clerkMiddleware(async (auth, req: NextRequest) => {
+// Changed from 'export default' to 'export const proxy'
+export const proxy = clerkMiddleware(async (auth, req: NextRequest) => {
     // Skip middleware for public API routes
     if (isPublicApiRoute(req)) {
         return NextResponse.next()
@@ -56,7 +57,8 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
     
     // CORS for API routes only
     if (req.nextUrl.pathname.startsWith('/api/')) {
-        response.headers.set('Access-Control-Allow-Origin', process.env.NEXT_PUBLIC_SITE_URL!)
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://fourxclub-in.vercel.app'
+        response.headers.set('Access-Control-Allow-Origin', siteUrl)
         response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
         response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     }
