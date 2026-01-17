@@ -56,7 +56,8 @@ function applyRateLimit(req: NextRequest): NextResponse | null {
   return null
 }
 
-export async function proxy(req: NextRequest) {
+// Define the proxy function
+async function proxyFunction(req: NextRequest) {
     // Skip public API routes
     if (isPublicApiRoute(req)) {
         return NextResponse.next()
@@ -94,6 +95,10 @@ export async function proxy(req: NextRequest) {
     
     return response
 }
+
+// Export as BOTH default and named 'proxy'
+export default proxyFunction
+export { proxyFunction as proxy }
 
 export const config = {
   matcher: [
