@@ -1,7 +1,13 @@
-import type { NextConfig } from 'next'
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Your other config options
-}
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
+  },
+  // Add empty turbopack config to silence the warning
+  turbopack: {},
+};
 
-export default nextConfig
+export default nextConfig;
