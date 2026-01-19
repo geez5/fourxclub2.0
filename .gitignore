@@ -12,3 +12,5 @@ dist/
 *.log
 .vercel 
 .vercel
+
+/src/generated/prisma
