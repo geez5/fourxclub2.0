@@ -66,14 +66,14 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
-        token.phoneNumber = (user as any).phoneNumber
+        token.phoneNumber = user.phoneNumber
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).id = token.id
-        (session.user as any).phoneNumber = token.phoneNumber
+        session.user.id = token.id
+        session.user.phoneNumber = token.phoneNumber
       }
       return session
     }
