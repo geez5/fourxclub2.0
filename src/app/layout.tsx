@@ -1,27 +1,20 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import Providers from "@/components/Providers";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "FourX Club",
-  description: "Trade with humanity",
-};
+import { ClerkProvider } from '@clerk/nextjs'
+import './globals.css'
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>
+    <ClerkProvider>
+      <html lang="en">
+        <body>
           {children}
-        </Providers>
-      </body>
-    </html>
-  );
+        </body>
+      </html>
+    </ClerkProvider>
+  )
 }
