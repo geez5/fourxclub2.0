@@ -20,6 +20,14 @@ const isPublicApiRoute = createRouteMatcher([
   '/api/webhooks/(.*)',
 ])
 
+// Public routes (signin, signup, home)
+const isPublicRoute = createRouteMatcher([
+  '/',
+  '/signin(.*)',
+  '/signup(.*)',
+  '/api/auth/(.*)',
+])
+
 function applyRateLimit(req: NextRequest): NextResponse | null {
   const ip = req.headers.get('x-forwarded-for') || 
             req.headers.get('x-real-ip') || 
@@ -58,8 +66,8 @@ function applyRateLimit(req: NextRequest): NextResponse | null {
 
 // Define the proxy function
 async function proxyFunction(req: NextRequest) {
-    // Skip public API routes
-    if (isPublicApiRoute(req)) {
+    // Skip public routes
+    if (isPublicRoute(req) || isPublicApiRoute(req)) {
         return NextResponse.next()
     }
     
@@ -71,7 +79,8 @@ async function proxyFunction(req: NextRequest) {
     if (isProtectedRoute(req)) {
         const { userId } = await auth()
         if (!userId) {
-            const signInUrl = new URL('/sign-in', req.nextUrl.origin)
+            // Changed from /sign-in to /signin
+            const signInUrl = new URL('/signin', req.nextUrl.origin)
             signInUrl.searchParams.set('redirect_url', req.nextUrl.pathname + req.nextUrl.search)
             return NextResponse.redirect(signInUrl)
         }

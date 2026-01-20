@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '2mb',
     },
   },
-  // Add empty turbopack config to silence the warning
   turbopack: {},
 };
 

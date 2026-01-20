@@ -1,24 +1,31 @@
-generator client {
-  provider = "prisma-client-js"
+datasource db {
+  provider = "postgresql"  // or "mysql"
+  url      = env("DATABASE_URL")
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
   id            String    @id @default(cuid())
   name          String?
-  email         String?   @unique
-  phoneNumber   String?   @unique
+  email         String    @unique
   emailVerified DateTime?
-  password      String?
+  password      String
   image         String?
-  accounts      Account[]
-  sessions      Session[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  
+  hasCourseAccess    Boolean @default(false)
+  hasDiscordAccess   Boolean @default(false)
+  discordAccessUntil DateTime?
+  referralCode       String?  @unique
+  referredBy         String?
+  
+  accounts      Account[]
+  sessions      Session[]
+  activities    UserActivity[]
 }
 
 model Account {
@@ -54,4 +61,14 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model UserActivity {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String   // "page_view", "video_watched", "course_purchased", etc.
+  metadata  Json?    // additional data
+  timestamp DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
