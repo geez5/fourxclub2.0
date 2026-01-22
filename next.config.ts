@@ -1,8 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Add empty turbopack config to silence the error
-  turbopack: {},
+  // Simple config for Next.js 15
 };
 
 export default nextConfig;

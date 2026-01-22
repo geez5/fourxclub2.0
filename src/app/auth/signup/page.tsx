@@ -1,9 +1,9 @@
 import { SignUp } from "@clerk/nextjs";
 
-export default function SignUpPage() {
+export default function SignupPage() {
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <SignUp 
+      <SignUp
         appearance={{
           elements: {
             rootBox: "mx-auto",
@@ -13,6 +13,7 @@ export default function SignUpPage() {
         routing="path"
         path="/auth/signup"
         signInUrl="/auth/signin"
+        fallbackRedirectUrl="/dashboard"
       />
     </div>
   );
