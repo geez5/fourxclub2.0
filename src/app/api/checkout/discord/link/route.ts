@@ -1,19 +1,20 @@
 import { NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { supabaseAdmin } from '@/lib/supabase'
 import { addUserToDiscord } from '@/lib/discord-bots'
 import { logAudit } from '@/lib/auditLog'
 
 export async function POST(req: Request) {
   try {
-    const { userId } = await auth()
+    const supabase = createRouteHandlerClient({ cookies })
+    const { data: { session } } = await supabase.auth.getSession()
     
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    const userId = session.user.id
     
     const { discordId } = await req.json()
     
@@ -28,7 +29,7 @@ export async function POST(req: Request) {
     const { data: user } = await supabaseAdmin
       .from('users')
       .select('id, email')
-      .eq('clerk_id', userId)
+      .eq('id', userId)
       .single()
     
     if (!user) {

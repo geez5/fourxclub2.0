@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
-import { auth } from '@clerk/nextjs/server'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { supabaseAdmin } from '@/lib/supabase'
 import { generateReferralCode, applyReferralCode, getReferralStats } from '@/lib/referrals'
 import { logAudit } from '@/lib/auditLog'
@@ -7,20 +8,20 @@ import { logAudit } from '@/lib/auditLog'
 // GET - Get user's referral code and stats
 export async function GET(req: Request) {
   try {
-    const { userId } = await auth()
+    const supabase = createRouteHandlerClient({ cookies })
+    const { data: { session } } = await supabase.auth.getSession()
     
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    const userId = session.user.id
     
     // Get user
     const { data: user } = await supabaseAdmin
       .from('users')
       .select('id')
-      .eq('clerk_id', userId)
+      .eq('id', userId)
       .single()
     
     if (!user) {
@@ -63,14 +64,14 @@ export async function GET(req: Request) {
 // POST - Validate and apply referral code
 export async function POST(req: Request) {
   try {
-    const { userId } = await auth()
+    const supabase = createRouteHandlerClient({ cookies })
+    const { data: { session } } = await supabase.auth.getSession()
     
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    const userId = session.user.id
     
     const { code } = await req.json()
     
@@ -85,7 +86,7 @@ export async function POST(req: Request) {
     const { data: user } = await supabaseAdmin
       .from('users')
       .select('id')
-      .eq('clerk_id', userId)
+      .eq('id', userId)
       .single()
     
     if (!user) {

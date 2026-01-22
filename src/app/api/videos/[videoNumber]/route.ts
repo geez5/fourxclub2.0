@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server'
-import { auth, currentUser } from '@clerk/nextjs/server' // Import both auth and currentUser
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { supabaseAdmin } from '@/lib/supabase'
 import { generateVideoToken } from '@/lib/videoTokens'
 import { generateBunnySignedUrl, courseVideos } from '@/lib/bunny'
@@ -9,14 +10,14 @@ export async function GET(
   { params }: { params: Promise<{ videoNumber: string }> }
 ) {
   try {
-    const { userId } = await auth()
+    const supabase = createRouteHandlerClient({ cookies })
+    const { data: { session } } = await supabase.auth.getSession()
     
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    const userId = session.user.id
     
     // Await params
     const { videoNumber: videoNumberStr } = await params
@@ -34,7 +35,7 @@ export async function GET(
     const { data: dbUser } = await supabaseAdmin
       .from('users')
       .select('id, email')
-      .eq('clerk_id', userId)
+      .eq('id', userId)
       .single()
     
     if (!dbUser) {
@@ -98,14 +99,14 @@ export async function POST(
   { params }: { params: Promise<{ videoNumber: string }> }
 ) {
   try {
-    const { userId } = await auth()
+    const supabase = createRouteHandlerClient({ cookies })
+    const { data: { session } } = await supabase.auth.getSession()
     
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    const userId = session.user.id
     
     // Await params
     const { videoNumber: videoNumberStr } = await params
@@ -116,7 +117,7 @@ export async function POST(
     const { data: dbUser } = await supabaseAdmin
       .from('users')
       .select('id')
-      .eq('clerk_id', userId)
+      .eq('id', userId)
       .single()
     
     if (!dbUser) {

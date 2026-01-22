@@ -17,11 +17,3 @@ export const supabaseAdmin = createClient(
     }
   }
 )
-
-// Set current user context for RLS
-export async function setUserContext(clerkId: string) {
-  await supabaseAdmin.rpc('set_config', {
-    setting: 'app.current_user_clerk_id',
-    value: clerkId
-  })
-}

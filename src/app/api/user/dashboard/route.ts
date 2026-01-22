@@ -1,24 +1,25 @@
 import { NextResponse } from 'next/server'
-import { auth, currentUser } from '@clerk/nextjs/server'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { supabaseAdmin } from '@/lib/supabase'
 
 export async function GET(req: Request) {
   try {
-    const { userId } = await auth()
-    const user = await currentUser()
+    const supabase = createRouteHandlerClient({ cookies })
+    const { data: { session } } = await supabase.auth.getSession()
     
-    if (!userId || !user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      )
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    const userId = session.user.id
+    const user = session.user
     
     // Get or create user in database
     let { data: dbUser } = await supabaseAdmin
       .from('users')
       .select('*')
-      .eq('clerk_id', userId)
+      .eq('id', userId)
       .single()
     
     if (!dbUser) {
@@ -26,9 +27,9 @@ export async function GET(req: Request) {
       const { data: newUser } = await supabaseAdmin
         .from('users')
         .insert({
-          clerk_id: userId,
-          email: user.emailAddresses[0].emailAddress,
-          full_name: `${user.firstName || ''} ${user.lastName || ''}`.trim()
+          id: userId,
+          email: user.email,
+          full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || ''
         })
         .select()
         .single()

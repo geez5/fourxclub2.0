@@ -1,81 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id        String   @id @default(cuid())
-  clerkid   String   @unique
-  email     String   @unique
-  username  String?  @unique
-  firstName String?
-  lastName  String?
-  imageUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                String   @id @default(uuid())
+  email             String   @unique
+  fullName          String?
+  discordId         String?  @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   // Relations
-  activities       UserActivity[]
-  courseAccesses   CourseAccess[]
-  communityAccesses CommunityAccess[]
-  referrerReferrals Referral[] @relation("Referrer")
-  referredReferrals Referral[] @relation("Referred")
+  activities         UserActivity[]
+  courseAccesses     CourseAccess[]
+  communityAccesses  CommunityAccess[]
+  referrerReferrals  Referral[]        @relation("Referrer")
+  referredReferrals  Referral[]        @relation("Referred")
+
+  @@map("users")
 }
 
 model UserActivity {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   action    String
   metadata  Json?
   createdAt DateTime @default(now())
 
-  @@index([userId])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_activities")
 }
 
 model CourseAccess {
-  id        String   @id @default(cuid())
-  userId    String
-  courseId  String
-  grantedAt DateTime @default(now())
-  expiresAt DateTime?
+  id            String   @id @default(uuid())
+  userId        String
+  purchasedAt   DateTime @default(now())
+  expiresAt     DateTime?
+  status        String   @default("active")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, courseId])
-  @@index([userId])
+  @@map("course_accesses")
 }
 
 model CommunityAccess {
-  id          String   @id @default(cuid())
-  userId      String
-  communityId String
-  grantedAt   DateTime @default(now())
-  expiresAt   DateTime?
+  id            String   @id @default(uuid())
+  userId        String
+  subscribedAt  DateTime @default(now())
+  expiresAt     DateTime?
+  status        String   @default("active")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, communityId])
-  @@index([userId])
+  @@map("community_accesses")
 }
 
 model Referral {
-  id          String    @id @default(cuid())
+  id          String   @id @default(uuid())
   referrerId  String
-  referredId  String?
-  code        String    @unique
-  createdAt   DateTime  @default(now())
-  completedAt DateTime?
+  referredId  String
+  code        String
+  createdAt   DateTime @default(now())
 
-  referrer User  @relation("Referrer", fields: [referrerId], references: [id], onDelete: Cascade)
-  referred User? @relation("Referred", fields: [referredId], references: [id], onDelete: Cascade)
+  referrer User @relation("Referrer", fields: [referrerId], references: [id], onDelete: Cascade)
+  referred User @relation("Referred", fields: [referredId], references: [id], onDelete: Cascade)
 
-  @@index([referrerId])
-  @@index([referredId])
+  @@map("referrals")
 }

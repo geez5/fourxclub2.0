@@ -31,7 +31,6 @@ interface DashboardStats {
 
 interface User {
   id: string
-  clerkId: string
   email: string
   fullName: string
   discordId?: string

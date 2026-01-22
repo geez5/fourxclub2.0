@@ -1,24 +1,26 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { createRouteMatcher } from '@clerk/nextjs/server'
-import { auth } from '@clerk/nextjs/server'
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 
 // Rate limiting store
 const rateLimit = new Map<string, { count: number; resetTime: number }>()
 
-// Protected routes
-const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
-  '/api/videos(.*)',
-  '/api/referrals(.*)',
-  '/api/user(.*)',
-  '/api/discord/link(.*)',
-])
+// Protected routes - manually match patterns
+function isProtectedRoute(pathname: string): boolean {
+  const protectedPatterns = [
+    /^\/dashboard/,
+    /^\/api\/videos/,
+    /^\/api\/referrals/,
+    /^\/api\/user/,
+    /^\/api\/discord\/link/,
+  ]
+  return protectedPatterns.some(pattern => pattern.test(pathname))
+}
 
-// Public API routes
-const isPublicApiRoute = createRouteMatcher([
-  '/api/webhooks/(.*)',
-])
+// Public API routes - manually match patterns
+function isPublicApiRoute(pathname: string): boolean {
+  return /^\/api\/webhooks\//.test(pathname)
+}
 
 function applyRateLimit(req: NextRequest): NextResponse | null {
   const ip = req.headers.get('x-forwarded-for') || 
@@ -59,7 +61,7 @@ function applyRateLimit(req: NextRequest): NextResponse | null {
 // Define the proxy function
 async function proxyFunction(req: NextRequest) {
     // Skip public API routes
-    if (isPublicApiRoute(req)) {
+    if (isPublicApiRoute(req.nextUrl.pathname)) {
         return NextResponse.next()
     }
     
@@ -68,9 +70,12 @@ async function proxyFunction(req: NextRequest) {
     if (rateLimitResult) return rateLimitResult
     
     // Check auth for protected routes
-    if (isProtectedRoute(req)) {
-        const { userId } = await auth()
-        if (!userId) {
+    if (isProtectedRoute(req.nextUrl.pathname)) {
+        const res = NextResponse.next()
+        const supabase = createMiddlewareClient({ req, res })
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        if (!session) {
             const signInUrl = new URL('/sign-in', req.nextUrl.origin)
             signInUrl.searchParams.set('redirect_url', req.nextUrl.pathname + req.nextUrl.search)
             return NextResponse.redirect(signInUrl)

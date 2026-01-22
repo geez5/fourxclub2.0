@@ -1,32 +1,37 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { createRouteMatcher } from '@clerk/nextjs/server'
-import { auth } from '@clerk/nextjs/server'
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 
 // Rate limiting store
 const rateLimit = new Map<string, { count: number; resetTime: number }>()
 
-// Protected routes
-const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
-  '/api/videos(.*)',
-  '/api/referrals(.*)',
-  '/api/user(.*)',
-  '/api/discord/link(.*)',
-])
+// Protected routes - manually match patterns
+function isProtectedRoute(pathname: string): boolean {
+  const protectedPatterns = [
+    /^\/dashboard/,
+    /^\/api\/videos/,
+    /^\/api\/referrals/,
+    /^\/api\/user/,
+    /^\/api\/discord\/link/,
+  ]
+  return protectedPatterns.some(pattern => pattern.test(pathname))
+}
 
-// Public API routes
-const isPublicApiRoute = createRouteMatcher([
-  '/api/webhooks/(.*)',
-])
+// Public API routes - manually match patterns
+function isPublicApiRoute(pathname: string): boolean {
+  return /^\/api\/webhooks\//.test(pathname)
+}
 
 // Public routes (signin, signup, home) - UPDATED TO MATCH FOLDER NAMES
-const isPublicRoute = createRouteMatcher([
-  '/',
-  '/sign-in(.*)',  // Changed from /signin
-  '/sign-up(.*)',  // Changed from /signup
-  '/api/auth/(.*)',
-])
+function isPublicRoute(pathname: string): boolean {
+  const publicPatterns = [
+    /^\/$/,
+    /^\/sign-in/,
+    /^\/sign-up/,
+    /^\/api\/auth\//,
+  ]
+  return publicPatterns.some(pattern => pattern.test(pathname))
+}
 
 function applyRateLimit(req: NextRequest): NextResponse | null {
   const ip = req.headers.get('x-forwarded-for') || 
@@ -67,7 +72,7 @@ function applyRateLimit(req: NextRequest): NextResponse | null {
 // Define the proxy function
 async function proxyFunction(req: NextRequest) {
     // Skip public routes
-    if (isPublicRoute(req) || isPublicApiRoute(req)) {
+    if (isPublicRoute(req.nextUrl.pathname) || isPublicApiRoute(req.nextUrl.pathname)) {
         return NextResponse.next()
     }
     
@@ -76,9 +81,12 @@ async function proxyFunction(req: NextRequest) {
     if (rateLimitResult) return rateLimitResult
     
     // Check auth for protected routes
-    if (isProtectedRoute(req)) {
-        const { userId } = await auth()
-        if (!userId) {
+    if (isProtectedRoute(req.nextUrl.pathname)) {
+        const res = NextResponse.next()
+        const supabase = createMiddlewareClient({ req, res })
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        if (!session) {
             // UPDATED TO USE HYPHENATED VERSION
             const signInUrl = new URL('/sign-in', req.nextUrl.origin)
             signInUrl.searchParams.set('redirect_url', req.nextUrl.pathname + req.nextUrl.search)

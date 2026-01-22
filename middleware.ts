@@ -1,22 +1,34 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-const isPublicRoute = createRouteMatcher([
-  '/',
-  '/auth/signin(.*)',
-  '/auth/signup(.*)',
-  '/sso-callback(.*)',
-  '/api/webhooks(.*)',
-])
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res });
 
-export default clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
-    await auth.protect()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  // Protect dashboard and admin routes
+  if (req.nextUrl.pathname.startsWith('/dashboard') && !session) {
+    return NextResponse.redirect(new URL('/auth/signin', req.url));
   }
-})
+
+  if (req.nextUrl.pathname.startsWith('/admin')) {
+    if (!session || session.user.email !== 'hello@fourxclub.in') {
+      return NextResponse.redirect(new URL('/dashboard', req.url));
+    }
+  }
+
+  // Redirect to dashboard if already signed in
+  if (req.nextUrl.pathname.startsWith('/auth/signin') && session) {
+    return NextResponse.redirect(new URL('/dashboard', req.url));
+  }
+
+  return res;
+}
 
 export const config = {
-  matcher: [
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    '/(api|trpc)(.*)',
-  ],
-}
+  matcher: ['/dashboard/:path*', '/admin/:path*', '/auth/:path*'],
+};

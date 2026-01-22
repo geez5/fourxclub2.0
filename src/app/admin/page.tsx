@@ -1,20 +1,23 @@
-import { auth, currentUser } from '@clerk/nextjs/server'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import AdminDashboard from '@/components/admin/AdminDashboard'
 
 const ADMIN_EMAIL = 'hello@fourxclub.in'
 
 export default async function AdminPage() {
-  const { userId } = await auth()
-  const user = await currentUser()
+  const supabase = createServerComponentClient({ cookies })
+  const { data: { session } } = await supabase.auth.getSession()
   
   // Check if user is authenticated
-  if (!userId || !user) {
+  if (!session) {
     redirect('/sign-in?redirect=/admin')
   }
   
+  const userId = session.user.id
+  const userEmail = session.user.email
+  
   // Check if user is admin
-  const userEmail = user.emailAddresses[0].emailAddress
   if (userEmail !== ADMIN_EMAIL) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
