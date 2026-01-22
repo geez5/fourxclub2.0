@@ -1,18 +1,27 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { PrismaClient } from "@prisma/client";
-import { authOptions } from "../../auth/[...nextauth]/route";
-
-const prisma = new PrismaClient();
+import { auth } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const { userId } = await auth();
 
-    if (!session?.user?.id) {
+    if (!userId) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
+      );
+    }
+
+    // Get user from database using Clerk ID
+    const user = await prisma.user.findUnique({
+      where: { clerkid: userId } // Changed from clerkId to clerkid
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
       );
     }
 
@@ -20,18 +29,17 @@ export async function POST(req: Request) {
 
     const activity = await prisma.userActivity.create({
       data: {
-        userId: session.user.id,
+        userId: user.id,
         action,
         metadata: metadata || {},
       }
     });
 
-    return NextResponse.json({ success: true, activity });
-
+    return NextResponse.json(activity);
   } catch (error) {
-    console.error("Activity tracking error:", error);
+    console.error('Error creating activity:', error);
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

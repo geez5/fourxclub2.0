@@ -20,11 +20,11 @@ const isPublicApiRoute = createRouteMatcher([
   '/api/webhooks/(.*)',
 ])
 
-// Public routes (signin, signup, home)
+// Public routes (signin, signup, home) - UPDATED TO MATCH FOLDER NAMES
 const isPublicRoute = createRouteMatcher([
   '/',
-  '/signin(.*)',
-  '/signup(.*)',
+  '/sign-in(.*)',  // Changed from /signin
+  '/sign-up(.*)',  // Changed from /signup
   '/api/auth/(.*)',
 ])
 
@@ -79,8 +79,8 @@ async function proxyFunction(req: NextRequest) {
     if (isProtectedRoute(req)) {
         const { userId } = await auth()
         if (!userId) {
-            // Changed from /sign-in to /signin
-            const signInUrl = new URL('/signin', req.nextUrl.origin)
+            // UPDATED TO USE HYPHENATED VERSION
+            const signInUrl = new URL('/sign-in', req.nextUrl.origin)
             signInUrl.searchParams.set('redirect_url', req.nextUrl.pathname + req.nextUrl.search)
             return NextResponse.redirect(signInUrl)
         }

@@ -2,17 +2,14 @@ import { SignUp } from "@clerk/nextjs";
 
 export default function SignUpPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex min-h-screen items-center justify-center bg-gray-50">
       <SignUp 
         appearance={{
           elements: {
             rootBox: "mx-auto",
-            card: "shadow-lg"
+            card: "shadow-xl"
           }
         }}
-        routing="path"
-        path="/auth/signup"
-        signInUrl="/auth/signin"
       />
     </div>
   );

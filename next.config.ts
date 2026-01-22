@@ -1,12 +1,18 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // Ensure proper file tracing for Vercel
   experimental: {
-    serverActions: {
-      bodySizeLimit: '2mb',
-    },
+    // Remove or comment out any outputFileTracingRoot settings
   },
-  turbopack: {},
+  
+  // Explicitly tell Next.js to include middleware in the build
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push('@prisma/client');
+    }
+    return config;
+  },
 };
 
 export default nextConfig;

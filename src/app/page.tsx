@@ -1,17 +1,17 @@
 "use client";
 import { 
-  ArrowRight, Shield, Users, Video, Lock, Sparkles, Check, 
-  Star, Award, TrendingUp, Zap, Globe, Heart 
+  ArrowRight, Users, Video, Lock, Sparkles, Check, 
+  Star, Award, Zap, Globe, Heart 
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
-
+import Link from 'next/link';
+import { useUser, SignOutButton } from "@clerk/nextjs";
 
 export default function HomePage() {
+  const { isSignedIn, user } = useUser();
   const [refCode, setRefCode] = useState('REF-XXXXX');
   const [copied, setCopied] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
-
-  // Course access UI state
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [hasCourseAccess, setHasCourseAccess] = useState(false);
   const [isProcessingPurchase, setIsProcessingPurchase] = useState(false);
@@ -35,67 +35,59 @@ export default function HomePage() {
       await navigator.clipboard.writeText(refCode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // ignore clipboard errors
-    }
+    } catch {}
   };
 
   const videos = Array.from({ length: 10 }).map((_, i) => ({
     id: i + 1,
     title: `Video ${i + 1}`,
-    // placeholder encrypted paths - replace with your secure endpoints
     src: `/encrypted/course/video-${i + 1}.mp4`,
   }));
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
+      {/* Navigation with Clerk Auth */}
       <nav className="fixed top-0 w-full z-50 border-b border-gray-200 bg-white/80 backdrop-blur-xl">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-blue-600 shadow-lg">
-                <img 
-                  src="fxclogo.webp" 
-                  alt="FourXclub Logo" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="fxclogo.webp" alt="FourXclub Logo" className="w-full h-full object-cover" />
               </div>
               <span className="font-bold text-xl">FourXclub</span>
             </div>
+            
             <div className="hidden md:flex items-center gap-8">
-              <a href="#about" className="text-sm font-medium hover:text-blue-600 transition-colors">
-                About
-              </a>
-              <a href="#course" className="text-sm font-medium hover:text-blue-600 transition-colors">
-                Course
-              </a>
-              <a href="#community" className="text-sm font-medium hover:text-blue-600 transition-colors">
-                Community
-              </a>
-              <a href="#pricing" className="text-sm font-medium hover:text-blue-600 transition-colors">
-                Pricing
-              </a>
+              <a href="#about" className="text-sm font-medium hover:text-blue-600 transition-colors">About</a>
+              <a href="#course" className="text-sm font-medium hover:text-blue-600 transition-colors">Course</a>
+              <a href="#community" className="text-sm font-medium hover:text-blue-600 transition-colors">Community</a>
+              <a href="#pricing" className="text-sm font-medium hover:text-blue-600 transition-colors">Pricing</a>
             </div>
+            
             <div className="flex items-center gap-3">
-              
-              <Link href="/auth/signin">
-                <button className="px-4 py-2 text-sm font-medium hover:bg-gray-100 rounded-lg transition-colors">
-                  Sign In
-                </button>
-              </Link>
-
-              <Link href="/auth/signup">
-                <button className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
-                  Get Started <ArrowRight className="w-4 h-4" />
-                </button>
-              </Link>
-              <button
-                onClick={() => setShowCourseModal(true)}
-                className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-              >
-                Get Started <ArrowRight className="w-4 h-4" />
-              </button>
+              {isSignedIn ? (
+                <>
+                  <span className="text-sm font-medium">Hi, {user?.firstName || user?.emailAddresses[0].emailAddress}!</span>
+                  <SignOutButton>
+                    <button className="px-4 py-2 text-sm font-medium hover:bg-gray-100 rounded-lg transition-colors">
+                      Sign Out
+                    </button>
+                  </SignOutButton>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/signin">
+                    <button className="px-4 py-2 text-sm font-medium hover:bg-gray-100 rounded-lg transition-colors">
+                      Sign In
+                    </button>
+                  </Link>
+                  <Link href="/auth/signup">
+                    <button className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                      Get Started <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
