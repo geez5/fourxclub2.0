@@ -1,6 +1,6 @@
 import { SignUp } from "@clerk/nextjs";
 
-export default function SignupPage() {
+export default function SignUpPage() {
   return (
     <div className="flex min-h-screen items-center justify-center">
       <SignUp
@@ -11,9 +11,10 @@ export default function SignupPage() {
           }
         }}
         routing="path"
-        path="/auth/signup"
-        signInUrl="/auth/signin"
-        fallbackRedirectUrl="/dashboard"
+        path="/signup"
+        signInUrl="/sign-in"
+        afterSignUpUrl="/dashboard"
+        redirectUrl="/dashboard"
       />
     </div>
   );
