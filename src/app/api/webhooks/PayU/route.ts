@@ -3,13 +3,13 @@
 
 import { NextResponse, NextRequest } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function POST(_req: NextRequest) {
   // Payment webhook disabled - return success for now
   // TODO: Implement Stripe/Instamojo webhook here
-  
-  return NextResponse.json({ 
+
+  return NextResponse.json({
     message: "Payment processing temporarily disabled",
-    status: "pending" 
+    status: "pending"
   }, { status: 200 });
 }
 

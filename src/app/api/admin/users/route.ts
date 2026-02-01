@@ -1,59 +1,44 @@
-import { NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-const ADMIN_EMAIL = 'hello@fourxclub.in'
-
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient({ cookies })
-    const { data: { session } } = await supabase.auth.getSession()
-    
-    if (!session || session.user.email !== ADMIN_EMAIL) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
-    }
-    
     const { searchParams } = new URL(req.url)
-    const search = searchParams.get('search') || ''
-    
-    const users = await prisma.user.findMany({
-      where: search ? {
+    const search = searchParams.get('search')
+
+    const whereClause = search
+      ? {
         OR: [
-          { email: { contains: search, mode: 'insensitive' } },
-          { firstName: { contains: search, mode: 'insensitive' } },
-          { lastName: { contains: search, mode: 'insensitive' } },
+          { email: { contains: search, mode: 'insensitive' as const } },
+          { fullName: { contains: search, mode: 'insensitive' as const } },
         ]
-      } : undefined,
+      }
+      : {}
+
+    const users = await prisma.user.findMany({
+      where: whereClause,
       include: {
-        coursePurchases: true,
-        discordSubscriptions: true,
-        referralCodes: true,
+        courseAccesses: true,
+        communityAccesses: true,
+        referrerReferrals: true,
       },
       orderBy: { createdAt: 'desc' },
       take: 50,
     })
-    
-    const formattedUsers = users.map(u => ({
+    const formattedUsers = users.map((u) => ({
       id: u.id,
       email: u.email,
-      fullName: `${u.firstName || ''} ${u.lastName || ''}`.trim(),
+      fullName: u.fullName || u.email,
       discordId: u.discordId,
       createdAt: u.createdAt,
-      coursePurchased: u.coursePurchases.length > 0,
-      discordSubscribed: u.discordSubscriptions.some(s => 
-        s.status === 'active' || s.status === 'trialing'
-      ),
-      referralUses: u.referralCodes[0]?.usesCount || 0,
+      coursePurchased: u.courseAccesses?.status === 'active',
+      communityAccess: u.communityAccesses?.status === 'active',
+      referralCount: u.referrerReferrals?.length ?? 0,
     }))
-    
+
     return NextResponse.json({ users: formattedUsers })
-    
   } catch (error) {
     console.error('Admin users error:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch users' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import Image from 'next/image';
 
 export default function SignInPage() {
   const [loading, setLoading] = useState(false);

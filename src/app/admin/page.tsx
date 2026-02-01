@@ -1,22 +1,21 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import AdminDashboard from '@/components/admin/AdminDashboard'
 
 const ADMIN_EMAIL = 'hello@fourxclub.in'
 
 export default async function AdminPage() {
-  const supabase = createServerComponentClient({ cookies })
+  const supabase = await createClient()
   const { data: { session } } = await supabase.auth.getSession()
-  
+
   // Check if user is authenticated
   if (!session) {
     redirect('/sign-in?redirect=/admin')
   }
-  
-  const userId = session.user.id
+
   const userEmail = session.user.email
-  
+
   // Check if user is admin
   if (userEmail !== ADMIN_EMAIL) {
     return (
@@ -28,18 +27,18 @@ export default async function AdminPage() {
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h1>
-          <p className="text-gray-600 mb-6">You don't have permission to access the admin dashboard.</p>
-          <a 
-            href="/" 
+          <p className="text-gray-600 mb-6">You do not have permission to access the admin dashboard.</p>
+          <Link
+            href="/"
             className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Go to Homepage
-          </a>
+          </Link>
         </div>
       </div>
     )
   }
-  
+
   return <AdminDashboard />
 }
 

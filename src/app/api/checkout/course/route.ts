@@ -2,21 +2,21 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 // Disable all payment processing temporarily
-export async function POST(req: NextRequest) {
+export async function POST(_req: NextRequest) {
   return NextResponse.json(
     { error: 'Payment processing temporarily disabled. Please use access code.' },
     { status: 503 }
   )
 }
 
-export async function PUT(req: NextRequest) {
+export async function PUT(_req: NextRequest) {
   return NextResponse.json(
     { error: 'Payment verification temporarily disabled.' },
     { status: 503 }
   )
 }
 
-export async function PATCH(req: NextRequest) {
+export async function PATCH(_req: NextRequest) {
   return NextResponse.json({ ok: true }, { status: 200 })
 }
 

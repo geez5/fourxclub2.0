@@ -1,7 +1,6 @@
 // src/app/api/checkout/verify-access/route.ts
 import { NextRequest, NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createClient } from '@/lib/supabase/server'
 
 // Demo access codes - you can give these to partners
 const VALID_ACCESS_CODES = new Set([
@@ -14,14 +13,14 @@ const VALID_ACCESS_CODES = new Set([
 
 export async function POST(req: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient({ cookies })
+    const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
-    
+
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized', valid: false }, { status: 401 })
     }
-    
-    const userId = session.user.id
+
+    const _userId = session.user.id
 
     const { accessCode } = await req.json()
 

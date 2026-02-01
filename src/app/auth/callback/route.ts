@@ -1,36 +1,40 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { createClient } from '@/lib/supabase/server'
+import { NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
 
 export async function GET(request: Request) {
-  const requestUrl = new URL(request.url);
-  const code = requestUrl.searchParams.get('code');
+  const { searchParams, origin } = new URL(request.url)
+  const code = searchParams.get('code')
+  // Default redirect to dashboard after successful auth
+  const next = searchParams.get('next') ?? '/dashboard'
 
   if (code) {
-    const supabase = createRouteHandlerClient({ cookies });
-    const { data } = await supabase.auth.exchangeCodeForSession(code);
+    const supabase = await createClient()
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
-    if (data.session) {
-      // Create or update user in Prisma
-      await prisma.user.upsert({
-        where: { email: data.session.user.email! },
-        update: {
-          firstName: data.session.user.user_metadata.full_name?.split(' ')[0],
-          lastName: data.session.user.user_metadata.full_name?.split(' ').slice(1).join(' '),
-          imageUrl: data.session.user.user_metadata.avatar_url,
-        },
-        create: {
-          id: data.session.user.id,
-          email: data.session.user.email!,
-          firstName: data.session.user.user_metadata.full_name?.split(' ')[0],
-          lastName: data.session.user.user_metadata.full_name?.split(' ').slice(1).join(' '),
-          imageUrl: data.session.user.user_metadata.avatar_url,
-          username: data.session.user.email?.split('@')[0],
-        },
-      });
+    if (!error && data.session) {
+      // Sync user data with your database
+      try {
+        await prisma.user.upsert({
+          where: { email: data.session.user.email! },
+          update: {
+            fullName: data.session.user.user_metadata.full_name || null,
+          },
+          create: {
+            id: data.session.user.id,
+            email: data.session.user.email!,
+            fullName: data.session.user.user_metadata.full_name || null,
+          },
+        })
+      } catch (dbError) {
+        console.error('Database sync error:', dbError)
+        // Continue with redirect even if DB sync fails
+      }
+
+      return NextResponse.redirect(`${origin}${next}`)
     }
   }
 
-  return NextResponse.redirect(`${requestUrl.origin}/dashboard`);
+  // Return the user to an error page with instructions
+  return NextResponse.redirect(`${origin}/auth/auth-code-error`)
 }

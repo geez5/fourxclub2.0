@@ -1,22 +1,22 @@
-import { supabaseAdmin } from './supabase'
+import { supabaseAdmin } from './supabase/index'
 
 export async function logAudit(
   action: string,
-  userId?: string,
-  details?: any,
-  request?: Request
+  userId: string,
+  metadata: Record<string, unknown>,
+  req: Request
 ) {
-  const ipAddress = request?.headers.get('x-forwarded-for') || 
-                   request?.headers.get('x-real-ip') || 
-                   'unknown'
-  
-  const userAgent = request?.headers.get('user-agent') || 'unknown'
-  
-  await supabaseAdmin.from('audit_logs').insert({
-    user_id: userId || null,
-    action,
-    details: details || {},
-    ip_address: ipAddress,
-    user_agent: userAgent
-  })
+  const ip = req.headers.get('x-forwarded-for') ||
+    req.headers.get('x-real-ip') ||
+    'unknown'
+
+  await supabaseAdmin
+    .from('audit_logs')
+    .insert({
+      action,
+      user_id: userId,
+      metadata,
+      ip_address: ip,
+      created_at: new Date().toISOString()
+    })
 }

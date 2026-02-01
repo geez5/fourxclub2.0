@@ -1,5 +1,4 @@
-import { AuthenticateWithRedirectCallback } from "@clerk/nextjs";
-
+// You can delete this file, or create a simple callback handler if needed
 export default function SSOCallback() {
-  return <AuthenticateWithRedirectCallback />;
+  return <div>Processing authentication...</div>
 }

@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { 
-  BarChart3, Users, DollarSign, TrendingUp, Video, 
+import {
+  Users, DollarSign, Video,
   MessageSquare, Gift, Search, Download, MoreVertical,
-  Check, X, Ban, RefreshCw 
+  Check, X
 } from 'lucide-react'
 
 interface DashboardStats {
@@ -14,18 +14,18 @@ interface DashboardStats {
   activeSubscriptions: number
   totalReferrals: number
   avgCourseCompletion: number
-  recentUsers: Array<{ 
+  recentUsers: Array<{
     name: string
     email: string
     joinedDate: string
-    hasPurchased: boolean 
+    hasPurchased: boolean
   }>
-  recentPurchases: Array<{ 
+  recentPurchases: Array<{
     product: string
     user: string
     amount: number
     currency: string
-    date: string 
+    date: string
   }>
 }
 
@@ -53,38 +53,38 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'users'>('overview')
   const [searchTerm, setSearchTerm] = useState('')
   const [timeRange, setTimeRange] = useState('30d')
-  
+
   useEffect(() => {
+    const fetchDashboardData = async () => {
+      setLoading(true)
+      try {
+        const response = await fetch(`/api/admin/dashboard?range=${timeRange}`)
+        const data = await response.json()
+        setStats(data)
+      } catch (error) {
+        console.error('Failed to fetch dashboard data:', error)
+      }
+      setLoading(false)
+    }
+
+    const fetchUsers = async () => {
+      setLoading(true)
+      try {
+        const response = await fetch(`/api/admin/users?search=${searchTerm}`)
+        const data = await response.json()
+        setUsers(data.users || [])
+      } catch (error) {
+        console.error('Failed to fetch users:', error)
+      }
+      setLoading(false)
+    }
+
     if (activeTab === 'overview') {
       fetchDashboardData()
     } else if (activeTab === 'users') {
       fetchUsers()
     }
-  }, [activeTab, timeRange])
-
-  const fetchDashboardData = async () => {
-    setLoading(true)
-    try {
-      const response = await fetch(`/api/admin/dashboard?range=${timeRange}`)
-      const data = await response.json()
-      setStats(data)
-    } catch (error) {
-      console.error('Failed to fetch dashboard data:', error)
-    }
-    setLoading(false)
-  }
-
-  const fetchUsers = async () => {
-    setLoading(true)
-    try {
-      const response = await fetch(`/api/admin/users?search=${searchTerm}`)
-      const data = await response.json()
-      setUsers(data.users || [])
-    } catch (error) {
-      console.error('Failed to fetch users:', error)
-    }
-    setLoading(false)
-  }
+  }, [activeTab, timeRange, searchTerm])
 
   const handleExport = async () => {
     try {
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
             </div>
             <div className="flex items-center space-x-4">
               {activeTab === 'overview' && (
-                <select 
+                <select
                   value={timeRange}
                   onChange={(e) => setTimeRange(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -142,7 +142,7 @@ export default function AdminDashboard() {
                   <option value="all">All time</option>
                 </select>
               )}
-              <button 
+              <button
                 onClick={handleExport}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
               >
@@ -156,21 +156,19 @@ export default function AdminDashboard() {
           <div className="flex space-x-6 mt-6">
             <button
               onClick={() => setActiveTab('overview')}
-              className={`pb-4 px-1 border-b-2 font-medium transition-colors ${
-                activeTab === 'overview'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
+              className={`pb-4 px-1 border-b-2 font-medium transition-colors ${activeTab === 'overview'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
             >
               Overview
             </button>
             <button
               onClick={() => setActiveTab('users')}
-              className={`pb-4 px-1 border-b-2 font-medium transition-colors ${
-                activeTab === 'users'
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
+              className={`pb-4 px-1 border-b-2 font-medium transition-colors ${activeTab === 'users'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+                }`}
             >
               Users
             </button>
@@ -307,7 +305,6 @@ export default function AdminDashboard() {
                     placeholder="Search users..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && fetchUsers()}
                     className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-80"
                   />
                 </div>

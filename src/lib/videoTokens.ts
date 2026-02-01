@@ -1,5 +1,5 @@
 import { createHash, randomBytes } from 'crypto'
-import { supabaseAdmin } from './supabase'
+import { supabaseAdmin } from './supabase/index'
 
 // Generate secure video access token
 export async function generateVideoToken(

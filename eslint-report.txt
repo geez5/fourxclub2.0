@@ -1,0 +1,81 @@
+﻿
+C:\Users\SHARM\fourxclub.in\src\app\api\user\activity\route.ts
+  5:27  warning  'req' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\SHARM\fourxclub.in\src\app\api\user\dashboard\route.ts
+  5:27  warning  'req' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\SHARM\fourxclub.in\src\app\api\videos\[videoNumber]\route.ts
+   3:10  warning  'supabaseAdmin' is defined but never used. Allowed unused vars must match /^_/u            @typescript-eslint/no-unused-vars
+   4:10  warning  'generateVideoToken' is defined but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars
+   5:10  warning  'generateBunnySignedUrl' is defined but never used. Allowed unused vars must match /^_/u   @typescript-eslint/no-unused-vars
+   5:34  warning  'courseVideos' is defined but never used. Allowed unused vars must match /^_/u             @typescript-eslint/no-unused-vars
+  24:11  warning  'userId' is assigned a value but never used. Allowed unused vars must match /^_/u          @typescript-eslint/no-unused-vars
+  28:11  warning  'videoNumberStr' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\SHARM\fourxclub.in\src\app\api\webhooks\bunny\route.ts
+  2:10  warning  'prisma' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\SHARM\fourxclub.in\src\app\auth\signin\page.tsx
+  5:8  warning  'Image' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\SHARM\fourxclub.in\src\app\page.tsx
+   4:3   warning  'ArrowRight' is defined but never used. Allowed unused vars must match /^_/u                        @typescript-eslint/no-unused-vars
+   4:15  warning  'Users' is defined but never used. Allowed unused vars must match /^_/u                             @typescript-eslint/no-unused-vars
+   4:22  warning  'Video' is defined but never used. Allowed unused vars must match /^_/u                             @typescript-eslint/no-unused-vars
+   4:29  warning  'Lock' is defined but never used. Allowed unused vars must match /^_/u                              @typescript-eslint/no-unused-vars
+   4:35  warning  'Sparkles' is defined but never used. Allowed unused vars must match /^_/u                          @typescript-eslint/no-unused-vars
+   4:45  warning  'Check' is defined but never used. Allowed unused vars must match /^_/u                             @typescript-eslint/no-unused-vars
+   5:3   warning  'Star' is defined but never used. Allowed unused vars must match /^_/u                              @typescript-eslint/no-unused-vars
+   5:9   warning  'Award' is defined but never used. Allowed unused vars must match /^_/u                             @typescript-eslint/no-unused-vars
+   5:16  warning  'Zap' is defined but never used. Allowed unused vars must match /^_/u                               @typescript-eslint/no-unused-vars
+   5:21  warning  'Globe' is defined but never used. Allowed unused vars must match /^_/u                             @typescript-eslint/no-unused-vars
+   5:28  warning  'Heart' is defined but never used. Allowed unused vars must match /^_/u                             @typescript-eslint/no-unused-vars
+   8:8   warning  'Link' is defined but never used. Allowed unused vars must match /^_/u                              @typescript-eslint/no-unused-vars
+  14:10  warning  'isAuthenticated' is assigned a value but never used. Allowed unused vars must match /^_/u          @typescript-eslint/no-unused-vars
+  17:10  warning  'copied' is assigned a value but never used. Allowed unused vars must match /^_/u                   @typescript-eslint/no-unused-vars
+  18:10  warning  'showTerms' is assigned a value but never used. Allowed unused vars must match /^_/u                @typescript-eslint/no-unused-vars
+  19:10  warning  'showCourseModal' is assigned a value but never used. Allowed unused vars must match /^_/u          @typescript-eslint/no-unused-vars
+  19:27  warning  'setShowCourseModal' is assigned a value but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars
+  20:10  warning  'hasCourseAccess' is assigned a value but never used. Allowed unused vars must match /^_/u          @typescript-eslint/no-unused-vars
+  20:27  warning  'setHasCourseAccess' is assigned a value but never used. Allowed unused vars must match /^_/u       @typescript-eslint/no-unused-vars
+  21:10  warning  'isProcessingPurchase' is assigned a value but never used. Allowed unused vars must match /^_/u     @typescript-eslint/no-unused-vars
+  21:32  warning  'setIsProcessingPurchase' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  47:9   warning  'generateCode' is assigned a value but never used. Allowed unused vars must match /^_/u             @typescript-eslint/no-unused-vars
+  53:9   warning  'copyCode' is assigned a value but never used. Allowed unused vars must match /^_/u                 @typescript-eslint/no-unused-vars
+  61:9   warning  'videos' is assigned a value but never used. Allowed unused vars must match /^_/u                   @typescript-eslint/no-unused-vars
+
+C:\Users\SHARM\fourxclub.in\src\app\sign-in\[[...sign-in]]\page.tsx
+  75:14  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\SHARM\fourxclub.in\src\app\sign-up\page.tsx
+  12:9   warning  'router' is assigned a value but never used. Allowed unused vars must match /^_/u                                                                              @typescript-eslint/no-unused-vars
+  86:11  error    Do not use an `<a>` element to navigate to `/sign-in/`. Use `<Link />` from `next/link` instead. See: https://nextjs.org/docs/messages/no-html-link-for-pages  @next/next/no-html-link-for-pages
+
+C:\Users\SHARM\fourxclub.in\src\components\HomePageClients.tsx
+   16:10  warning  'copied' is assigned a value but never used. Allowed unused vars must match /^_/u                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   58:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  243:65  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  493:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  622:86  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  622:92  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+C:\Users\SHARM\fourxclub.in\src\components\PayUCheckout.tsx
+   13:3   warning  'currency' is assigned a value but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  112:18  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                      react/no-unescaped-entities
+
+C:\Users\SHARM\fourxclub.in\src\lib\PayU.ts
+  24:40  warning  'payload' is defined but never used. Allowed unused args must match /^_/u    @typescript-eslint/no-unused-vars
+  24:57  warning  'signature' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  30:35  warning  'amount' is defined but never used. Allowed unused args must match /^_/u     @typescript-eslint/no-unused-vars
+  30:51  warning  'currency' is defined but never used. Allowed unused args must match /^_/u   @typescript-eslint/no-unused-vars
+  30:69  warning  'receipt' is defined but never used. Allowed unused args must match /^_/u    @typescript-eslint/no-unused-vars
+
+C:\Users\SHARM\fourxclub.in\src\lib\auditLog.ts
+  6:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\SHARM\fourxclub.in\src\lib\discord-bots.ts
+  61:10  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+Γ£û 52 problems (8 errors, 44 warnings)
+

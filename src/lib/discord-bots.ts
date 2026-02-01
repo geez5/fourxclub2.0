@@ -58,7 +58,7 @@ export async function getMemberRoles(userId: string) {
   try {
     const member = await rest.get(
       Routes.guildMember(GUILD_ID, userId)
-    ) as any
+    ) as { roles: string[] }
     return { success: true, roles: member.roles }
   } catch (error) {
     console.error('Failed to get member:', error)

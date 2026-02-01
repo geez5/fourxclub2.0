@@ -1,150 +1,111 @@
-import { NextResponse, NextRequest } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import { supabaseAdmin } from '@/lib/supabase'
-import { generateVideoToken } from '@/lib/videoTokens'
-import { generateBunnySignedUrl, courseVideos } from '@/lib/bunny'
+import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import { prisma } from '@/lib/prisma'
+import { courseVideos, generateBunnyEmbedUrl } from '@/lib/bunny'
+
+type RouteContext = {
+  params: Promise<{ videoNumber: string }>
+}
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ videoNumber: string }> }
+  context: RouteContext
 ) {
   try {
-    const supabase = createRouteHandlerClient({ cookies })
+    const { videoNumber } = await context.params
+    const supabase = await createClient()
     const { data: { session } } = await supabase.auth.getSession()
-    
+
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-    
+
     const userId = session.user.id
-    
-    // Await params
-    const { videoNumber: videoNumberStr } = await params
-    const videoNumber = parseInt(videoNumberStr)
-    
+
     // Validate video number
-    if (isNaN(videoNumber) || videoNumber < 1 || videoNumber > 10) {
+    const videoNum = parseInt(videoNumber)
+    if (isNaN(videoNum) || videoNum < 1 || videoNum > 10) {
       return NextResponse.json(
-        { error: 'Invalid video number' },
+        { error: 'Invalid video number. Must be between 1 and 10.' },
         { status: 400 }
       )
     }
-    
-    // Get user from database - renamed to dbUser to avoid conflict
-    const { data: dbUser } = await supabaseAdmin
-      .from('users')
-      .select('id, email')
-      .eq('id', userId)
-      .single()
-    
-    if (!dbUser) {
+
+    // Check if user has paid access
+    const courseAccess = await prisma.courseAccess.findFirst({
+      where: {
+        userId,
+        status: 'active',
+      },
+    })
+
+    if (!courseAccess) {
       return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      )
-    }
-    
-    // Check if user has purchased the course
-    const { data: purchase } = await supabaseAdmin
-      .from('course_purchases')
-      .select('id')
-      .eq('user_id', dbUser.id)
-      .eq('status', 'completed')
-      .single()
-    
-    if (!purchase) {
-      return NextResponse.json(
-        { error: 'Course not purchased', code: 'NOT_PURCHASED' },
+        {
+          error: 'Access denied. Please purchase the course to watch videos.',
+          requiresPurchase: true
+        },
         { status: 403 }
       )
     }
-    
-    // Generate access token
-    const token = await generateVideoToken(dbUser.id, videoNumber)
-    
-    // Get video info
-    const video = courseVideos[videoNumber - 1]
-    
-    // Get signed Bunny Stream URL with watermark
-    const bunnyUrl = generateBunnySignedUrl(
-      video.bunnyId, 
-      dbUser.email, 
-      2 // 2 hours expiry
-    )
-    
-    return NextResponse.json({
-      token,
-      videoUrl: bunnyUrl,
-      videoInfo: {
-        title: video.title,
-        description: video.description,
-        duration: video.duration
-      },
-      expiresIn: 7200 // 2 hours in seconds
-    })
-    
-  } catch (error) {
-    console.error('Video access error:', error)
-    return NextResponse.json(
-      { error: 'Failed to get video access' },
-      { status: 500 }
-    )
-  }
-}
 
-// Update video progress
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ videoNumber: string }> }
-) {
-  try {
-    const supabase = createRouteHandlerClient({ cookies })
-    const { data: { session } } = await supabase.auth.getSession()
-    
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-    
-    const userId = session.user.id
-    
-    // Await params
-    const { videoNumber: videoNumberStr } = await params
-    const videoNumber = parseInt(videoNumberStr)
-    const { progressSeconds, completed } = await req.json()
-    
-    // Get user
-    const { data: dbUser } = await supabaseAdmin
-      .from('users')
-      .select('id')
-      .eq('id', userId)
-      .single()
-    
-    if (!dbUser) {
+    // Get video info
+    const video = courseVideos.find((v) => v.id === videoNum)
+    if (!video) {
       return NextResponse.json(
-        { error: 'User not found' },
+        { error: 'Video not found' },
         { status: 404 }
       )
     }
-    
-    // Update or insert progress
-    await supabaseAdmin
-      .from('video_progress')
-      .upsert({
-        user_id: dbUser.id,
-        video_number: videoNumber,
-        progress_seconds: progressSeconds,
-        completed: completed || false,
-        last_watched: new Date().toISOString()
-      })
-    
-    return NextResponse.json({ success: true })
-    
+
+    // Check if Bunny ID is configured
+    if (video.bunnyId.startsWith('REPLACE_WITH_')) {
+      return NextResponse.json(
+        {
+          error: 'Video not yet available. Please check back later.',
+          videoInfo: {
+            id: video.id,
+            title: video.title,
+            description: video.description,
+            duration: video.duration,
+          }
+        },
+        { status: 503 }
+      )
+    }
+
+    // Generate secure embed URL
+    const embedUrl = generateBunnyEmbedUrl(video.bunnyId)
+
+    // Log video access for analytics
+    await prisma.userActivity.create({
+      data: {
+        userId,
+        action: 'video_watched',
+        metadata: {
+          videoId: video.id,
+          videoTitle: video.title,
+          provider: 'bunny',
+          timestamp: new Date().toISOString(),
+        },
+      },
+    }).catch((err) => {
+      console.error('Failed to log video activity:', err)
+    })
+
+    return NextResponse.json({
+      success: true,
+      video: {
+        id: video.id,
+        title: video.title,
+        description: video.description,
+        duration: video.duration,
+        embedUrl,
+        thumbnail: video.thumbnail,
+      },
+    })
   } catch (error) {
-    console.error('Video progress error:', error)
-    return NextResponse.json(
-      { error: 'Failed to update progress' },
-      { status: 500 }
-    )
+    console.error('Video route error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
