@@ -1,0 +1,16 @@
+# Backend Environment - DO NOT COMMIT
+.env
+.env.local
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/

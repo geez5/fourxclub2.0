@@ -1,33 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
+import { API_URL } from '@/lib/api';
 
 export default function SignInPage() {
   const [loading, setLoading] = useState(false);
-  const supabase = createClient();
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
-        },
-      });
-
-      if (error) {
-        console.error('Error:', error.message);
-        alert('Failed to sign in with Google');
-      }
+      // Redirect to Express backend OAuth endpoint
+      window.location.href = `${API_URL}/api/auth/google`;
     } catch (error) {
       console.error('Error:', error);
-    } finally {
       setLoading(false);
     }
   };

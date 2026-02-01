@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(cuid())
+  name              String?
+  email             String?   @unique
+  emailVerified     DateTime?
+  image             String?
+  fullName          String?
+  discordId         String?   @unique
+  referralCode      String?   @unique  // Unique referral code for this user
+  referredByCode    String?             // The referral code used when signing up
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // NextAuth relations (kept for compatibility)
+  accounts          Account[]
+  sessions          Session[]
+
+  // App relations
+  activities         UserActivity[]
+  courseAccesses     CourseAccess?
+  communityAccesses  CommunityAccess?
+  payments           Payment[]
+  referrerReferrals  Referral[]        @relation("Referrer")
+  referredReferrals  Referral[]        @relation("Referred")
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model UserActivity {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_activities")
+}
+
+model CourseAccess {
+  id            String   @id @default(uuid())
+  userId        String   @unique  // One course access per user
+  purchasedAt   DateTime @default(now())
+  expiresAt     DateTime?
+  status        String   @default("active")  // active, expired
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("course_accesses")
+}
+
+model CommunityAccess {
+  id            String   @id @default(uuid())
+  userId        String   @unique  // One community access per user
+  subscribedAt  DateTime @default(now())
+  expiresAt     DateTime?
+  autoRenew     Boolean  @default(false)
+  status        String   @default("active")  // active, expired, trial
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("community_accesses")
+}
+
+model Payment {
+  id                     String   @id @default(uuid())
+  userId                 String
+  type                   String   // 'course' | 'discord_subscription'
+  amount                 Float
+  currency               String   @default("INR")
+  status                 String   @default("pending")  // pending, completed, failed
+  razorpayOrderId        String?  @unique // Razorpay order ID
+  razorpayPaymentId      String?  @unique // Razorpay payment ID
+  razorpaySignature      String?  // Razorpay signature for verification
+  razorpaySubscriptionId String?  // Razorpay subscription ID for recurring payments
+  metadata               Json?    // Additional payment details
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model Referral {
+  id          String   @id @default(uuid())
+  referrerId  String
+  referredId  String
+  code        String
+  bonusDays   Int      @default(15)  // Days of free Discord access granted
+  applied     Boolean  @default(false)  // Whether bonus has been applied
+  createdAt   DateTime @default(now())
+
+  referrer User @relation("Referrer", fields: [referrerId], references: [id], onDelete: Cascade)
+  referred User @relation("Referred", fields: [referredId], references: [id], onDelete: Cascade)
+
+  @@map("referrals")
+}
