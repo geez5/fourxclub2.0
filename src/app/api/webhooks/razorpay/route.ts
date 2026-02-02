@@ -59,29 +59,45 @@ export async function POST(request: Request) {
 
 async function handlePaymentCaptured(payment: RazorpayPaymentEntity) {
     const orderId = payment.order_id
-    if (!orderId) return
+    if (!orderId) {
+        console.warn('Payment captured but missing order_id:', payment.id)
+        return
+    }
 
     const paymentRecord = await prisma.payment.findFirst({
         where: { razorpayOrderId: orderId }
     })
 
-    if (!paymentRecord || paymentRecord.status === 'completed') return
+    if (!paymentRecord) {
+        console.error('Payment captured but record not found for order:', orderId)
+        return
+    }
 
-    await prisma.payment.update({
-        where: { id: paymentRecord.id },
-        data: {
-            status: 'completed',
-            razorpayPaymentId: payment.id
-        }
-    })
+    if (paymentRecord.status === 'completed') {
+        console.log('Payment already completed, skipping:', payment.id)
+        return
+    }
 
-    // Grant access if not already granted via frontend verify
-    if (paymentRecord.type === 'course') {
-        await prisma.courseAccess.upsert({
-            where: { userId: paymentRecord.userId },
-            update: { status: 'active', purchasedAt: new Date() },
-            create: { userId: paymentRecord.userId, status: 'active' }
+    try {
+        await prisma.payment.update({
+            where: { id: paymentRecord.id },
+            data: {
+                status: 'completed',
+                razorpayPaymentId: payment.id
+            }
         })
+
+        // Grant access if not already granted via frontend verify
+        if (paymentRecord.type === 'course') {
+            await prisma.courseAccess.upsert({
+                where: { userId: paymentRecord.userId },
+                update: { status: 'active', purchasedAt: new Date() },
+                create: { userId: paymentRecord.userId, status: 'active' }
+            })
+        }
+    } catch (error) {
+        console.error('Error handling payment capture:', error)
+        throw error
     }
 }
 
@@ -92,62 +108,78 @@ async function handleSubscriptionCharged(subscription: RazorpaySubscriptionEntit
         where: { razorpaySubscriptionId: subscriptionId }
     })
 
-    if (!paymentRecord) return
-
-    // Create a record for the recurring payment
-    if (paymentRecord.status === 'completed') {
-        await prisma.payment.create({
-            data: {
-                userId: paymentRecord.userId,
-                type: 'discord_subscription',
-                amount: payment.amount / 100,
-                currency: payment.currency,
-                status: 'completed',
-                razorpayPaymentId: payment.id,
-                razorpaySubscriptionId: subscriptionId,
-                metadata: { recurring: true }
-            }
-        })
-    } else {
-        // Update the initial pending record
-        await prisma.payment.update({
-            where: { id: paymentRecord.id },
-            data: {
-                status: 'completed',
-                razorpayPaymentId: payment.id
-            }
-        })
+    if (!paymentRecord) {
+        console.error('Subscription charged but record not found:', subscriptionId)
+        return
     }
 
-    // Extend access by 30 days
-    const expiresAt = new Date()
-    expiresAt.setDate(expiresAt.getDate() + 30)
-
-    await prisma.communityAccess.update({
-        where: { userId: paymentRecord.userId },
-        data: {
-            status: 'active',
-            expiresAt: expiresAt,
-            autoRenew: true
+    try {
+        // Create a record for the recurring payment
+        if (paymentRecord.status === 'completed') {
+            await prisma.payment.create({
+                data: {
+                    userId: paymentRecord.userId,
+                    type: 'discord_subscription',
+                    amount: payment.amount / 100,
+                    currency: payment.currency,
+                    status: 'completed',
+                    razorpayPaymentId: payment.id,
+                    razorpaySubscriptionId: subscriptionId,
+                    metadata: { recurring: true }
+                }
+            })
+        } else {
+            // Update the initial pending record
+            await prisma.payment.update({
+                where: { id: paymentRecord.id },
+                data: {
+                    status: 'completed',
+                    razorpayPaymentId: payment.id
+                }
+            })
         }
-    })
+
+        // Extend access by 30 days
+        const expiresAt = new Date()
+        expiresAt.setDate(expiresAt.getDate() + 30)
+
+        await prisma.communityAccess.update({
+            where: { userId: paymentRecord.userId },
+            data: {
+                status: 'active',
+                expiresAt: expiresAt,
+                autoRenew: true
+            }
+        })
+    } catch (error) {
+        console.error('Error handling subscription charge:', error)
+        throw error
+    }
 }
 
 async function handleSubscriptionCancelled(subscription: RazorpaySubscriptionEntity) {
-    const paymentRecord = await prisma.payment.findFirst({
-        where: { razorpaySubscriptionId: subscription.id }
-    })
+    try {
+        const paymentRecord = await prisma.payment.findFirst({
+            where: { razorpaySubscriptionId: subscription.id }
+        })
 
-    if (!paymentRecord) return
-
-    await prisma.communityAccess.update({
-        where: { userId: paymentRecord.userId },
-        data: {
-            autoRenew: false,
-            // We don't necessarily kill access immediately, 
-            // they keep it until expiresAt
+        if (!paymentRecord) {
+            console.warn('Subscription cancelled but record not found:', subscription.id)
+            return
         }
-    })
+
+        await prisma.communityAccess.update({
+            where: { userId: paymentRecord.userId },
+            data: {
+                autoRenew: false,
+                // We don't necessarily kill access immediately, 
+                // they keep it until expiresAt
+            }
+        })
+    } catch (error) {
+        console.error('Error handling subscription cancellation:', error)
+        throw error
+    }
 }
 
 async function handlePaymentFailed(payment: RazorpayPaymentEntity) {
@@ -158,16 +190,27 @@ async function handlePaymentFailed(payment: RazorpayPaymentEntity) {
         ? { razorpayOrderId: orderId }
         : { razorpaySubscriptionId: subscriptionId }
 
-    if (!query.razorpayOrderId && !query.razorpaySubscriptionId) return
+    if (!query.razorpayOrderId && !query.razorpaySubscriptionId) {
+        console.warn('Payment failed but no ID to link:', payment.id)
+        return
+    }
 
-    const paymentRecord = await prisma.payment.findFirst({
-        where: query
-    })
+    try {
+        const paymentRecord = await prisma.payment.findFirst({
+            where: query
+        })
 
-    if (!paymentRecord) return
+        if (!paymentRecord) {
+            console.warn('Payment failed but record not found:', query)
+            return
+        }
 
-    await prisma.payment.update({
-        where: { id: paymentRecord.id },
-        data: { status: 'failed' }
-    })
+        await prisma.payment.update({
+            where: { id: paymentRecord.id },
+            data: { status: 'failed' }
+        })
+    } catch (error) {
+        console.error('Error handling payment failure:', error)
+        throw error
+    }
 }
