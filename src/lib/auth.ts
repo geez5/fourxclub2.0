@@ -15,6 +15,7 @@ if (!process.env.GOOGLE_CLIENT_SECRET) {
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
     ...authConfig,
+    trustHost: true,
     providers: [
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
