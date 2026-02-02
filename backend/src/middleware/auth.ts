@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { SignOptions } from 'jsonwebtoken'
 import { config } from '../config/env.js'
 import { prisma } from '../config/prisma.js'
 
@@ -54,7 +54,8 @@ export async function authMiddleware(
 }
 
 export function generateToken(userId: string, email: string): string {
-    return jwt.sign({ userId, email }, config.jwtSecret, {
-        expiresIn: config.jwtExpiresIn,
-    })
+    const options: SignOptions = {
+        expiresIn: '7d',
+    }
+    return jwt.sign({ userId, email }, config.jwtSecret, options)
 }

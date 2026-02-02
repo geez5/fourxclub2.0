@@ -81,7 +81,12 @@ passport.use(
                     }
                 }
 
-                return done(null, user)
+                // Return simplified user for Express session
+                return done(null, {
+                    id: user.id,
+                    email: user.email!,
+                    name: user.fullName || user.name || null,
+                })
             } catch (error) {
                 return done(error as Error, undefined)
             }

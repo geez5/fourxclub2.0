@@ -1,12 +1,13 @@
 import { Router, Response } from 'express'
 import { authMiddleware, AuthenticatedRequest } from '../middleware/auth.js'
+import { asyncHandler } from '../middleware/asyncHandler.js'
 import { prisma } from '../config/prisma.js'
 import { courseVideos, generateBunnyEmbedUrl } from '../services/bunny.js'
 
 const router = Router()
 
 // Get video by ID
-router.get('/:videoNumber', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+router.get('/:videoNumber', authMiddleware, asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
     try {
         const userId = req.user!.id
         const { videoNumber } = req.params
@@ -89,6 +90,6 @@ router.get('/:videoNumber', authMiddleware, async (req: AuthenticatedRequest, re
         console.error('Video route error:', error)
         res.status(500).json({ error: 'Internal server error' })
     }
-})
+}))
 
 export default router
