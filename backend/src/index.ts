@@ -17,6 +17,12 @@ import webhooksRoutes from './routes/webhooks.routes.js'
 
 const app = express()
 
+// Request logging middleware
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`)
+    next()
+})
+
 // CORS configuration
 app.use(
     cors({
@@ -34,6 +40,10 @@ app.use(cookieParser())
 app.use(passport.initialize())
 
 // Health check
+app.get('/', (_req, res) => {
+    res.json({ status: 'ok', service: 'fourxclub-backend' })
+})
+
 app.get('/health', (_req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
@@ -53,9 +63,8 @@ app.use('/api/webhooks', webhooksRoutes)
 app.use(errorHandler)
 
 // Start server
-const HOST = '0.0.0.0' // Required for Railway/cloud deployments
-app.listen(config.port, HOST, () => {
-    console.log(`🚀 Server running on ${HOST}:${config.port}`)
+app.listen(config.port, () => {
+    console.log(`🚀 Server running on port ${config.port}`)
     console.log(`📝 Environment: ${config.nodeEnv}`)
     console.log(`🌐 Frontend URL: ${config.frontendUrl}`)
 })
