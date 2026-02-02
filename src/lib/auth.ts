@@ -23,7 +23,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return session
         },
         async redirect({ url, baseUrl }) {
-            // Redirect to dashboard after sign in
             if (url.startsWith(baseUrl)) return url
             if (url.startsWith('/')) return `${baseUrl}${url}`
             return `${baseUrl}/dashboard`
@@ -33,4 +32,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         strategy: "database",
     },
     trustHost: true,
+    debug: process.env.NODE_ENV === "development",
 })
