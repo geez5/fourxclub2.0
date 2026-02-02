@@ -38,6 +38,18 @@ app.get('/health', (_req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
+// TEMPORARY DEBUG - Remove after fixing OAuth issue
+app.get('/debug-oauth', (_req, res) => {
+    const clientId = process.env.GOOGLE_CLIENT_ID || 'NOT SET'
+    const callbackUrl = process.env.GOOGLE_CALLBACK_URL || 'NOT SET'
+    res.json({
+        clientIdPrefix: clientId.substring(0, 20) + '...',
+        clientIdLength: clientId.length,
+        callbackUrl: callbackUrl,
+        hasSecret: !!process.env.GOOGLE_CLIENT_SECRET,
+    })
+})
+
 // API Routes
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
