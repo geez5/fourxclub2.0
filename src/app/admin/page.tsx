@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import AdminDashboard from '@/components/admin/AdminDashboard'
@@ -6,15 +6,14 @@ import AdminDashboard from '@/components/admin/AdminDashboard'
 const ADMIN_EMAIL = 'hello@fourxclub.in'
 
 export default async function AdminPage() {
-  const supabase = await createClient()
-  const { data: { session } } = await supabase.auth.getSession()
+  const session = await auth()
 
   // Check if user is authenticated
   if (!session) {
-    redirect('/sign-in?redirect=/admin')
+    redirect('/auth/signin?callbackUrl=/admin')
   }
 
-  const userEmail = session.user.email
+  const userEmail = session.user?.email
 
   // Check if user is admin
   if (userEmail !== ADMIN_EMAIL) {

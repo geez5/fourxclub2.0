@@ -1,27 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabase/client';
+import { useSession } from 'next-auth/react';
 import HomePageClient from '@/components/HomePageClients';
 
 export default function HomePage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { status } = useSession();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-
-      // Don't redirect - just track if user is authenticated
-      setIsAuthenticated(!!session);
-      setLoading(false);
-    };
-
-    checkAuth();
-  }, []);
-
-  if (loading) {
+  if (status === 'loading') {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -29,5 +14,5 @@ export default function HomePage() {
     );
   }
 
-  return <HomePageClient isAuthenticated={isAuthenticated} />;
+  return <HomePageClient isAuthenticated={status === 'authenticated'} />;
 }

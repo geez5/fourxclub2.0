@@ -7,11 +7,12 @@ import {
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import RazorpayCheckout from './RazorpayCheckout';
-import { createClient } from '@/lib/supabase/client';
 
 interface HomePageClientProps {
   isAuthenticated: boolean;
 }
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export default function HomePageClient({ isAuthenticated }: HomePageClientProps) {
   const [refCode, setRefCode] = useState('REF-XXXXX');
@@ -28,10 +29,12 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
   const fetchStatus = useCallback(async () => {
     if (isAuthenticated) {
       try {
-        const r = await fetch('/api/user/status');
+        const r = await fetch(`${API_URL}/api/user/status`, {
+          credentials: 'include',
+        });
         const data = await r.json();
         if (data.success) {
-          setHasCourseAccess(data.courseAccess.hasAccess);
+          setHasCourseAccess(data.courseAccess?.hasAccess || false);
         }
       } catch (err) {
         console.error('Failed to fetch user status:', err);

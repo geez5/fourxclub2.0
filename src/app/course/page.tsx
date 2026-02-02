@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabase/client';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import BunnyPlayer from '@/components/BunnyPlayer';
@@ -14,6 +14,8 @@ const purpleColor = '#9B7BD3';
 const textLight = '#ffffff';
 const textMuted = '#888888';
 const borderColor = '#3a3a3a';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 interface CourseVideo {
     id: number;
@@ -78,22 +80,26 @@ const PurchaseModal = ({
 );
 
 export default function CoursePage() {
+    const { status } = useSession();
     const [hasAccess, setHasAccess] = useState(false);
     const [loading, setLoading] = useState(true);
     const [selectedVideo, setSelectedVideo] = useState<CourseVideo | null>(null);
     const [showPurchaseModal, setShowPurchaseModal] = useState(false);
     const router = useRouter();
-    const supabase = createClient();
 
     useEffect(() => {
+        if (status === 'loading') return;
+
+        if (status === 'unauthenticated') {
+            router.push('/auth/signin');
+            return;
+        }
+
         const checkAccess = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
-                router.push('/auth/signin');
-                return;
-            }
             try {
-                const res = await fetch('/api/user/status');
+                const res = await fetch(`${API_URL}/api/user/status`, {
+                    credentials: 'include',
+                });
                 const data = await res.json();
                 if (data.success) {
                     setHasAccess(data.courseAccess?.hasAccess || false);
@@ -103,8 +109,11 @@ export default function CoursePage() {
             }
             setLoading(false);
         };
-        checkAccess();
-    }, [router, supabase.auth]);
+
+        if (status === 'authenticated') {
+            checkAccess();
+        }
+    }, [status, router]);
 
     const handleVideoSelect = (video: CourseVideo) => {
         if (hasAccess) {

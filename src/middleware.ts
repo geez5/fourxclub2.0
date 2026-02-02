@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { auth } from '@/lib/auth'
 
 // Rate limiting store
 const rateLimit = new Map<string, { count: number; resetTime: number }>()
@@ -9,17 +9,15 @@ const rateLimit = new Map<string, { count: number; resetTime: number }>()
 function isProtectedRoute(pathname: string): boolean {
   const protectedPatterns = [
     /^\/dashboard/,
-    /^\/api\/videos/,
-    /^\/api\/referrals/,
-    /^\/api\/user/,
-    /^\/api\/discord\/link/,
+    /^\/course/,
+    /^\/admin/,
   ]
   return protectedPatterns.some(pattern => pattern.test(pathname))
 }
 
 // Public API routes - manually match patterns
 function isPublicApiRoute(pathname: string): boolean {
-  return /^\/api\/webhooks\//.test(pathname)
+  return /^\/api\/webhooks\//.test(pathname) || /^\/api\/auth\//.test(pathname)
 }
 
 // Public routes (signin, signup, home, auth callback)
@@ -29,7 +27,6 @@ function isPublicRoute(pathname: string): boolean {
     /^\/sign-in/,
     /^\/sign-up/,
     /^\/auth\//,
-    /^\/api\/auth\//,
   ]
   return publicPatterns.some(pattern => pattern.test(pathname))
 }
@@ -70,9 +67,11 @@ function applyRateLimit(req: NextRequest): NextResponse | null {
   return null
 }
 
-export async function middleware(req: NextRequest) {
-  // Skip public routes
-  if (isPublicRoute(req.nextUrl.pathname) || isPublicApiRoute(req.nextUrl.pathname)) {
+export default auth((req) => {
+  const { nextUrl } = req
+
+  // Skip public routes and API routes
+  if (isPublicRoute(nextUrl.pathname) || isPublicApiRoute(nextUrl.pathname)) {
     return NextResponse.next()
   }
 
@@ -80,64 +79,16 @@ export async function middleware(req: NextRequest) {
   const rateLimitResult = applyRateLimit(req)
   if (rateLimitResult) return rateLimitResult
 
-  let response = NextResponse.next()
-
   // Check auth for protected routes
-  if (isProtectedRoute(req.nextUrl.pathname)) {
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) {
-            return req.cookies.get(name)?.value
-          },
-          set(name: string, value: string, options: CookieOptions) {
-            req.cookies.set({
-              name,
-              value,
-              ...options,
-            })
-            response = NextResponse.next({
-              request: {
-                headers: req.headers,
-              },
-            })
-            response.cookies.set({
-              name,
-              value,
-              ...options,
-            })
-          },
-          remove(name: string, options: CookieOptions) {
-            req.cookies.set({
-              name,
-              value: '',
-              ...options,
-            })
-            response = NextResponse.next({
-              request: {
-                headers: req.headers,
-              },
-            })
-            response.cookies.set({
-              name,
-              value: '',
-              ...options,
-            })
-          },
-        },
-      }
-    )
-
-    const { data: { session } } = await supabase.auth.getSession()
-
-    if (!session) {
-      const signInUrl = new URL('/auth/signin', req.nextUrl.origin)
-      signInUrl.searchParams.set('redirect_url', req.nextUrl.pathname + req.nextUrl.search)
+  if (isProtectedRoute(nextUrl.pathname)) {
+    if (!req.auth) {
+      const signInUrl = new URL('/auth/signin', nextUrl.origin)
+      signInUrl.searchParams.set('callbackUrl', nextUrl.pathname + nextUrl.search)
       return NextResponse.redirect(signInUrl)
     }
   }
+
+  const response = NextResponse.next()
 
   // Add security headers
   response.headers.set('X-Frame-Options', 'DENY')
@@ -145,20 +96,11 @@ export async function middleware(req: NextRequest) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
 
-  // CORS for API routes
-  if (req.nextUrl.pathname.startsWith('/api/')) {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    response.headers.set('Access-Control-Allow-Origin', siteUrl)
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  }
-
   return response
-}
+})
 
 export const config = {
   matcher: [
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    '/(api|trpc)(.*)',
   ],
 }
