@@ -53,8 +53,9 @@ app.use('/api/webhooks', webhooksRoutes)
 app.use(errorHandler)
 
 // Start server
-app.listen(config.port, () => {
-    console.log(`🚀 Server running on port ${config.port}`)
+const HOST = '0.0.0.0' // Required for Railway/cloud deployments
+app.listen(config.port, HOST, () => {
+    console.log(`🚀 Server running on ${HOST}:${config.port}`)
     console.log(`📝 Environment: ${config.nodeEnv}`)
     console.log(`🌐 Frontend URL: ${config.frontendUrl}`)
 })

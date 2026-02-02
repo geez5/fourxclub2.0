@@ -10,7 +10,7 @@ This guide explains how to upload your 10 trading course videos to Bunny.net (Bu
 1. **Log in to Bunny.net**: [https://dash.bunny.net/](https://dash.bunny.net/)
 2. **Go to Stream**: Click on "Stream" in the sidebar.
 3. **Create Video Library**: 
-   - You already have a library with ID: `578760`. 
+   - You already have a library with ID: `589918`. 
    - Ensure the name is something like `FourXclub Course`.
 4. **Configure Security (Token Authentication)**:
    - Go to your Video Library settings.
@@ -22,7 +22,7 @@ This guide explains how to upload your 10 trading course videos to Bunny.net (Bu
 
 ## Step 2: Upload Your 10 Videos
 
-1. **Go to your Library**: Click on Library `578760`.
+1. **Go to your Library**: Click on Library `589918`.
 2. **Upload Videos**: Use the Bunny dashboard to upload your 10 mp4 files.
 3. **Get Video IDs**: Once uploaded, each video will have a unique ID (a UUID).
 4. **Update Configuration**: Open `src/lib/bunny.ts` and replace the placeholder IDs:
@@ -71,9 +71,11 @@ The system controls access as follows:
 Ensure these are correct in your `.env.local`:
 
 ```bash
-BUNNY_API_KEY=840eaa76-8447-45d9-be99fe76a077-22f2-41a0
-BUNNY_LIBRARY_ID=578760
-NEXT_PUBLIC_BUNNY_LIBRARY_ID=578760
+BUNNY_API_KEY=a9991ca0-83a4-41a0-8a7e6ae8649a-e599-4257
+BUNNY_LIBRARY_ID=589918
+BUNNY_CDN_URL=vz-36a9a6d8-d84.b-cdn.net
+BUNNY_PULL_ZONE=vz-36a9a6d8-d84
+NEXT_PUBLIC_BUNNY_LIBRARY_ID=589918
 ```
 
 ---

@@ -35,6 +35,9 @@ export const config = {
     // Bunny CDN
     bunny: {
         libraryId: process.env.BUNNY_LIBRARY_ID || '589918',
+        apiKey: process.env.BUNNY_API_KEY!,
+        cdnUrl: process.env.BUNNY_CDN_URL || 'vz-36a9a6d8-d84.b-cdn.net',
+        pullZone: process.env.BUNNY_PULL_ZONE || 'vz-36a9a6d8-d84',
     },
 
     // Admin

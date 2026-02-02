@@ -14,7 +14,7 @@ export interface CourseVideo {
  * Course videos configuration for Bunny.net
  * 
  * INSTRUCTIONS:
- * 1. Upload your 10 videos to your Bunny Stream Library (ID: 578760)
+ * 1. Upload your 10 videos to your Bunny Stream Library (ID: 589918)
  * 2. Get the Video ID for each video from the Bunny dashboard
  * 3. Replace REPLACE_WITH_BUNNY_ID_X with actual IDs
  */
@@ -107,6 +107,6 @@ export const courseVideos: CourseVideo[] = [
  * but for basic domain-restricted embedding, a standard embed link works.
  */
 export function generateBunnyEmbedUrl(bunnyId: string): string {
-  const libraryId = process.env.NEXT_PUBLIC_BUNNY_LIBRARY_ID || '578760'
+  const libraryId = process.env.NEXT_PUBLIC_BUNNY_LIBRARY_ID || '589918'
   return `https://iframe.mediadelivery.net/embed/${libraryId}/${bunnyId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`
 }
