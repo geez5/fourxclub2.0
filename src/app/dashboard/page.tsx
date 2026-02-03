@@ -14,7 +14,7 @@ const textLight = '#ffffff';
 const textMuted = '#888888';
 const borderColor = '#3a3a3a';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
 
 interface UserStatus {
     user: { id: string; email: string; name: string; referralCode: string; discordId: string | null; };
@@ -35,7 +35,7 @@ function DashboardContent() {
 
     const fetchUserStatus = useCallback(async () => {
         try {
-            const res = await fetch(`${API_URL}/api/user/status`, {
+            const res = await fetch(`/api/user/status`, {
                 credentials: 'include',
             });
             const data = await res.json();
@@ -86,7 +86,7 @@ function DashboardContent() {
 
     const applyReferralCode = async () => {
         try {
-            const res = await fetch(`${API_URL}/api/referral/apply`, {
+            const res = await fetch(`/api/referral/apply`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ code: referralInput }),

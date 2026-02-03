@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Script from 'next/script'
 import { useSession } from 'next-auth/react'
-import { API_URL } from '@/lib/api'
+
 
 interface RazorpayResponse {
     razorpay_payment_id: string
@@ -93,7 +93,7 @@ export default function RazorpayCheckout({
             }
 
             // 1. Create Order or Subscription on backend
-            const response = await fetch(`${API_URL}/api/payments/create`, {
+            const response = await fetch(`/api/payments/create`, {
                 method: 'POST',
                 credentials: 'include',
                 headers,
@@ -134,7 +134,7 @@ export default function RazorpayCheckout({
                     try {
                         setLoading(true) // Set loading during verification
                         // 3. Verify payment on backend
-                        const verifyResponse = await fetch(`${API_URL}/api/payments/verify`, {
+                        const verifyResponse = await fetch(`/api/payments/verify`, {
                             method: 'POST',
                             credentials: 'include',
                             headers,

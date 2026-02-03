@@ -16,10 +16,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code",
+                },
+            },
         }),
     ],
     callbacks: {
         ...authConfig.callbacks,
+        async signIn({ user, account, profile }) {
+            console.log("Auth SignIn Callback - Provider:", account?.provider);
+            if (account?.provider === "google") {
+                // You can add more checks here if needed
+                console.log("Google Sign In Attempt:", user.email);
+            }
+            return true;
+        },
         async session({ session, token }) {
             if (session.user && token.sub) {
                 session.user.id = token.sub
@@ -36,6 +51,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                             secret,
                             { expiresIn: '1d' }
                         )
+                    } else {
+                        console.error("Auth Session - Missing JWT_SECRET or AUTH_SECRET");
                     }
                 } catch (error) {
                     console.error("Error generating backend token:", error)

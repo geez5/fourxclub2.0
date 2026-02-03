@@ -57,8 +57,8 @@ export default auth(async (req) => {
   }
 
   // Apply rate limiting
-  const rateLimitResult = applyRateLimit(req)
-  if (rateLimitResult) return rateLimitResult
+  // const rateLimitResult = applyRateLimit(req)
+  // if (rateLimitResult) return rateLimitResult
 
   // The 'authorized' callback in auth.config.ts handles protection
   return NextResponse.next()

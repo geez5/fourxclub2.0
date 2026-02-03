@@ -15,7 +15,7 @@ const textLight = '#ffffff';
 const textMuted = '#888888';
 const borderColor = '#3a3a3a';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
 
 interface CourseVideo {
     id: number;
@@ -97,7 +97,7 @@ export default function CoursePage() {
 
         const checkAccess = async () => {
             try {
-                const res = await fetch(`${API_URL}/api/user/status`, {
+                const res = await fetch(`/api/user/status`, {
                     credentials: 'include',
                 });
                 const data = await res.json();
