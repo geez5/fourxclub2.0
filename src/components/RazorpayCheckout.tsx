@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Script from 'next/script'
+import { useSession } from 'next-auth/react'
 import { API_URL } from '@/lib/api'
 
 interface RazorpayResponse {
@@ -57,6 +58,7 @@ export default function RazorpayCheckout({
     onSuccess,
     onFailure,
 }: RazorpayCheckoutProps) {
+    const { data: session } = useSession()
     const [loading, setLoading] = useState(false)
     const [scriptLoaded, setScriptLoaded] = useState(false)
     const router = useRouter()
@@ -85,11 +87,16 @@ export default function RazorpayCheckout({
         setLoading(true)
 
         try {
+            const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+            if (session?.user?.backendToken) {
+                headers['Authorization'] = `Bearer ${session.user.backendToken}`
+            }
+
             // 1. Create Order or Subscription on backend
             const response = await fetch(`${API_URL}/api/payments/create`, {
                 method: 'POST',
                 credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
+                headers,
                 body: JSON.stringify({ type }),
             })
 
@@ -130,7 +137,7 @@ export default function RazorpayCheckout({
                         const verifyResponse = await fetch(`${API_URL}/api/payments/verify`, {
                             method: 'POST',
                             credentials: 'include',
-                            headers: { 'Content-Type': 'application/json' },
+                            headers,
                             body: JSON.stringify({
                                 razorpay_payment_id: response.razorpay_payment_id,
                                 razorpay_signature: response.razorpay_signature,

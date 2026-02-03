@@ -4,13 +4,9 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"
 import { authConfig } from "./auth.config"
 
-// Validate required environment variables
-if (!process.env.GOOGLE_CLIENT_ID) {
-    throw new Error("Missing GOOGLE_CLIENT_ID environment variable")
-}
-if (!process.env.GOOGLE_CLIENT_SECRET) {
-    throw new Error("Missing GOOGLE_CLIENT_SECRET environment variable")
-}
+
+
+import jwt from "jsonwebtoken"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -27,6 +23,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async session({ session, token }) {
             if (session.user && token.sub) {
                 session.user.id = token.sub
+
+                // Generate backend compatible token
+                try {
+                    const secret = process.env.JWT_SECRET || process.env.AUTH_SECRET
+                    if (secret) {
+                        session.user.backendToken = jwt.sign(
+                            {
+                                userId: session.user.id,
+                                email: session.user.email
+                            },
+                            secret,
+                            { expiresIn: '1d' }
+                        )
+                    }
+                } catch (error) {
+                    console.error("Error generating backend token:", error)
+                }
             }
             return session
         },

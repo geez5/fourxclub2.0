@@ -6,6 +6,8 @@ declare module "next-auth" {
     user: {
       id: string
       phoneNumber?: string | null
+      role?: string
+      backendToken?: string
     } & DefaultSession["user"]
   }
 
