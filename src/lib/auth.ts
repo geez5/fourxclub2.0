@@ -4,7 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import type { NextAuthConfig } from "next-auth";
 import { prisma } from "@/lib/prisma";
 
-export const authOptions = {
+export const authConfig = {
     adapter: PrismaAdapter(prisma),
 
     providers: [
@@ -23,5 +23,9 @@ export const authOptions = {
     debug: true,
 } satisfies NextAuthConfig;
 
-// Auth.js v5 handler
-export const handlers = NextAuth(authOptions);
+// 🚨 DO NOT destructure directly
+const authInstance = NextAuth(authConfig);
+
+// ✅ THESE MUST EXIST
+export const handlers = authInstance.handlers;
+export const auth = authInstance.auth;
