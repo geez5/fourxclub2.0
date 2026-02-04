@@ -8,6 +8,17 @@ import { authConfig } from "./auth.config"
 
 import jwt from "jsonwebtoken"
 
+// Check for missing environment variables
+if (!process.env.GOOGLE_CLIENT_ID) {
+    console.error("CRITICAL ERROR: GOOGLE_CLIENT_ID is missing from environment variables!");
+}
+if (!process.env.GOOGLE_CLIENT_SECRET) {
+    console.error("CRITICAL ERROR: GOOGLE_CLIENT_SECRET is missing from environment variables!");
+}
+if (!process.env.NEXTAUTH_SECRET) {
+    console.error("CRITICAL ERROR: NEXTAUTH_SECRET is missing from environment variables!");
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
     ...authConfig,
