@@ -1,71 +1,67 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import NextAuth from 'next-auth'
-import { authConfig } from './lib/auth.config'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { auth } from "@/lib/auth";
 
-const { auth } = NextAuth(authConfig)
-
-// Rate limiting store
-const rateLimit = new Map<string, { count: number; resetTime: number }>()
+// Optional: rate limiting store
+const rateLimit = new Map<string, { count: number; resetTime: number }>();
 
 function applyRateLimit(req: NextRequest): NextResponse | null {
-  const ip = req.headers.get('x-forwarded-for') ||
-    req.headers.get('x-real-ip') ||
-    'unknown'
+  const ip =
+    req.headers.get("x-forwarded-for") ||
+    req.headers.get("x-real-ip") ||
+    "unknown";
 
-  const now = Date.now()
-  const windowMs = 15 * 60 * 1000
-  const maxRequests = 100
+  const now = Date.now();
+  const windowMs = 15 * 60 * 1000;
+  const maxRequests = 100;
 
-  const key = `${ip}-${req.nextUrl.pathname}`
-  const record = rateLimit.get(key)
+  const key = `${ip}-${req.nextUrl.pathname}`;
+  const record = rateLimit.get(key);
 
   if (!record || now > record.resetTime) {
-    rateLimit.set(key, { count: 1, resetTime: now + windowMs })
-    return null
+    rateLimit.set(key, { count: 1, resetTime: now + windowMs });
+    return null;
   }
 
   if (record.count >= maxRequests) {
     return NextResponse.json(
-      { error: 'Too many requests. Please try again later.' },
-      { status: 429, headers: { 'Retry-After': String(Math.ceil((record.resetTime - now) / 1000)) } }
-    )
+      { error: "Too many requests. Please try again later." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(
+            Math.ceil((record.resetTime - now) / 1000)
+          ),
+        },
+      }
+    );
   }
 
-  record.count++
-  rateLimit.set(key, record)
-
-  // Cleanup
-  if (Math.random() < 0.001) {
-    for (const [k, v] of rateLimit.entries()) {
-      if (now > v.resetTime) rateLimit.delete(k)
-    }
-  }
-
-  return null
+  record.count++;
+  rateLimit.set(key, record);
+  return null;
 }
 
 export default auth(async (req) => {
-  const { nextUrl } = req
+  const { nextUrl } = req;
 
   // Skip static assets
   if (
-    nextUrl.pathname.startsWith('/_next') ||
-    nextUrl.pathname.includes('.')
+    nextUrl.pathname.startsWith("/_next") ||
+    nextUrl.pathname.includes(".")
   ) {
-    return NextResponse.next()
+    return NextResponse.next();
   }
 
-  // Apply rate limiting
-  // const rateLimitResult = applyRateLimit(req)
-  // if (rateLimitResult) return rateLimitResult
+  // Optional rate limit
+  // const rateLimitResult = applyRateLimit(req);
+  // if (rateLimitResult) return rateLimitResult;
 
-  // The 'authorized' callback in auth.config.ts handles protection
-  return NextResponse.next()
-})
+  return NextResponse.next();
+});
 
 export const config = {
   matcher: [
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
   ],
-}
+};
