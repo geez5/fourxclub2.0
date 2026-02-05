@@ -88,9 +88,7 @@ export default function RazorpayCheckout({
 
         try {
             const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-            if (session?.user?.backendToken) {
-                headers['Authorization'] = `Bearer ${session.user.backendToken}`
-            }
+            // Cookie-based auth is used automatically via credentials: 'include'
 
             // 1. Create Order or Subscription on backend
             const response = await fetch(`/api/payments/create`, {

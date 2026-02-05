@@ -1,57 +1,59 @@
+import NextAuth from "next-auth"
+import Google from "next-auth/providers/google"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "@/lib/prisma"
 
-import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "@/lib/prisma";
-import { authConfig } from "./auth.config";
+// Environment variable check
+const googleClientId = process.env.GOOGLE_CLIENT_ID
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET
+const authSecret = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET
 
-// ⚠️ NODE.JS ONLY ⚠️
-// This file initializes the DB adapter.
-// Do NOT import this in Middleware.
+if (!googleClientId) console.error("❌ Missing GOOGLE_CLIENT_ID")
+if (!googleClientSecret) console.error("❌ Missing GOOGLE_CLIENT_SECRET")
+if (!authSecret) console.error("❌ Missing AUTH_SECRET/NEXTAUTH_SECRET/JWT_SECRET")
 
-console.log("🔐 Initializing NextAuth...");
-console.log("📊 DATABASE_URL present:", !!process.env.DATABASE_URL);
-console.log("🌍 NODE_ENV:", process.env.NODE_ENV);
-
-// Use JWT sessions in production for reliability
-// Database sessions can cause issues with cold starts and connection pooling
-const useJwtSessions = process.env.USE_JWT_SESSIONS === "true" || process.env.NODE_ENV === "production";
-
-const authOptions = useJwtSessions
-    ? {
-        // JWT sessions - more reliable for serverless/Railway
-        session: { strategy: "jwt" as const },
-        ...authConfig,
-        callbacks: {
-            ...authConfig.callbacks,
-            // Store user ID in JWT token
-            async jwt({ token, user, account }: any) {
-                if (user) {
-                    token.id = user.id;
-                }
-                if (account) {
-                    token.accessToken = account.access_token;
-                }
-                console.log("👉 JWT CALLBACK", { tokenId: token.id });
-                return token;
+export const { handlers, auth, signIn, signOut } = NextAuth({
+    adapter: PrismaAdapter(prisma),
+    providers: [
+        Google({
+            clientId: googleClientId!,
+            clientSecret: googleClientSecret!,
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code",
+                },
             },
-            // Add user ID to session
-            async session({ session, token }: any) {
-                if (session.user && token.id) {
-                    session.user.id = token.id as string;
-                }
-                console.log("👉 SESSION CALLBACK", { userId: session.user?.id });
-                return session;
-            },
+        }),
+    ],
+    secret: authSecret,
+    trustHost: true,
+    session: {
+        strategy: "jwt",
+    },
+    callbacks: {
+        async jwt({ token, user, account }) {
+            // First sign in - save user data to token
+            if (user) {
+                token.id = user.id
+            }
+            if (account) {
+                token.accessToken = account.access_token
+            }
+            return token
         },
-    }
-    : {
-        // Database sessions - for development
-        adapter: PrismaAdapter(prisma),
-        session: { strategy: "database" as const },
-        ...authConfig,
-    };
-
-console.log("📋 Session strategy:", useJwtSessions ? "JWT" : "database");
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
-console.log("✅ NextAuth initialized");
+        async session({ session, token }) {
+            // Add user id to session
+            if (session.user && token.id) {
+                session.user.id = token.id as string
+            }
+            return session
+        },
+    },
+    pages: {
+        signIn: "/",
+        error: "/",
+    },
+    debug: process.env.NODE_ENV === "development",
+})
