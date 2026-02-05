@@ -91,7 +91,7 @@ export default function CoursePage() {
         if (status === 'loading') return;
 
         if (status === 'unauthenticated') {
-            router.push('/auth/signin');
+            router.push('/api/auth/signin');
             return;
         }
 

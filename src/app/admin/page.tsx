@@ -10,7 +10,7 @@ export default async function AdminPage() {
 
   // Check if user is authenticated
   if (!session) {
-    redirect('/auth/signin?callbackUrl=/admin')
+    redirect('/api/auth/signin?callbackUrl=/admin')
   }
 
   const userEmail = session.user?.email

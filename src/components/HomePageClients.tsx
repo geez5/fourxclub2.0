@@ -115,12 +115,12 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 </Link>
               ) : (
                 <>
-                  <Link href="/auth/signin">
+                  <Link href="/api/auth/signin">
                     <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:opacity-80" style={{ color: textLight }}>
                       Sign In
                     </button>
                   </Link>
-                  <Link href="/auth/signin">
+                  <Link href="/api/auth/signin">
                     <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2" style={{ backgroundColor: greenColor, color: bgPrimary }}>
                       Get Started <ArrowRight className="w-4 h-4" />
                     </button>
@@ -163,7 +163,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 Join Now
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <Link href="/auth/signin?pdf=true">
+              <Link href="/api/auth/signin?pdf=true">
                 <button
                   className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors"
                   style={{ backgroundColor: greenColor, color: bgPrimary }}
@@ -287,7 +287,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         </button>
                       )
                     ) : (
-                      <Link href="/auth/signin">
+                      <Link href="/api/auth/signin">
                         <button className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Enroll Now</button>
                       </Link>
                     )}
@@ -432,7 +432,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   />
                 )
               ) : (
-                <Link href="/auth/signin">
+                <Link href="/api/auth/signin">
                   <button className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Get Started</button>
                 </Link>
               )}
@@ -464,7 +464,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   className="w-full px-4 py-2 font-medium rounded-lg"
                 />
               ) : (
-                <Link href="/auth/signin">
+                <Link href="/api/auth/signin">
                   <button className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Access Community</button>
                 </Link>
               )}
@@ -660,7 +660,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       }}
                     />
                   ) : (
-                    <Link href="/auth/signin">
+                    <Link href="/api/auth/signin">
                       <button
                         className="px-4 py-2 rounded-lg"
                         style={{ backgroundColor: greenColor, color: bgPrimary }}
