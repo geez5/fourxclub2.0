@@ -1,6 +1,9 @@
 import { handlers } from "@/lib/auth"
 
+console.log("📍 [ROUTE] Auth route handler loaded")
+
 export const { GET, POST } = handlers
 
-// Force dynamic to prevent static generation issues
 export const dynamic = "force-dynamic"
+
+console.log("✅ [ROUTE] Auth handlers exported")
