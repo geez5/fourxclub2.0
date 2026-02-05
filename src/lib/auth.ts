@@ -8,8 +8,26 @@ import { authConfig } from "./auth.config";
 // This file initializes the DB adapter.
 // Do NOT import this in Middleware.
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
-    adapter: PrismaAdapter(prisma),
-    session: { strategy: "database" },
-    ...authConfig,
-});
+// Log database connection status
+console.log("🔐 Initializing NextAuth with Prisma adapter...");
+console.log("📊 DATABASE_URL present:", !!process.env.DATABASE_URL);
+
+let authExport;
+try {
+    authExport = NextAuth({
+        adapter: PrismaAdapter(prisma),
+        session: { strategy: "database" },
+        ...authConfig,
+    });
+    console.log("✅ NextAuth initialized successfully");
+} catch (error) {
+    console.error("❌ Failed to initialize NextAuth:", error);
+    // Fallback to JWT sessions if database adapter fails
+    authExport = NextAuth({
+        session: { strategy: "jwt" },
+        ...authConfig,
+    });
+    console.log("⚠️ Falling back to JWT sessions");
+}
+
+export const { handlers, auth, signIn, signOut } = authExport;

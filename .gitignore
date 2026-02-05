@@ -2,7 +2,8 @@
 .env
 .env.local
 .env*.local
-.env.production 
+.env.production
+!.env.example
 node_modules/
 .next/
 out/
@@ -14,10 +15,6 @@ dist/
 .vercel
 
 /src/generated/prisma
-.env
-.env.local
-.env.production
-.env.*.local
 
 # Database
 prisma/dev.db

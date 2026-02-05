@@ -5,11 +5,37 @@ import type { NextAuthConfig } from "next-auth";
 // ⚠️ EDGE RUNTIME COMPATIBLE CONF ⚠️
 // Do not import Prisma here!
 
+// Environment variable validation
+const googleClientId = process.env.GOOGLE_CLIENT_ID || "";
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
+// NextAuth v5 uses AUTH_SECRET or NEXTAUTH_SECRET, fallback to JWT_SECRET for backwards compatibility
+const nextAuthSecret = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET || "";
+
+// Log warnings for missing environment variables (only once at startup)
+if (typeof window === "undefined") {
+    if (!googleClientId) {
+        console.error("❌ MISSING: GOOGLE_CLIENT_ID environment variable");
+    }
+    if (!googleClientSecret) {
+        console.error("❌ MISSING: GOOGLE_CLIENT_SECRET environment variable");
+    }
+    if (!nextAuthSecret) {
+        console.error("❌ MISSING: AUTH_SECRET/NEXTAUTH_SECRET/JWT_SECRET - one of these is required");
+    } else {
+        const secretSource = process.env.AUTH_SECRET ? "AUTH_SECRET" :
+            process.env.NEXTAUTH_SECRET ? "NEXTAUTH_SECRET" : "JWT_SECRET";
+        console.log(`✅ Using ${secretSource} for auth secret`);
+    }
+    if (!process.env.NEXTAUTH_URL && !process.env.AUTH_URL) {
+        console.warn("⚠️ NEXTAUTH_URL not set - relying on request headers for URL detection");
+    }
+}
+
 export const authConfig = {
     providers: [
         Google({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+            clientId: googleClientId,
+            clientSecret: googleClientSecret,
             authorization: {
                 params: {
                     prompt: "consent",
@@ -19,8 +45,13 @@ export const authConfig = {
             },
         }),
     ],
-    secret: process.env.NEXTAUTH_SECRET,
-    debug: true, // process.env.NODE_ENV === "development",
+    secret: nextAuthSecret,
+    trustHost: true, // Required for Railway/proxy deployments
+    debug: process.env.NODE_ENV === "development",
+    pages: {
+        signIn: "/", // Redirect to home page for sign in
+        error: "/", // Redirect errors to home page
+    },
     callbacks: {
         async signIn({ user, account, profile }) {
             console.log("👉 SIGNIN CALLBACK", { user, account, profile });
