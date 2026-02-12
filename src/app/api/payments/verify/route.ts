@@ -40,7 +40,9 @@ export async function POST(req: Request) {
             try {
                 const order = await razorpay.orders.fetch(razorpay_order_id);
                 const orderType = (order.notes as Record<string, string>)?.type;
-                type = orderType === 'combo' ? 'combo' : 'course';
+                if (orderType === 'combo' || orderType === 'discord_subscription' || orderType === 'course') {
+                    type = orderType;
+                }
             } catch {
                 type = 'course';
             }

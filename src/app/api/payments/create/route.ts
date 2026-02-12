@@ -46,32 +46,29 @@ export async function POST(req: Request) {
             });
         }
 
-        // Discord Subscription (Recurring)
+        // Discord Community Access (One-time ₹2000)
         if (type === "discord_subscription") {
-            // PLAN ID IS REQUIRED FOR SUBSCRIPTIONS
-            // You must create a plan in Razorpay Dashboard and add it to .env
-            const planId = process.env.RAZORPAY_PLAN_ID || "plan_OVjg4s7k0r2M6J";
-
-            if (!planId) {
-                console.error("RAZORPAY_PLAN_ID is missing in environment variables");
-                return NextResponse.json({ error: "Server configuration error: Missing Plan ID" }, { status: 500 });
-            }
-
-            const subscription = await razorpay.subscriptions.create({
-                plan_id: planId,
-                customer_notify: 1,
-                total_count: 120, // 10 years (indefinite roughly)
+            const amount = 2000 * 100; // INR 2000 in paise
+            const options = {
+                amount: amount.toString(),
+                currency: "INR",
+                receipt: `rcpt_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+                payment_capture: 1,
                 notes: {
                     userId: session.user.id,
                     type: "discord_subscription",
                 },
-            });
+            };
+
+            const order = await razorpay.orders.create(options);
 
             return NextResponse.json({
                 success: true,
-                subscriptionId: subscription.id,
+                orderId: order.id,
+                amount: order.amount,
+                currency: order.currency,
                 keyId: process.env.RAZORPAY_KEY_ID,
-                method: "subscription",
+                method: "order",
                 prefill: {
                     name: session.user.name,
                     email: session.user.email
