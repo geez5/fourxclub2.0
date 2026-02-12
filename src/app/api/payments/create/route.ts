@@ -79,6 +79,36 @@ export async function POST(req: Request) {
             });
         }
 
+        // Combo Package (Course + Discord, One-time)
+        if (type === "combo") {
+            const amount = 2499 * 100; // INR 2499 in paise
+            const options = {
+                amount: amount.toString(),
+                currency: "INR",
+                receipt: `rcpt_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+                payment_capture: 1,
+                notes: {
+                    userId: session.user.id,
+                    type: "combo",
+                },
+            };
+
+            const order = await razorpay.orders.create(options);
+
+            return NextResponse.json({
+                success: true,
+                orderId: order.id,
+                amount: order.amount,
+                currency: order.currency,
+                keyId: process.env.RAZORPAY_KEY_ID,
+                method: "order",
+                prefill: {
+                    name: session.user.name,
+                    email: session.user.email
+                }
+            });
+        }
+
         return NextResponse.json({ error: "Invalid payment type" }, { status: 400 });
 
     } catch (error: any) {

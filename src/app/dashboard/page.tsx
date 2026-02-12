@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense, useCallback } from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import RazorpayCheckout from '@/components/RazorpayCheckout';
@@ -50,7 +50,7 @@ function DashboardContent() {
         if (status === 'loading') return;
 
         if (status === 'unauthenticated') {
-            router.push('/api/auth/signin');
+            signIn('google');
             return;
         }
 

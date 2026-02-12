@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import RazorpayCheckout from './RazorpayCheckout';
 
 interface HomePageClientProps {
@@ -109,16 +110,12 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 </Link>
               ) : (
                 <>
-                  <Link href="/api/auth/signin">
-                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:opacity-80" style={{ color: textLight }}>
-                      Sign In
-                    </button>
-                  </Link>
-                  <Link href="/api/auth/signin">
-                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2" style={{ backgroundColor: greenColor, color: bgPrimary }}>
-                      Get Started <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </Link>
+                  <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:opacity-80" style={{ color: textLight }}>
+                    Sign In
+                  </button>
+                  <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2" style={{ backgroundColor: greenColor, color: bgPrimary }}>
+                    Get Started <ArrowRight className="w-4 h-4" />
+                  </button>
                 </>
               )}
             </div>
@@ -157,15 +154,14 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 Join Now
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <Link href="/api/auth/signin?pdf=true">
-                <button
-                  className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors"
-                  style={{ backgroundColor: greenColor, color: bgPrimary }}
-                >
-                  Claim your 1st FREE PDF to kickstart your journey
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </Link>
+              <button
+                onClick={() => signIn('google')}
+                className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors"
+                style={{ backgroundColor: greenColor, color: bgPrimary }}
+              >
+                Claim your 1st FREE PDF to kickstart your journey
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
 
             {/* Social Proof */}
@@ -281,9 +277,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         </button>
                       )
                     ) : (
-                      <Link href="/api/auth/signin">
-                        <button className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Enroll Now</button>
-                      </Link>
+                      <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Enroll Now</button>
                     )}
                   </div>
                 </div>
@@ -360,7 +354,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       <div className="flex items-center gap-3">
                         <div className="flex-1 p-3 rounded-lg font-mono text-sm" style={{ backgroundColor: bgPrimary, color: purpleColor }}>{refCode}</div>
                         <button onClick={generateCode} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: greenColor, color: bgPrimary }}>Generate</button>
-                        <button onClick={copyCode} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ border: `1px solid ${borderColor}`, color: textLight }}>Copy</button>
+                        <button onClick={copyCode} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors" style={{ border: `1px solid ${borderColor}`, color: copied ? bgPrimary : textLight, backgroundColor: copied ? greenColor : 'transparent' }}>{copied ? 'Copied!' : 'Copy'}</button>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -426,9 +420,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   />
                 )
               ) : (
-                <Link href="/api/auth/signin">
-                  <button className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Get Started</button>
-                </Link>
+                <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Get Started</button>
               )}
             </div>
 
@@ -458,9 +450,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   className="w-full px-4 py-2 font-medium rounded-lg"
                 />
               ) : (
-                <Link href="/api/auth/signin">
-                  <button className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Access Community</button>
-                </Link>
+                <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Access Community</button>
               )}
             </div>
 
@@ -486,16 +476,24 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowCourseModal(true);
-                }}
-                className="w-full px-4 py-2 font-medium rounded-lg"
-                style={{ backgroundColor: greenColor, color: bgPrimary, boxShadow: `0 10px 25px -5px ${greenColor}50` }}
-              >
-                Get Full Access
-              </button>
+              {isAuthenticated ? (
+                <RazorpayCheckout
+                  type="combo"
+                  buttonText="Get Full Access"
+                  className="w-full px-4 py-2 font-medium rounded-lg"
+                  onSuccess={() => {
+                    setHasCourseAccess(true);
+                  }}
+                />
+              ) : (
+                <button
+                  onClick={() => signIn('google')}
+                  className="w-full px-4 py-2 font-medium rounded-lg"
+                  style={{ backgroundColor: greenColor, color: bgPrimary, boxShadow: `0 10px 25px -5px ${greenColor}50` }}
+                >
+                  Get Full Access
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -640,14 +638,13 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       }}
                     />
                   ) : (
-                    <Link href="/api/auth/signin">
-                      <button
-                        className="px-4 py-2 rounded-lg"
-                        style={{ backgroundColor: greenColor, color: bgPrimary }}
-                      >
-                        Sign in to Purchase
-                      </button>
-                    </Link>
+                    <button
+                      onClick={() => signIn('google')}
+                      className="px-4 py-2 rounded-lg"
+                      style={{ backgroundColor: greenColor, color: bgPrimary }}
+                    >
+                      Sign in to Purchase
+                    </button>
                   )}
                 </div>
               ) : (

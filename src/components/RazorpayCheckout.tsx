@@ -44,7 +44,7 @@ declare global {
 }
 
 interface RazorpayCheckoutProps {
-    type: 'course' | 'discord_subscription'
+    type: 'course' | 'discord_subscription' | 'combo'
     buttonText?: string
     className?: string
     onSuccess?: () => void
@@ -70,7 +70,7 @@ export default function RazorpayCheckout({
         }
     }, [])
 
-    const defaultButtonText = type === 'course' ? 'Buy Course - ₹1,499' : 'Subscribe - ₹2,000/month'
+    const defaultButtonText = type === 'course' ? 'Buy Course - ₹1,499' : type === 'combo' ? 'Get Full Access - ₹2,499' : 'Subscribe - ₹2,000/month'
 
     const handlePayment = async () => {
         // Double check script availability
@@ -116,7 +116,7 @@ export default function RazorpayCheckout({
                 amount: amount,
                 currency: 'INR',
                 name: 'FourX Club',
-                description: type === 'course' ? 'Trading Course Access' : 'Discord Community Subscription',
+                description: type === 'course' ? 'Trading Course Access' : type === 'combo' ? 'Complete Trading Setup (Course + Discord)' : 'Discord Community Subscription',
                 image: '/fxclogo.webp',
                 prefill: {
                     name: prefill?.name || '',
