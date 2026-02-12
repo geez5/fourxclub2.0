@@ -1,5 +1,7 @@
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "./prisma"
 
 // Get secret from multiple possible env var names
 const authSecret = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET
@@ -17,6 +19,7 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+    adapter: PrismaAdapter(prisma),
     providers: [
         Google({
             clientId: process.env.GOOGLE_CLIENT_ID || "",
