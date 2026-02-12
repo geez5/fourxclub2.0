@@ -17,7 +17,7 @@ interface HomePageClientProps {
 export default function HomePageClient({ isAuthenticated }: HomePageClientProps) {
   const [refCode, setRefCode] = useState('REF-XXXXX');
   const [copied, setCopied] = useState(false);
-  const [showTerms, setShowTerms] = useState(false);
+
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [hasCourseAccess, setHasCourseAccess] = useState(false);
 
@@ -42,13 +42,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') setShowTerms(false);
-    }
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
+
 
   useEffect(() => {
     // Wrap in a microtask to avoid synchronous state updates during render
@@ -551,7 +545,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div>
               <h4 className="font-semibold mb-4" style={{ color: purpleColor }}>Legal</h4>
               <ul className="space-y-2 text-sm">
-                <li><button onClick={() => setShowTerms(true)} style={{ color: textMuted }}>Terms &amp; conditions</button></li>
+                <li><Link href="/terms" className="transition-opacity hover:opacity-80" style={{ color: textMuted }}>Terms & Conditions</Link></li>
+                <li><Link href="/privacy" className="transition-opacity hover:opacity-80" style={{ color: textMuted }}>Privacy Policy</Link></li>
               </ul>
             </div>
           </div>
@@ -565,86 +560,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         </div>
       </footer>
 
-      {/* Terms Modal */}
-      {showTerms && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-6 sm:p-10">
-          <div className="absolute inset-0 bg-black/80" onClick={() => setShowTerms(false)} />
-          <div className="relative z-10 max-w-3xl w-full rounded-xl shadow-xl overflow-hidden" style={{ backgroundColor: bgCard }}>
-            <div className="flex items-center justify-between p-6" style={{ borderBottom: `1px solid ${borderColor}` }}>
-              <h2 className="text-xl font-bold" style={{ color: greenColor }}>Terms &amp; Conditions</h2>
-              <button onClick={() => setShowTerms(false)} className="text-sm px-3 py-1 rounded" style={{ color: textLight }}>Close</button>
-            </div>
-            <div className="p-6 max-h-[70vh] overflow-y-auto text-sm leading-relaxed" style={{ color: textLight }}>
-              <p className="font-semibold" style={{ color: purpleColor }}>Last Updated: January 2026</p>
-              <p className="mt-4">Welcome to FourXclub. These Terms & Conditions ("Terms") govern your access to and use of our website, courses, live sessions, and community platform. By accessing or using FourXclub, you acknowledge that you have read, understood, and agreed to be bound by these Terms. If you do not agree, please do not use the platform.
 
-1. Nature of Services
-FourXclub is an educational and awareness-based platform focused on trading concepts, market understanding, and skill development. All content, discussions, sessions, and interactions are provided solely for educational and informational purposes.
-
-FourXclub does not provide:
-
-Investment advice
-Financial advice
-Trading recommendations
-Portfolio management services
-Guaranteed strategies or profit assurances
-2. Market Risk Disclosure
-Trading in financial markets involves substantial risk and may result in partial or complete loss of capital. Market conditions are volatile and unpredictable.
-
-Trading outcomes vary for every individual
-Past performance is not indicative of future results
-You may lose more than your initial investment
-3. User Responsibility
-All trading decisions made by you are entirely your own responsibility. FourXclub shall not be held responsible for any trading losses, missed opportunities, or financial outcomes resulting from the use of information shared on the platform.
-
-You are encouraged to consult a SEBI-registered financial advisor before making any investment or trading decisions.
-
-4. Live Trading Sessions Disclaimer
-Live trading sessions conducted on FourXclub are for educational demonstration purposes only. These sessions are intended to explain market behavior, trade planning, and execution logic.
-
-They should not be considered trade signals, buy/sell instructions, or investment advice. Users are strongly advised not to blindly copy trades.
-
-5. One-on-One Interaction Disclaimer
-Any one-on-one discussions, chats, or interactions with experienced traders or mentors are intended solely for knowledge sharing and educational guidance and do not constitute personalized financial advice.
-
-6. No Guarantee of Results
-FourXclub makes no guarantees regarding profits, income, trading success, or skill outcomes. Success depends on multiple factors including discipline, risk management, psychology, and market conditions.
-
-7. Community Rules & Conduct
-To maintain a focused and safe learning environment, users agree to:
-
-Avoid spam, promotions, or signal selling
-Not make false or guaranteed profit claims
-Maintain respectful and professional conduct
-Not share misleading or illegal content
-FourXclub reserves the right to moderate, suspend, or terminate access to any user violating these rules without prior notice.
-
-8. Subscription, Pricing & Free Trial
-Community access is provided on a monthly subscription basis
-The subscription fee is ₹2,000 per month, subject to change
-The first month may be offered free at the discretion of FourXclub
-Subscription fees, once charged, are non-refundable unless stated otherwise
-9. Intellectual Property
-All content including videos, live sessions, documents, graphics, and learning material are the intellectual property of FourXclub. Users are strictly prohibited from screen recording, redistributing content, sharing login credentials, or republishing material without written permission. Violation may result in termination of access and legal action.
-
-10. Limitation of Liability
-To the maximum extent permitted by law, FourXclub and its affiliates shall not be liable for any direct or indirect losses, damages, emotional distress, or financial consequences arising from the use of the platform.
-
-11. Termination of Access
-FourXclub reserves the right to suspend or terminate access at any time, without notice, for violations of these Terms or misuse of the platform.
-
-12. Governing Law
-These Terms shall be governed by the laws of India. Any disputes shall be subject to the jurisdiction of Indian courts.
-
-13. Acknowledgement
-By using FourXclub, you acknowledge that you understand the risks involved in trading and that you are solely responsible for your actions and decisions. If you do not agree with any part of these Terms, please discontinue use of the platform immediately.
-
-
-FourXclub does not facilitate, recommend, or assist in accessing any broker, exchange, trading platform, or financial service provider. Any instruments, markets, or trading examples discussed on the platform are for educational illustration only and may not be permitted for trading by residents of certain jurisdictions, including India. Users are solely responsible for ensuring that any trading activity they undertake complies with applicable laws, regulations, and guidelines, including those issued by the RBI, FEMA, and SEBI. FourXclub bears no responsibility for the legality, compliance, or consequences of users’ trading activities.</p>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Course Modal */}
       {showCourseModal && (
