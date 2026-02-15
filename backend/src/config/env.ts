@@ -1,6 +1,13 @@
-import dotenv from 'dotenv'
 
-dotenv.config()
+import dotenv from 'dotenv'
+import path from 'path'
+
+// Resolve .env path relative to this file
+// src/config/env.ts -> ../../.env
+const envPath = path.resolve(__dirname, '../../.env')
+
+dotenv.config({ path: envPath })
+
 
 export const config = {
     port: parseInt(process.env.PORT || '5000', 10),
@@ -42,6 +49,12 @@ export const config = {
 
     // Admin
     adminEmail: process.env.ADMIN_EMAIL || 'hello.fourxclub@gmail.com',
+
+    // Email (Resend)
+    email: {
+        resendApiKey: process.env.RESEND_API_KEY!,
+        fromEmail: process.env.FROM_EMAIL || 'onboarding@resend.dev',
+    },
 }
 
 // Validate required env vars

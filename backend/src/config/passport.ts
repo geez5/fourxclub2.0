@@ -2,6 +2,7 @@ import passport from 'passport'
 import { Strategy as GoogleStrategy, Profile } from 'passport-google-oauth20'
 import { config } from './env.js'
 import { prisma } from './prisma.js'
+import { sendWelcomeEmail } from '../services/email.service.js'
 
 // Generate a unique referral code
 function generateReferralCode(): string {
@@ -57,6 +58,12 @@ passport.use(
                                 },
                             },
                         },
+                    })
+
+                    // Send welcome email with PDF
+                    // Don't await to avoid blocking the auth flow
+                    sendWelcomeEmail(email, user.name || 'Trader').catch(err => {
+                        console.error('Failed to send welcome email:', err)
                     })
                 } else {
                     // Update existing user's account if needed
