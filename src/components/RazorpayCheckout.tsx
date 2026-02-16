@@ -128,7 +128,6 @@ export default function RazorpayCheckout({
                 modal: {
                     ondismiss: () => setLoading(false),
                 },
-                //commit
                 handler: async (response: RazorpayResponse) => {
                     try {
                         setLoading(true) // Set loading during verification
