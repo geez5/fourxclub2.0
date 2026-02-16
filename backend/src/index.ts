@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 // CORS configuration
 app.use(
     cors({
-        origin: [config.frontendUrl, 'http://localhost:3000'],
+        origin: [config.frontendUrl, 'http://localhost:3000', 'https://fourxclub.com'],
         credentials: true,
     })
 )
