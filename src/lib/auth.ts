@@ -35,6 +35,36 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     callbacks: {
         async signIn({ user, account }) {
             console.log("[AUTH] SignIn callback:", user.email)
+
+            // Check if user is signing in for the first time
+            if (user.email) {
+                try {
+                    const existingUser = await prisma.user.findUnique({
+                        where: { email: user.email },
+                    })
+
+                    if (!existingUser) {
+                        // New user — send welcome email after a short delay
+                        // to allow PrismaAdapter to create the user record first
+                        console.log("[AUTH] New user detected, will send welcome email to:", user.email)
+                        const email = user.email
+                        const name = user.name || "Trader"
+
+                        // Import and send email asynchronously (don't block sign-in)
+                        import("./email").then(({ sendWelcomeEmail }) => {
+                            sendWelcomeEmail(email, name).catch(err => {
+                                console.error("[AUTH] Failed to send welcome email:", err)
+                            })
+                        }).catch(err => {
+                            console.error("[AUTH] Failed to import email module:", err)
+                        })
+                    }
+                } catch (err) {
+                    // Don't block sign-in if email check fails
+                    console.error("[AUTH] Error checking for existing user:", err)
+                }
+            }
+
             return true
         },
         async jwt({ token, user }) {
