@@ -44,7 +44,7 @@ declare global {
 }
 
 interface RazorpayCheckoutProps {
-    type: 'course' | 'discord_subscription'
+    type: 'course' | 'discord_subscription' | 'combo'
     buttonText?: string
     className?: string
     onSuccess?: () => void
@@ -70,7 +70,7 @@ export default function RazorpayCheckout({
         }
     }, [])
 
-    const defaultButtonText = type === 'course' ? 'Buy Course - ₹1,499' : 'Subscribe - ₹2,000/month'
+    const defaultButtonText = type === 'course' ? 'Buy Course - ₹1,499' : type === 'combo' ? 'Get Full Access - ₹2,499' : 'Subscribe - ₹2,000/month'
 
     const handlePayment = async () => {
         // Double check script availability
@@ -88,9 +88,7 @@ export default function RazorpayCheckout({
 
         try {
             const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-            if (session?.user?.backendToken) {
-                headers['Authorization'] = `Bearer ${session.user.backendToken}`
-            }
+            // Cookie-based auth is used automatically via credentials: 'include'
 
             // 1. Create Order or Subscription on backend
             const response = await fetch(`/api/payments/create`, {
@@ -118,7 +116,7 @@ export default function RazorpayCheckout({
                 amount: amount,
                 currency: 'INR',
                 name: 'FourX Club',
-                description: type === 'course' ? 'Trading Course Access' : 'Discord Community Subscription',
+                description: type === 'course' ? 'Trading Course Access' : type === 'combo' ? 'Complete Trading Setup (Course + Discord)' : 'Discord Community Subscription',
                 image: '/fxclogo.webp',
                 prefill: {
                     name: prefill?.name || '',
@@ -130,6 +128,7 @@ export default function RazorpayCheckout({
                 modal: {
                     ondismiss: () => setLoading(false),
                 },
+                //commit
                 handler: async (response: RazorpayResponse) => {
                     try {
                         setLoading(true) // Set loading during verification

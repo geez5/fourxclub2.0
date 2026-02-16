@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import {
+    razorpay,
     verifyRazorpaySignature,
     verifySubscriptionSignature
 } from "@/lib/razorpay";
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
         } = body;
 
         let verified = false;
-        let type: 'course' | 'discord_subscription' = 'course';
+        let type: 'course' | 'discord_subscription' | 'combo' = 'course';
 
         // Verify Signature
         if (razorpay_subscription_id) {
@@ -35,8 +36,16 @@ export async function POST(req: Request) {
                 razorpay_signature
             );
         } else if (razorpay_order_id) {
-            // One-time Order Verification
-            type = 'course';
+            // One-time Order Verification — check notes to determine if combo
+            try {
+                const order = await razorpay.orders.fetch(razorpay_order_id);
+                const orderType = (order.notes as Record<string, string>)?.type;
+                if (orderType === 'combo' || orderType === 'discord_subscription' || orderType === 'course') {
+                    type = orderType;
+                }
+            } catch {
+                type = 'course';
+            }
             verified = verifyRazorpaySignature(
                 razorpay_order_id,
                 razorpay_payment_id,
@@ -53,11 +62,12 @@ export async function POST(req: Request) {
         await prisma.$transaction(async (tx) => {
 
             // 1. Record the Payment
+            const amountMap = { course: 1499.00, discord_subscription: 2000.00, combo: 2499.00 };
             await tx.payment.create({
                 data: {
                     userId: session.user.id,
                     type,
-                    amount: type === 'course' ? 1499.00 : 2000.00, // Hardcoded for safety or pass from frontend if verified
+                    amount: amountMap[type],
                     status: 'completed',
                     razorpayPaymentId: razorpay_payment_id,
                     razorpayOrderId: razorpay_order_id,
@@ -67,7 +77,7 @@ export async function POST(req: Request) {
             });
 
             // 2. Grant Access
-            if (type === 'course') {
+            if (type === 'course' || type === 'combo') {
                 await tx.courseAccess.upsert({
                     where: { userId: session.user.id },
                     update: {
@@ -81,7 +91,9 @@ export async function POST(req: Request) {
                         purchasedAt: new Date(),
                     }
                 });
-            } else if (type === 'discord_subscription') {
+            }
+
+            if (type === 'discord_subscription' || type === 'combo') {
                 // Calculate expiry (1 month from now)
                 const expiresAt = new Date();
                 expiresAt.setMonth(expiresAt.getMonth() + 1);

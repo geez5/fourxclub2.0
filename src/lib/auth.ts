@@ -1,57 +1,57 @@
+import NextAuth from "next-auth"
+import Google from "next-auth/providers/google"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "./prisma"
 
-import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { prisma } from "@/lib/prisma";
-import { authConfig } from "./auth.config";
+// Get secret from multiple possible env var names
+const authSecret = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET
 
-// ⚠️ NODE.JS ONLY ⚠️
-// This file initializes the DB adapter.
-// Do NOT import this in Middleware.
+// Validate required env vars at startup
+if (!authSecret) {
+    console.error("❌ [AUTH] CRITICAL: No auth secret found! Set AUTH_SECRET or NEXTAUTH_SECRET in your .env.local file.")
+    console.error("   Generate one with: openssl rand -base64 32")
+}
 
-console.log("🔐 Initializing NextAuth...");
-console.log("📊 DATABASE_URL present:", !!process.env.DATABASE_URL);
-console.log("🌍 NODE_ENV:", process.env.NODE_ENV);
+if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    console.warn("⚠️ [AUTH] Google OAuth credentials missing. Google login will not work.")
+    console.warn("   Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in your .env.local file.")
+    console.warn("   Get them from: https://console.cloud.google.com/apis/credentials")
+}
 
-// Use JWT sessions in production for reliability
-// Database sessions can cause issues with cold starts and connection pooling
-const useJwtSessions = process.env.USE_JWT_SESSIONS === "true" || process.env.NODE_ENV === "production";
-
-const authOptions = useJwtSessions
-    ? {
-        // JWT sessions - more reliable for serverless/Railway
-        session: { strategy: "jwt" as const },
-        ...authConfig,
-        callbacks: {
-            ...authConfig.callbacks,
-            // Store user ID in JWT token
-            async jwt({ token, user, account }: any) {
-                if (user) {
-                    token.id = user.id;
-                }
-                if (account) {
-                    token.accessToken = account.access_token;
-                }
-                console.log("👉 JWT CALLBACK", { tokenId: token.id });
-                return token;
-            },
-            // Add user ID to session
-            async session({ session, token }: any) {
-                if (session.user && token.id) {
-                    session.user.id = token.id as string;
-                }
-                console.log("👉 SESSION CALLBACK", { userId: session.user?.id });
-                return session;
-            },
+export const { handlers, auth, signIn, signOut } = NextAuth({
+    adapter: PrismaAdapter(prisma),
+    providers: [
+        Google({
+            clientId: process.env.GOOGLE_CLIENT_ID || "",
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+        }),
+    ],
+    secret: authSecret,
+    trustHost: true,
+    session: {
+        strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60,
+    },
+    callbacks: {
+        async signIn({ user, account }) {
+            console.log("[AUTH] SignIn callback:", user.email)
+            return true
         },
-    }
-    : {
-        // Database sessions - for development
-        adapter: PrismaAdapter(prisma),
-        session: { strategy: "database" as const },
-        ...authConfig,
-    };
-
-console.log("📋 Session strategy:", useJwtSessions ? "JWT" : "database");
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
-console.log("✅ NextAuth initialized");
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id
+                token.email = user.email
+                token.name = user.name
+                token.picture = user.image
+            }
+            return token
+        },
+        async session({ session, token }) {
+            if (session.user) {
+                session.user.id = (token.sub || token.id) as string
+            }
+            return session
+        },
+    },
+    debug: process.env.NODE_ENV === "development",
+})

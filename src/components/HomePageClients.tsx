@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import RazorpayCheckout from './RazorpayCheckout';
 
 interface HomePageClientProps {
@@ -17,7 +18,7 @@ interface HomePageClientProps {
 export default function HomePageClient({ isAuthenticated }: HomePageClientProps) {
   const [refCode, setRefCode] = useState('REF-XXXXX');
   const [copied, setCopied] = useState(false);
-  const [showTerms, setShowTerms] = useState(false);
+
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [hasCourseAccess, setHasCourseAccess] = useState(false);
 
@@ -42,13 +43,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') setShowTerms(false);
-    }
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
+
 
   useEffect(() => {
     // Wrap in a microtask to avoid synchronous state updates during render
@@ -115,16 +110,12 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 </Link>
               ) : (
                 <>
-                  <Link href="/api/auth/signin">
-                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:opacity-80" style={{ color: textLight }}>
-                      Sign In
-                    </button>
-                  </Link>
-                  <Link href="/api/auth/signin">
-                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2" style={{ backgroundColor: greenColor, color: bgPrimary }}>
-                      Get Started <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </Link>
+                  <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:opacity-80" style={{ color: textLight }}>
+                    Sign In
+                  </button>
+                  <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2" style={{ backgroundColor: greenColor, color: bgPrimary }}>
+                    Get Started <ArrowRight className="w-4 h-4" />
+                  </button>
                 </>
               )}
             </div>
@@ -163,15 +154,14 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 Join Now
                 <ArrowRight className="w-4 h-4" />
               </button>
-              <Link href="/api/auth/signin?pdf=true">
-                <button
-                  className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors"
-                  style={{ backgroundColor: greenColor, color: bgPrimary }}
-                >
-                  Claim your 1st FREE PDF to kickstart your journey
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </Link>
+              <button
+                onClick={() => signIn('google')}
+                className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors"
+                style={{ backgroundColor: greenColor, color: bgPrimary }}
+              >
+                Claim your 1st FREE PDF to kickstart your journey
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
 
             {/* Social Proof */}
@@ -287,9 +277,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         </button>
                       )
                     ) : (
-                      <Link href="/api/auth/signin">
-                        <button className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Enroll Now</button>
-                      </Link>
+                      <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Enroll Now</button>
                     )}
                   </div>
                 </div>
@@ -366,7 +354,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       <div className="flex items-center gap-3">
                         <div className="flex-1 p-3 rounded-lg font-mono text-sm" style={{ backgroundColor: bgPrimary, color: purpleColor }}>{refCode}</div>
                         <button onClick={generateCode} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: greenColor, color: bgPrimary }}>Generate</button>
-                        <button onClick={copyCode} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ border: `1px solid ${borderColor}`, color: textLight }}>Copy</button>
+                        <button onClick={copyCode} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors" style={{ border: `1px solid ${borderColor}`, color: copied ? bgPrimary : textLight, backgroundColor: copied ? greenColor : 'transparent' }}>{copied ? 'Copied!' : 'Copy'}</button>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -432,9 +420,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   />
                 )
               ) : (
-                <Link href="/api/auth/signin">
-                  <button className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Get Started</button>
-                </Link>
+                <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Get Started</button>
               )}
             </div>
 
@@ -464,9 +450,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   className="w-full px-4 py-2 font-medium rounded-lg"
                 />
               ) : (
-                <Link href="/api/auth/signin">
-                  <button className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Access Community</button>
-                </Link>
+                <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Access Community</button>
               )}
             </div>
 
@@ -492,16 +476,24 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setShowCourseModal(true);
-                }}
-                className="w-full px-4 py-2 font-medium rounded-lg"
-                style={{ backgroundColor: greenColor, color: bgPrimary, boxShadow: `0 10px 25px -5px ${greenColor}50` }}
-              >
-                Get Full Access
-              </button>
+              {isAuthenticated ? (
+                <RazorpayCheckout
+                  type="combo"
+                  buttonText="Get Full Access"
+                  className="w-full px-4 py-2 font-medium rounded-lg"
+                  onSuccess={() => {
+                    setHasCourseAccess(true);
+                  }}
+                />
+              ) : (
+                <button
+                  onClick={() => signIn('google')}
+                  className="w-full px-4 py-2 font-medium rounded-lg"
+                  style={{ backgroundColor: greenColor, color: bgPrimary, boxShadow: `0 10px 25px -5px ${greenColor}50` }}
+                >
+                  Get Full Access
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -551,7 +543,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div>
               <h4 className="font-semibold mb-4" style={{ color: purpleColor }}>Legal</h4>
               <ul className="space-y-2 text-sm">
-                <li><button onClick={() => setShowTerms(true)} style={{ color: textMuted }}>Terms &amp; conditions</button></li>
+                <li><Link href="/terms" className="transition-opacity hover:opacity-80" style={{ color: textMuted }}>Terms & Conditions</Link></li>
+                <li><Link href="/privacy" className="transition-opacity hover:opacity-80" style={{ color: textMuted }}>Privacy Policy</Link></li>
               </ul>
             </div>
           </div>
@@ -565,22 +558,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         </div>
       </footer>
 
-      {/* Terms Modal */}
-      {showTerms && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center p-6 sm:p-10">
-          <div className="absolute inset-0 bg-black/80" onClick={() => setShowTerms(false)} />
-          <div className="relative z-10 max-w-3xl w-full rounded-xl shadow-xl overflow-hidden" style={{ backgroundColor: bgCard }}>
-            <div className="flex items-center justify-between p-6" style={{ borderBottom: `1px solid ${borderColor}` }}>
-              <h2 className="text-xl font-bold" style={{ color: greenColor }}>Terms &amp; Conditions</h2>
-              <button onClick={() => setShowTerms(false)} className="text-sm px-3 py-1 rounded" style={{ color: textLight }}>Close</button>
-            </div>
-            <div className="p-6 max-h-[70vh] overflow-y-auto text-sm leading-relaxed" style={{ color: textLight }}>
-              <p className="font-semibold" style={{ color: purpleColor }}>Last Updated: January 2026</p>
-              <p className="mt-4">Welcome to FourXclub. These Terms govern your access to and use of our website, courses, and community platform.</p>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Course Modal */}
       {showCourseModal && (
@@ -660,14 +638,13 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       }}
                     />
                   ) : (
-                    <Link href="/api/auth/signin">
-                      <button
-                        className="px-4 py-2 rounded-lg"
-                        style={{ backgroundColor: greenColor, color: bgPrimary }}
-                      >
-                        Sign in to Purchase
-                      </button>
-                    </Link>
+                    <button
+                      onClick={() => signIn('google')}
+                      className="px-4 py-2 rounded-lg"
+                      style={{ backgroundColor: greenColor, color: bgPrimary }}
+                    >
+                      Sign in to Purchase
+                    </button>
                   )}
                 </div>
               ) : (

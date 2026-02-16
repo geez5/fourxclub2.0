@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import AdminDashboard from '@/components/admin/AdminDashboard'
 
-const ADMIN_EMAIL = 'hello@fourxclub.in'
+const ADMIN_EMAIL = 'hello.fourxclub@gmail.com'
 
 export default async function AdminPage() {
   const session = await auth()
