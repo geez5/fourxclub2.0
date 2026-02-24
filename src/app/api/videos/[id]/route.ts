@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { courseVideos, generateBunnyEmbedUrl } from "@/lib/bunny";
+import { fetchBunnyVideoById } from "@/lib/bunny";
 
 export async function GET(
     req: Request,
@@ -28,18 +28,20 @@ export async function GET(
             );
         }
 
-        // Find the requested video
+        // Parse video ID
         const { id } = await params;
         const videoId = parseInt(id, 10);
 
-        if (isNaN(videoId)) {
+        if (isNaN(videoId) || videoId < 1) {
             return NextResponse.json(
                 { error: "Invalid video ID" },
                 { status: 400 }
             );
         }
 
-        const video = courseVideos.find((v) => v.id === videoId);
+        // Fetch video from Bunny API
+        const video = await fetchBunnyVideoById(videoId);
+
         if (!video) {
             return NextResponse.json(
                 { error: "Video not found" },
@@ -47,16 +49,13 @@ export async function GET(
             );
         }
 
-        // Generate the Bunny embed URL
-        const embedUrl = generateBunnyEmbedUrl(video.bunnyId);
-
         return NextResponse.json({
             video: {
                 id: video.id,
                 title: video.title,
                 description: video.description,
                 duration: video.duration,
-                embedUrl,
+                embedUrl: video.embedUrl,
                 thumbnail: video.thumbnail,
             },
         });

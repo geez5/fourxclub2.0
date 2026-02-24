@@ -1,112 +1,126 @@
 // src/lib/bunny.ts
-// Bunny.net video access and integration library
+// Bunny.net Stream API integration — fetches videos from the Bunny API
+
+const BUNNY_API_BASE = 'https://video.bunnycdn.com';
+
+export interface BunnyVideo {
+  videoLibraryId: number;
+  guid: string;
+  title: string;
+  dateUploaded: string;
+  views: number;
+  isPublic: boolean;
+  length: number; // seconds
+  status: number;
+  storageSize: number;
+  encodeProgress: number;
+  availableResolutions: string;
+  thumbnailCount: number;
+  category: string;
+}
 
 export interface CourseVideo {
-  id: number
-  title: string
-  description: string
-  duration: string
-  bunnyId: string // The Video ID from Bunny Stream
-  thumbnail?: string
+  id: number;
+  title: string;
+  description: string;
+  duration: string;
+  bunnyGuid: string;
+  embedUrl: string;
+  thumbnail: string;
+}
+
+// Video title mapping — maps the sort position (1-based) to the display title & description
+const VIDEO_METADATA: Record<number, { title: string; description: string }> = {
+  1: { title: 'Basics of Orderflow and Correlation of Equities and Currencies', description: 'Understanding orderflow fundamentals and how equities correlate with currencies' },
+  2: { title: 'Market Structure and Time Frames', description: 'How to read market structure across different time frames' },
+  3: { title: 'Sessions, Volatility and Volume', description: 'Trading sessions, volatility patterns, and volume analysis' },
+  4: { title: 'Risk Management', description: 'Position sizing, stop losses, and protecting your capital' },
+  5: { title: '(Intermediate) Trading View Tools for Order Flow Model', description: 'Using TradingView tools to build and analyse order flow models' },
+  6: { title: 'Liquidity', description: 'Understanding liquidity pools and how smart money operates' },
+  7: { title: 'Advanced Liquidity', description: 'Advanced concepts in liquidity hunting and manipulation' },
+  8: { title: 'Full Strategy', description: 'The complete FourXclub trading strategy from A to Z' },
+  9: { title: 'GER30 Strategy (Bonus)', description: 'Bonus strategy specifically designed for trading GER30' },
+  10: { title: 'NASDAQ Strategy (Bonus)', description: 'Bonus strategy specifically designed for trading NASDAQ' },
+};
+
+function formatDuration(seconds: number): string {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
 /**
- * Course videos configuration for Bunny.net
- * 
- * INSTRUCTIONS:
- * 1. Upload your 10 videos to your Bunny Stream Library (ID: 589918)
- * 2. Get the Video ID for each video from the Bunny dashboard
- * 3. Replace REPLACE_WITH_BUNNY_ID_X with actual IDs
+ * Fetch all videos from Bunny Stream library via the Bunny API.
+ * Uses BUNNY_API_KEY and BUNNY_LIBRARY_ID from environment variables.
  */
-export const courseVideos: CourseVideo[] = [
-  {
-    id: 1,
-    title: 'Basics of Orderflow and Correlation of Equities and Currencies',
-    description: 'Understanding orderflow fundamentals and how equities correlate with currencies',
-    duration: '15:30',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_1',
-    thumbnail: '/thumbnails/video-1.jpg',
-  },
-  {
-    id: 2,
-    title: 'Market Structure and Time Frames',
-    description: 'How to read market structure across different time frames',
-    duration: '22:45',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_2',
-    thumbnail: '/thumbnails/video-2.jpg',
-  },
-  {
-    id: 3,
-    title: 'Sessions, Volatility and Volume',
-    description: 'Trading sessions, volatility patterns, and volume analysis',
-    duration: '28:00',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_3',
-    thumbnail: '/thumbnails/video-3.jpg',
-  },
-  {
-    id: 4,
-    title: 'Risk Management',
-    description: 'Position sizing, stop losses, and protecting your capital',
-    duration: '20:15',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_4',
-    thumbnail: '/thumbnails/video-4.jpg',
-  },
-  {
-    id: 5,
-    title: '(Intermediate) Trading View Tools for Order Flow Model',
-    description: 'Using TradingView tools to build and analyse order flow models',
-    duration: '25:30',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_5',
-    thumbnail: '/thumbnails/video-5.jpg',
-  },
-  {
-    id: 6,
-    title: 'Liquidity',
-    description: 'Understanding liquidity pools and how smart money operates',
-    duration: '18:45',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_6',
-    thumbnail: '/thumbnails/video-6.jpg',
-  },
-  {
-    id: 7,
-    title: 'Advanced Liquidity',
-    description: 'Advanced concepts in liquidity hunting and manipulation',
-    duration: '24:00',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_7',
-    thumbnail: '/thumbnails/video-7.jpg',
-  },
-  {
-    id: 8,
-    title: 'Full Strategy',
-    description: 'The complete FourXclub trading strategy from A to Z',
-    duration: '30:15',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_8',
-    thumbnail: '/thumbnails/video-8.jpg',
-  },
-  {
-    id: 9,
-    title: 'GER30 Strategy (Bonus)',
-    description: 'Bonus strategy specifically designed for trading GER30',
-    duration: '22:00',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_9',
-    thumbnail: '/thumbnails/video-9.jpg',
-  },
-  {
-    id: 10,
-    title: 'NASDAQ Strategy (Bonus)',
-    description: 'Bonus strategy specifically designed for trading NASDAQ',
-    duration: '45:00',
-    bunnyId: 'REPLACE_WITH_BUNNY_ID_10',
-    thumbnail: '/thumbnails/video-10.jpg',
-  },
-]
+export async function fetchBunnyVideos(): Promise<CourseVideo[]> {
+  const apiKey = process.env.BUNNY_API_KEY;
+  const libraryId = process.env.BUNNY_LIBRARY_ID || '589918';
+
+  if (!apiKey) {
+    console.error('[Bunny] ❌ BUNNY_API_KEY is not set');
+    throw new Error('Video service not configured');
+  }
+
+  console.log(`[Bunny] Fetching videos from library ${libraryId}`);
+
+  const response = await fetch(
+    `${BUNNY_API_BASE}/library/${libraryId}/videos?page=1&itemsPerPage=100&orderBy=date`,
+    {
+      headers: {
+        'AccessKey': apiKey,
+        'Accept': 'application/json',
+      },
+      // Cache for 5 minutes to avoid hammering the API
+      next: { revalidate: 300 },
+    }
+  );
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error(`[Bunny] ❌ API error (${response.status}):`, errorText);
+    throw new Error(`Failed to fetch videos from Bunny (${response.status})`);
+  }
+
+  const data = await response.json();
+  const bunnyVideos: BunnyVideo[] = data.items || [];
+
+  console.log(`[Bunny] ✅ Fetched ${bunnyVideos.length} videos`);
+
+  // Map Bunny videos to our CourseVideo format
+  // Sort by dateUploaded to maintain consistent ordering
+  const sortedVideos = bunnyVideos
+    .filter((v) => v.status >= 4) // Only include fully encoded videos
+    .sort((a, b) => new Date(a.dateUploaded).getTime() - new Date(b.dateUploaded).getTime());
+
+  return sortedVideos.map((video, index) => {
+    const position = index + 1;
+    const metadata = VIDEO_METADATA[position];
+
+    return {
+      id: position,
+      title: metadata?.title || video.title,
+      description: metadata?.description || '',
+      duration: formatDuration(video.length),
+      bunnyGuid: video.guid,
+      embedUrl: generateBunnyEmbedUrl(video.guid, libraryId),
+      thumbnail: `https://${process.env.BUNNY_CDN_HOSTNAME || 'vz-36a9a6d8-d84.b-cdn.net'}/${video.guid}/thumbnail.jpg`,
+    };
+  });
+}
 
 /**
- * Generate secure Bunny.net embed URL
- * Note: Bunny Stream use a different signing method if enabled, 
- * but for basic domain-restricted embedding, a standard embed link works.
+ * Fetch a single video by position (1-based index).
  */
-export function generateBunnyEmbedUrl(bunnyId: string): string {
-  const libraryId = process.env.NEXT_PUBLIC_BUNNY_LIBRARY_ID || '589918'
-  return `https://iframe.mediadelivery.net/embed/${libraryId}/${bunnyId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`
+export async function fetchBunnyVideoById(videoId: number): Promise<CourseVideo | null> {
+  const videos = await fetchBunnyVideos();
+  return videos.find((v) => v.id === videoId) || null;
+}
+
+/**
+ * Generate Bunny.net iframe embed URL.
+ */
+export function generateBunnyEmbedUrl(guid: string, libraryId?: string): string {
+  const libId = libraryId || process.env.BUNNY_LIBRARY_ID || '589918';
+  return `https://iframe.mediadelivery.net/embed/${libId}/${guid}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`;
 }
