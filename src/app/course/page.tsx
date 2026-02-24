@@ -25,16 +25,16 @@ interface CourseVideo {
 }
 
 const COURSE_VIDEOS: CourseVideo[] = [
-    { id: 1, title: 'Introduction to Forex Trading', description: 'Basics of forex trading and market fundamentals', duration: '15:30' },
-    { id: 2, title: 'Understanding Currency Pairs', description: 'Major, minor, and exotic currency pairs explained', duration: '22:45' },
-    { id: 3, title: 'Technical Analysis Basics', description: 'Charts, candlesticks, and reading market data', duration: '28:00' },
-    { id: 4, title: 'Support and Resistance', description: 'Identifying key levels for entry and exit', duration: '20:15' },
-    { id: 5, title: 'Trend Trading Strategies', description: 'How to identify and trade with the trend', duration: '25:30' },
-    { id: 6, title: 'Risk Management', description: 'Position sizing and protecting your capital', duration: '18:45' },
-    { id: 7, title: 'Trading Psychology', description: 'Managing emotions and maintaining discipline', duration: '24:00' },
-    { id: 8, title: 'Advanced Chart Patterns', description: 'Head & shoulders, triangles, and more patterns', duration: '30:15' },
-    { id: 9, title: 'Building Your Trading Plan', description: 'Creating a systematic trading approach', duration: '22:00' },
-    { id: 10, title: 'Live Trading Session', description: 'Real trades with detailed commentary', duration: '45:00' },
+    { id: 1, title: 'Basics of Orderflow and Correlation of Equities and Currencies', description: 'Understanding orderflow fundamentals and how equities correlate with currencies', duration: '15:30' },
+    { id: 2, title: 'Market Structure and Time Frames', description: 'How to read market structure across different time frames', duration: '22:45' },
+    { id: 3, title: 'Sessions, Volatility and Volume', description: 'Trading sessions, volatility patterns, and volume analysis', duration: '28:00' },
+    { id: 4, title: 'Risk Management', description: 'Position sizing, stop losses, and protecting your capital', duration: '20:15' },
+    { id: 5, title: '(Intermediate) Trading View Tools for Order Flow Model', description: 'Using TradingView tools to build and analyse order flow models', duration: '25:30' },
+    { id: 6, title: 'Liquidity', description: 'Understanding liquidity pools and how smart money operates', duration: '18:45' },
+    { id: 7, title: 'Advanced Liquidity', description: 'Advanced concepts in liquidity hunting and manipulation', duration: '24:00' },
+    { id: 8, title: 'Full Strategy', description: 'The complete FourXclub trading strategy from A to Z', duration: '30:15' },
+    { id: 9, title: 'GER30 Strategy (Bonus)', description: 'Bonus strategy specifically designed for trading GER30', duration: '22:00' },
+    { id: 10, title: 'NASDAQ Strategy (Bonus)', description: 'Bonus strategy specifically designed for trading NASDAQ', duration: '45:00' },
 ];
 
 // Define PurchaseModal outside to avoid "Cannot create components during render"
