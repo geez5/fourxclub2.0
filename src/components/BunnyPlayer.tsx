@@ -35,12 +35,22 @@ export default function BunnyPlayer({
 
             try {
                 const response = await fetch(`/api/videos/${videoId}`)
-                const data = await response.json()
 
+                // Check response status BEFORE parsing JSON
                 if (!response.ok) {
-                    throw new Error(data.error || 'Failed to load video')
+                    // Read as text first to handle HTML error pages
+                    const contentType = response.headers.get('content-type')
+                    if (contentType && contentType.includes('application/json')) {
+                        const errorData = await response.json()
+                        throw new Error(errorData.error || `Server error: ${response.status}`)
+                    } else {
+                        const text = await response.text()
+                        console.error(`[BunnyPlayer] Non-JSON response (${response.status}):`, text.substring(0, 200))
+                        throw new Error(`Server returned ${response.status} instead of video data. Check that the API route exists.`)
+                    }
                 }
 
+                const data = await response.json()
                 setVideoData(data.video)
                 onLoad?.()
             } catch (err) {
