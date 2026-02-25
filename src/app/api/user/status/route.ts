@@ -2,9 +2,14 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 import { nanoid } from "nanoid"
+import { applyRateLimit } from "@/lib/rate-limit"
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
+        // Rate limit: general (100 req / 15 min)
+        const limited = await applyRateLimit(req, "general")
+        if (limited) return limited
+
         const session = await auth()
 
         if (!session?.user?.email) {

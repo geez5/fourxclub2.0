@@ -2,9 +2,14 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { razorpay } from "@/lib/razorpay";
+import { applyRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
     try {
+        // Rate limit: strict (10 req / 15 min)
+        const limited = await applyRateLimit(req, "strict");
+        if (limited) return limited;
+
         // Diagnostic: Check if Razorpay env vars are present
         console.log("[PAYMENTS/CREATE] RAZORPAY_KEY_ID present:", !!process.env.RAZORPAY_KEY_ID);
         console.log("[PAYMENTS/CREATE] RAZORPAY_KEY_SECRET present:", !!process.env.RAZORPAY_KEY_SECRET);

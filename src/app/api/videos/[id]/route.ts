@@ -2,12 +2,17 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { fetchBunnyVideoById } from "@/lib/bunny";
+import { applyRateLimit } from "@/lib/rate-limit";
 
 export async function GET(
     req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        // Rate limit: general (100 req / 15 min)
+        const limited = await applyRateLimit(req, "general");
+        if (limited) return limited;
+
         const session = await auth();
         if (!session?.user?.id) {
             return NextResponse.json(

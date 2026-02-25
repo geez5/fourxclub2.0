@@ -7,9 +7,14 @@ import {
     verifyRazorpaySignature,
     verifySubscriptionSignature
 } from "@/lib/razorpay";
+import { applyRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: Request) {
     try {
+        // Rate limit: strict (10 req / 15 min)
+        const limited = await applyRateLimit(req, "strict");
+        if (limited) return limited;
+
         const session = await auth();
         if (!session?.user?.id) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

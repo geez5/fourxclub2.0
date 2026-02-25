@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server"
+import { applyRateLimit } from "@/lib/rate-limit"
 
-export async function GET() {
+export async function GET(req: Request) {
+    // Rate limit: strict (10 req / 15 min)
+    const limited = await applyRateLimit(req, "strict")
+    if (limited) return limited
+
     const config = {
         googleClientId: !!process.env.GOOGLE_CLIENT_ID,
         googleClientSecret: !!process.env.GOOGLE_CLIENT_SECRET,
