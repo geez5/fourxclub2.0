@@ -55,7 +55,7 @@ function formatDuration(seconds: number): string {
  */
 export async function fetchBunnyVideos(): Promise<CourseVideo[]> {
   const apiKey = process.env.BUNNY_API_KEY;
-  const libraryId = process.env.BUNNY_LIBRARY_ID || '589918';
+  const libraryId = process.env.BUNNY_LIBRARY_ID || '606778';
 
   if (!apiKey) {
     console.error('[Bunny] ❌ BUNNY_API_KEY is not set');
@@ -106,7 +106,7 @@ export async function fetchBunnyVideos(): Promise<CourseVideo[]> {
       duration: formatDuration(video.length),
       bunnyGuid: video.guid,
       embedUrl: generateBunnyEmbedUrl(video.guid, libraryId),
-      thumbnail: `https://${process.env.BUNNY_CDN_HOSTNAME || 'vz-36a9a6d8-d84.b-cdn.net'}/${video.guid}/thumbnail.jpg`,
+      thumbnail: `https://${process.env.BUNNY_CDN_HOSTNAME || 'vz-139aba3d-007.b-cdn.net'}/${video.guid}/thumbnail.jpg`,
     };
   });
 }
