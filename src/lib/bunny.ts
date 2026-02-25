@@ -62,23 +62,25 @@ export async function fetchBunnyVideos(): Promise<CourseVideo[]> {
     throw new Error('Video service not configured');
   }
 
-  console.log(`[Bunny] Fetching videos from library ${libraryId}`);
+  const url = `${BUNNY_API_BASE}/library/${libraryId}/videos?page=1&itemsPerPage=100&orderBy=date`;
+  console.log(`[Bunny] Fetching videos from: ${url}`);
+  console.log(`[Bunny] API key starts with: ${apiKey.substring(0, 8)}...`);
+  console.log(`[Bunny] Library ID: ${libraryId}`);
 
-  const response = await fetch(
-    `${BUNNY_API_BASE}/library/${libraryId}/videos?page=1&itemsPerPage=100&orderBy=date`,
-    {
-      headers: {
-        'AccessKey': apiKey,
-        'Accept': 'application/json',
-      },
-      // Cache for 5 minutes to avoid hammering the API
-      next: { revalidate: 300 },
-    }
+  const response = await fetch(url, {
+    headers: {
+      'AccessKey': apiKey,
+      'Accept': 'application/json',
+    },
+    cache: 'no-store', // Disable cache for debugging
+  }
   );
 
   if (!response.ok) {
     const errorText = await response.text();
     console.error(`[Bunny] ❌ API error (${response.status}):`, errorText);
+    console.error(`[Bunny] ❌ This usually means BUNNY_API_KEY is the account API key, not the Stream Library API key.`);
+    console.error(`[Bunny] ❌ Go to Bunny Dashboard → Stream → Your Library → API → Copy the "Library API Key" (NOT the account API key)`);
     throw new Error(`Failed to fetch videos from Bunny (${response.status})`);
   }
 
