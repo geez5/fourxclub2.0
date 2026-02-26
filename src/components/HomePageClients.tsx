@@ -177,8 +177,9 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   Backed by Experience.
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed" style={{ color: textLight }}>
-                Understand value, acceptance and imbalance using Auction Market Theory and execute with professional risk discipline.<br />
+              <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto leading-relaxed" style={{ color: textLight }}>
+                Understand value, acceptance and imbalance using Auction Market Theory<br />
+                and execute with professional risk discipline.<br />
                 No signals, no hype, just skill.
               </p>
               <div className="flex items-center justify-center gap-4">
