@@ -90,8 +90,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
   // Color scheme
   const bgPrimary = '#000000';
   const bgCard = 'rgba(10, 10, 10, 0.8)';
-  const greenColor = '#6BBF6A';
-  const purpleColor = '#9B7BD3';
+  const greenColor = '#3D8C3C';
+  const purpleColor = '#6B4A9E';
   const textLight = '#ffffff';
   const textMuted = '#888888';
   const borderColor = 'rgba(255, 255, 255, 0.1)';

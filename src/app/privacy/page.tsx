@@ -6,8 +6,8 @@ import { ArrowLeft } from 'lucide-react';
 export default function PrivacyPage() {
     const bgPrimary = '#0a0a0a';
     const bgCard = '#151515';
-    const greenColor = '#6BBF6A';
-    const purpleColor = '#9B7BD3';
+    const greenColor = '#3D8C3C';
+    const purpleColor = '#6B4A9E';
     const textLight = '#ffffff';
     const textMuted = '#888888';
     const borderColor = '#3a3a3a';

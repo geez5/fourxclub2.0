@@ -27,8 +27,8 @@ interface ScatterOffset {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const GREEN = '#4DA14C';
-const PURPLE = '#7D5DB5';
+const GREEN = '#3D8C3C';
+const PURPLE = '#6B4A9E';
 const VISIBLE = 80;
 const CANDLE_W = 10;
 const CANDLE_GAP = 4;
