@@ -177,10 +177,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   Backed by Experience.
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl mb-10 max-w-4xl text-left leading-relaxed" style={{ color: textLight }}>
+              <p className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto text-center leading-relaxed" style={{ color: textLight }}>
                 Understand value, acceptance and imbalance using Auction Market Theory<br />
                 and execute with professional risk discipline.<br />
-                No signals, no hype, just skill.
+                <span style={{ color: '#E8829A' }}>No signals, no hype, just skill.</span>
               </p>
               <div className="flex items-center justify-center gap-4">
                 <button
