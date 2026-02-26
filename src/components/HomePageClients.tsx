@@ -4,11 +4,12 @@ import {
   ArrowRight, Users, Video, Lock, Sparkles, Check,
   Star, Award, Zap, Globe, Heart
 } from 'lucide-react';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import RazorpayCheckout from './RazorpayCheckout';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import CandlestickChart from './CandlestickChart';
 
 interface HomePageClientProps {
   isAuthenticated: boolean;
@@ -26,6 +27,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
   const { scrollY } = useScroll();
   const backgroundY = useTransform(scrollY, [0, 1500], ['0%', '30%']);
   const backgroundOpacity = useTransform(scrollY, [0, 800], [0.6, 0.0]);
+
+  // Chart scroll-zoom is now handled inside CandlestickChart itself
 
   const fadeInUp = {
     initial: { opacity: 0, y: 40 },
@@ -213,6 +216,22 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <span className="ml-2 font-medium" style={{ color: textLight }}>4.9/5 rating</span>
                 </div>
               </div>
+
+              {/* Candlestick Chart Showcase */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
+                className="mt-16 max-w-5xl mx-auto"
+              >
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="h-px flex-1" style={{ background: `linear-gradient(to right, transparent, ${greenColor}40)` }} />
+                  <span className="text-xs font-mono px-3 py-1 rounded-full" style={{ color: greenColor, border: `1px solid ${greenColor}30`, backgroundColor: `${greenColor}10` }}>LIVE MARKET SIMULATION</span>
+                  <div className="h-px flex-1" style={{ background: `linear-gradient(to left, transparent, ${purpleColor}40)` }} />
+                </div>
+                <CandlestickChart />
+                <p className="text-center mt-3 text-xs" style={{ color: textMuted }}>Hover candles for OHLC data · Drag to pan · Live ticks every 1.6s</p>
+              </motion.div>
             </div>
           </div>
         </motion.section>
