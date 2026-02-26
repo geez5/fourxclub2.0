@@ -173,14 +173,14 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               </div>
               <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight" style={{ color: greenColor }}>
                 Built on Analysis.<br />
-                <span className="bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(to right, ${greenColor}, ${purpleColor}, ${greenColor})` }}>
+                <span className="bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(to right, ${purpleColor}, ${purpleColor})`, color: purpleColor }}>
                   Backed by Experience.
                 </span>
               </h1>
               <p className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto text-center leading-relaxed" style={{ color: textLight }}>
                 Understand value, acceptance and imbalance using Auction Market Theory<br />
                 and execute with professional risk discipline.<br />
-                <span style={{ color: '#E8829A' }}>No signals, no hype, just skill.</span>
+                <span style={{ color: purpleColor }}>No signals, no hype, just skill.</span>
               </p>
               <div className="flex items-center justify-center gap-4">
                 <button
