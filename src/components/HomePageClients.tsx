@@ -167,7 +167,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full text-sm" style={{ backgroundColor: `${greenColor}20`, color: greenColor, border: `1px solid ${greenColor}50` }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full text-sm" style={{ backgroundColor: `#E8829A20`, color: '#E8829A', border: `1px solid #E8829A50` }}>
                 <Sparkles className="w-3 h-3" />
                 Now Live: Transform Your Skills
               </div>
@@ -177,7 +177,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   Backed by Experience.
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto leading-relaxed" style={{ color: textLight }}>
+              <p className="text-xl md:text-2xl mb-10 max-w-4xl text-left leading-relaxed" style={{ color: textLight }}>
                 Understand value, acceptance and imbalance using Auction Market Theory<br />
                 and execute with professional risk discipline.<br />
                 No signals, no hype, just skill.
@@ -213,7 +213,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 </div>
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="w-4 h-4" style={{ fill: greenColor, color: greenColor }} />
+                    <Star key={i} className="w-4 h-4" style={{ fill: '#FFD700', color: '#FFD700' }} />
                   ))}
                   <span className="ml-2 font-medium" style={{ color: textLight }}>4.9/5 rating</span>
                 </div>
