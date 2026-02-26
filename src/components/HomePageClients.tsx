@@ -174,7 +174,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight" style={{ color: greenColor }}>
                 Built on Analysis.<br />
                 <span className="bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(to right, ${greenColor}, ${purpleColor}, ${greenColor})` }}>
-                  Backed by Experience
+                  Backed by Experience.
                 </span>
               </h1>
               <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed" style={{ color: textLight }}>
