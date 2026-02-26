@@ -149,7 +149,7 @@ function CandleElement({ candle, index, scatter, toY, isLast, isHovered }: Candl
             <motion.rect
                 x={x} y={bodyTop}
                 width={CANDLE_W} height={bodyH}
-                fill={candle.isBullish ? `${color}cc` : 'transparent'}
+                fill={`${color}cc`}
                 stroke={color}
                 strokeWidth={isHovered ? 1.5 : 0.8}
                 rx={1}
