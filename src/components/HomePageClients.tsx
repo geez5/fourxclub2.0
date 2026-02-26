@@ -172,13 +172,13 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 Now Live: Transform Your Skills
               </div>
               <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight" style={{ color: greenColor }}>
-                Built on Analysis.{" "}
+                Built on Analysis.<br />
                 <span className="bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(to right, ${greenColor}, ${purpleColor}, ${greenColor})` }}>
                   Backed by Experience
                 </span>
               </h1>
               <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed" style={{ color: textLight }}>
-                Learn how institutional traders read the market: with structured strategies, real chart breakdowns, and disciplined risk management. No hype. No signals. Just skill.
+                Understand value, acceptance, and imbalance using Auction Market Theory and execute with professional risk discipline,
               </p>
               <div className="flex items-center justify-center gap-4">
                 <button
