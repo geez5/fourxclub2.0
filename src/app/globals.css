@@ -73,7 +73,11 @@
   --sidebar-ring: oklch(0.75 0.28 320);
 }
 
-@theme inline {
+@theme inline {\n
+  --font-heading: \'Satoshi\', sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+  --font-accent: \'JetBrains Mono\', monospace;
+
   --font-sans: "Geist", "Geist Fallback";
   --font-mono: "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
@@ -121,6 +125,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-body);
   }
 }
 
@@ -284,4 +289,9 @@ html {
 
 .hover-shine-warning-box:hover {
   animation: shine-warning-box 1.6s ease-in-out infinite;
+}
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
 }

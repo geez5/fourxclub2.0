@@ -263,7 +263,7 @@ export default function CandlestickChart() {
                     display: 'inline-block', width: 8, height: 8, borderRadius: '50%',
                     background: GREEN, animation: 'chartPulse 1.6s ease-in-out infinite',
                 }} />
-                <span style={{ color: GREEN, fontSize: 11, fontFamily: 'monospace', letterSpacing: 1 }}>
+                <span style={{ color: GREEN, fontSize: 11, fontFamily: 'var(--font-accent)', letterSpacing: 1 }}>
                     LIVE · {visibleCandles[visibleCandles.length - 1]?.close.toFixed(4)}
                 </span>
             </div>
@@ -346,7 +346,7 @@ export default function CandlestickChart() {
                             {(['O', 'H', 'L', 'C'] as const).map((label, li) => {
                                 const vals = [hoveredCandle.open, hoveredCandle.high, hoveredCandle.low, hoveredCandle.close];
                                 return (
-                                    <span key={label} style={{ fontSize: 10, fontFamily: 'monospace', color: hoveredCandle.isBullish ? GREEN : PURPLE }}>
+                                    <span key={label} style={{ fontSize: 10, fontFamily: 'var(--font-accent)', color: hoveredCandle.isBullish ? GREEN : PURPLE }}>
                                         <span style={{ color: 'rgba(255,255,255,0.4)' }}>{label}: </span>
                                         {vals[li].toFixed(4)}
                                     </span>
@@ -360,7 +360,7 @@ export default function CandlestickChart() {
             {/* Time axis */}
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 8px 6px', opacity: 0.3 }}>
                 {[0, 20, 40, 60, 79].map(i => (
-                    <span key={i} style={{ fontSize: 9, fontFamily: 'monospace', color: '#fff' }}>-{VISIBLE - i}</span>
+                    <span key={i} style={{ fontSize: 9, fontFamily: 'var(--font-accent)', color: '#fff' }}>-{VISIBLE - i}</span>
                 ))}
             </div>
 
