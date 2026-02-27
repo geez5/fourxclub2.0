@@ -1,15 +1,15 @@
-import { Inter } from 'next/font/google'
-import '@fontsource/satoshi/400.css' // Regular
-import '@fontsource/satoshi/500.css' // Medium
-import '@fontsource/satoshi/700.css' // Bold
-import '@fontsource/jetbrains-mono/400.css' // Regular
-import '@fontsource/jetbrains-mono/700.css' // Bold
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/components/Providers'
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
 })
 
 export const metadata = {
@@ -24,7 +24,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-body`} suppressHydrationWarning>
+      <head>
+        <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&amp;display=swap" rel="stylesheet" />
+      </head>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-body`} suppressHydrationWarning>
         <Providers>
           {children}
         </Providers>
