@@ -27,8 +27,8 @@ interface ScatterOffset {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const GREEN = '#3D8C3C';
-const PURPLE = '#6B4A9E';
+const GREEN = '#00ff88';
+const PURPLE = '#8b5cf6';
 const VISIBLE = 80;
 const CANDLE_W = 10;
 const CANDLE_GAP = 4;
@@ -245,11 +245,11 @@ export default function CandlestickChart() {
             ref={containerRef}
             className="relative w-full select-none"
             style={{
-                background: '#000',
+                background: '#0f1738',
                 borderRadius: '16px',
                 overflow: 'hidden',
-                border: '1px solid rgba(107,191,106,0.18)',
-                boxShadow: '0 0 60px 0 rgba(107,191,106,0.08), 0 0 30px 0 rgba(155,123,211,0.06)',
+                border: '1px solid rgba(0, 201, 255, 0.18)',
+                boxShadow: '0 0 60px 0 rgba(0, 201, 255, 0.08), 0 0 30px 0 rgba(139, 92, 246, 0.06)',
                 cursor: isDragging ? 'grabbing' : 'grab',
             }}
             onMouseDown={onMouseDown}
@@ -332,7 +332,7 @@ export default function CandlestickChart() {
                             bottom: 8,
                             left: `${(hoveredIdx / VISIBLE) * 100}%`,
                             transform: 'translateX(-50%)',
-                            background: 'rgba(10,10,10,0.92)',
+                            background: 'rgba(15, 23, 56, 0.92)',
                             border: `1px solid ${hoveredCandle.isBullish ? GREEN : PURPLE}40`,
                             borderRadius: 8,
                             padding: '6px 10px',

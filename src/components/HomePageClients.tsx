@@ -88,18 +88,18 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
   }));
 
   // Color scheme
-  const bgPrimary = '#000000';
-  const bgCard = 'rgba(10, 10, 10, 0.8)';
-  const greenColor = '#2E7D2E';
-  const purpleColor = '#6B2DB8';
-  const textLight = '#ffffff';
-  const textMuted = '#888888';
-  const borderColor = 'rgba(255, 255, 255, 0.1)';
+  const bgPrimary = '#0b1026';
+  const bgCard = '#0f1738';
+  const cyanColor = '#00c9ff';
+  const purpleColor = '#8b5cf6';
+  const textLight = '#e0e7ff';
+  const textMuted = '#94a3b8';
+  const borderColor = 'rgba(224, 231, 255, 0.1)';
 
   return (
-    <div className="min-h-screen relative" style={{ backgroundColor: '#000000', color: textLight }}>
+    <div className="min-h-screen relative" style={{ backgroundColor: bgPrimary, color: textLight }}>
       {/* Dynamic Background Image */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" style={{ backgroundColor: '#000' }}>
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" style={{ backgroundColor: bgPrimary }}>
         <motion.div
           className="absolute inset-0 w-full h-full bg-no-repeat bg-cover bg-top"
           style={{
@@ -124,10 +124,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-8">
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg" style={{ border: `2px solid ${greenColor}` }}>
+                  <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg" style={{ border: `2px solid ${cyanColor}` }}>
                     <img src="fxclogo.webp" alt="FourXclub Logo" className="w-full h-full object-cover" />
                   </div>
-                  <span className="font-bold text-xl hover-shine-blush-text" style={{ color: '#FFB6C1' }}>FourXclub</span>
+                  <span className="font-bold text-xl hover-shine-warning-text" style={{ color: '#f43f5e' }}>FourXclub</span>
                 </div>
                 <div className="hidden md:flex items-center gap-6">
                   <a href="#course" className="text-sm font-medium transition-colors hover:opacity-80 hover-shine-purple" style={{ color: purpleColor }}>Course</a>
@@ -139,7 +139,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <div className="flex items-center gap-3">
                 {isAuthenticated ? (
                   <Link href="/dashboard">
-                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors" style={{ backgroundColor: greenColor, color: bgPrimary }}>
+                    <button className="px-4 py-2 text-sm font-medium rounded-lg transition-colors" style={{ backgroundColor: cyanColor, color: bgPrimary }}>
                       Dashboard
                     </button>
                   </Link>
@@ -148,7 +148,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                     <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:opacity-80" style={{ color: textLight }}>
                       Sign In
                     </button>
-                    <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2" style={{ backgroundColor: greenColor, color: bgPrimary }}>
+                    <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2" style={{ backgroundColor: cyanColor, color: bgPrimary }}>
                       Get Started <ArrowRight className="w-4 h-4" />
                     </button>
                   </>
@@ -161,17 +161,17 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         {/* Hero Section */}
         <motion.section {...fadeInUp} className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden">
           <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: `${greenColor}15` }} />
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: `${cyanColor}15` }} />
             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: `${purpleColor}15` }} />
           </div>
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full text-sm hover-shine-blush-box" style={{ backgroundColor: `#E8829A20`, color: '#E8829A', border: `1px solid #E8829A50` }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full text-sm hover-shine-warning-box" style={{ backgroundColor: `#E8829A20`, color: '#f43f5e', border: `1px solid #E8829A50` }}>
                 <Sparkles className="w-3 h-3" />
                 Now Live: Transform Your Skills
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight hover-shine-green" style={{ color: greenColor }}>
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight hover-shine-cyan" style={{ color: cyanColor }}>
                 Built on Analysis.<br />
                 <span className="bg-clip-text text-transparent hover-shine-purple" style={{ backgroundImage: `linear-gradient(to right, ${purpleColor}, ${purpleColor})`, color: purpleColor }}>
                   Backed by Experience.
@@ -180,7 +180,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <p className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto text-center leading-relaxed" style={{ color: textLight }}>
                 Understand value, acceptance and imbalance using Auction Market Theory<br />
                 and execute with professional risk discipline.<br />
-                <span className="hover-shine-blush-text" style={{ color: '#C0715A', fontSize: '1.15em', fontStyle: 'italic', fontWeight: '400' }}>No signals, no hype, just skill.</span>
+                <span className="hover-shine-warning-text" style={{ color: '#00ff88', fontSize: '1.15em', fontStyle: 'italic', fontWeight: '400' }}>No signals, no hype, just skill.</span>
               </p>
               <div className="flex items-center justify-center gap-4">
                 <button
@@ -194,7 +194,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 <button
                   onClick={() => signIn('google')}
                   className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors"
-                  style={{ backgroundColor: greenColor, color: bgPrimary }}
+                  style={{ backgroundColor: cyanColor, color: bgPrimary }}
                 >
                   Claim your 1st FREE PDF to kickstart your journey
                   <ArrowRight className="w-4 h-4" />
@@ -206,7 +206,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
                     {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="w-8 h-8 rounded-full border-2" style={{ backgroundImage: `linear-gradient(to bottom right, ${greenColor}, ${purpleColor})`, borderColor: bgPrimary }} />
+                      <div key={i} className="w-8 h-8 rounded-full border-2" style={{ backgroundImage: `linear-gradient(to bottom right, ${cyanColor}, ${purpleColor})`, borderColor: bgPrimary }} />
                     ))}
                   </div>
                   <span className="font-medium" style={{ color: textLight }}>500+ active learners</span>
@@ -227,8 +227,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 className="mt-16 max-w-5xl mx-auto"
               >
                 <div className="flex items-center justify-center gap-3 mb-4">
-                  <div className="h-px flex-1" style={{ background: `linear-gradient(to right, transparent, ${greenColor}40)` }} />
-                  <span className="text-xs font-mono px-3 py-1 rounded-full hover-shine-green" style={{ color: greenColor, border: `1px solid ${greenColor}30`, backgroundColor: `${greenColor}10` }}>LIVE MARKET SIMULATION</span>
+                  <div className="h-px flex-1" style={{ background: `linear-gradient(to right, transparent, ${cyanColor}40)` }} />
+                  <span className="text-xs font-mono px-3 py-1 rounded-full hover-shine-cyan" style={{ color: cyanColor, border: `1px solid ${cyanColor}30`, backgroundColor: `${cyanColor}10` }}>LIVE MARKET SIMULATION</span>
                   <div className="h-px flex-1" style={{ background: `linear-gradient(to left, transparent, ${purpleColor}40)` }} />
                 </div>
                 <CandlestickChart />
@@ -242,10 +242,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="about" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
                 Mission &amp; Vision
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-green" style={{ color: greenColor }}>A Trading Ecosystem</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-cyan" style={{ color: cyanColor }}>A Trading Ecosystem</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
                 At FourXclub, our aim is simple: to educate traders the right way.
                 We are a transparent, skill-focused trading community built by professionals with 7+ years of real market experience.
@@ -260,8 +260,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 { icon: Check, title: "Skill Over Shortcuts", desc: "Focus on building discipline and long-term skills." },
               ].map((item, i) => (
                 <div key={i} className="p-6 rounded-xl transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgPrimary, border: `1px solid ${borderColor}` }}>
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: `${greenColor}20` }}>
-                    <item.icon className="w-6 h-6 hover-shine-green" style={{ color: greenColor }} />
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: `${cyanColor}20` }}>
+                    <item.icon className="w-6 h-6 hover-shine-cyan" style={{ color: cyanColor }} />
                   </div>
                   <h3 className="text-xl font-bold mb-2 hover-shine-purple" style={{ color: purpleColor }}>{item.title}</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>{item.desc}</p>
@@ -275,7 +275,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="course" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
                 Premium Course
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>FourXclub Core Trading Course</h2>
@@ -288,18 +288,18 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 {/* Course Preview Card */}
                 <div className="overflow-hidden rounded-xl shadow-2xl" style={{ backgroundColor: bgCard, border: `2px solid ${purpleColor}50`, boxShadow: `0 25px 50px -12px ${purpleColor}30` }}>
-                  <div className="relative aspect-video p-8 flex items-center justify-center" style={{ backgroundImage: `linear-gradient(to bottom right, ${greenColor}, ${purpleColor})` }}>
+                  <div className="relative aspect-video p-8 flex items-center justify-center" style={{ backgroundImage: `linear-gradient(to bottom right, ${cyanColor}, ${purpleColor})` }}>
                     <div className="relative">
                       <div className="w-20 h-20 rounded-2xl flex items-center justify-center backdrop-blur-sm" style={{ backgroundColor: `${bgPrimary}ee` }}>
-                        <Lock className="w-10 h-10 hover-shine-green" style={{ color: greenColor }} />
+                        <Lock className="w-10 h-10 hover-shine-cyan" style={{ color: cyanColor }} />
                       </div>
                     </div>
                     <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 rounded-full text-sm font-medium hover-shine-green" style={{ backgroundColor: `${bgPrimary}ee`, color: greenColor }}>Encrypted</span>
+                      <span className="px-3 py-1 rounded-full text-sm font-medium hover-shine-cyan" style={{ backgroundColor: `${bgPrimary}ee`, color: cyanColor }}>Encrypted</span>
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="text-2xl font-bold mb-2 hover-shine-green" style={{ color: greenColor }}>Professional Trading Program</h3>
+                    <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: cyanColor }}>Professional Trading Program</h3>
                     <p className="mb-4 leading-relaxed" style={{ color: textMuted }}>Market structure, strategy logic, risk management, and trading psychology.</p>
                     <div className="flex items-center justify-between gap-4 mb-4">
                       <div className="flex items-center gap-4 text-sm" style={{ color: textMuted }}>
@@ -309,13 +309,13 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         </div>
                         <div className="flex items-center gap-1">
                           <span className="line-through">Rs.3499</span>
-                          <span className="ml-2 font-semibold hover-shine-green" style={{ color: greenColor }}>Rs.1499</span>
+                          <span className="ml-2 font-semibold hover-shine-cyan" style={{ color: cyanColor }}>Rs.1499</span>
                         </div>
                       </div>
                       {isAuthenticated ? (
                         hasCourseAccess ? (
                           <Link href="/course">
-                            <button className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: greenColor, color: bgPrimary }}>Watch</button>
+                            <button className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: cyanColor, color: bgPrimary }}>Watch</button>
                           </Link>
                         ) : (
                           <button
@@ -348,8 +348,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                     "Certificate of completion",
                   ].map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: `${greenColor}20` }}>
-                        <Check className="w-4 h-4 hover-shine-green" style={{ color: greenColor }} />
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: `${cyanColor}20` }}>
+                        <Check className="w-4 h-4 hover-shine-cyan" style={{ color: cyanColor }} />
                       </div>
                       <span className="text-lg leading-relaxed" style={{ color: textLight }}>{feature}</span>
                     </div>
@@ -364,21 +364,21 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="community" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
                 <Users className="w-3 h-3" />
                 Exclusive Community
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-green" style={{ color: greenColor }}>Join the FourXclub Trading Community</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-cyan" style={{ color: cyanColor }}>Join the FourXclub Trading Community</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
                 A private, well-moderated trading community for serious traders.
               </p>
             </div>
 
             <div className="max-w-4xl mx-auto">
-              <div className="overflow-hidden rounded-xl shadow-2xl" style={{ backgroundColor: bgPrimary, border: `2px solid ${greenColor}50` }}>
+              <div className="overflow-hidden rounded-xl shadow-2xl" style={{ backgroundColor: bgPrimary, border: `2px solid ${cyanColor}50` }}>
                 <div className="grid md:grid-cols-2">
                   <div className="p-8 md:p-10 space-y-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1' }}>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e' }}>
                       <Zap className="w-4 h-4" />
                       First Month Free
                     </div>
@@ -393,7 +393,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         "No signals, no spam, no hype",
                       ].map((feature, i) => (
                         <div key={i} className="flex items-center gap-2">
-                          <Check className="w-5 h-5 flex-shrink-0 hover-shine-green" style={{ color: greenColor }} />
+                          <Check className="w-5 h-5 flex-shrink-0 hover-shine-cyan" style={{ color: cyanColor }} />
                           <span style={{ color: textLight }}>{feature}</span>
                         </div>
                       ))}
@@ -402,17 +402,17 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="p-8 md:p-10 flex flex-col justify-center" style={{ backgroundColor: `${purpleColor}10` }}>
                     <div className="space-y-6">
                       <div className="p-6 rounded-xl" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
-                        <h4 className="font-bold text-xl mb-2 hover-shine-green" style={{ color: greenColor }}>Refer &amp; Earn Free Access</h4>
+                        <h4 className="font-bold text-xl mb-2 hover-shine-cyan" style={{ color: cyanColor }}>Refer &amp; Earn Free Access</h4>
                         <p className="text-sm mb-4 leading-relaxed" style={{ color: textMuted }}>Share your referral code. Both get 15 extra days free.</p>
                         <div className="flex items-center gap-3">
                           <div className="flex-1 p-3 rounded-lg font-mono text-sm hover-shine-purple" style={{ backgroundColor: bgPrimary, color: purpleColor }}>{refCode}</div>
-                          <button onClick={generateCode} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: greenColor, color: bgPrimary }}>Generate</button>
-                          <button onClick={copyCode} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors" style={{ border: `1px solid ${borderColor}`, color: copied ? bgPrimary : textLight, backgroundColor: copied ? greenColor : 'transparent' }}>{copied ? 'Copied!' : 'Copy'}</button>
+                          <button onClick={generateCode} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: cyanColor, color: bgPrimary }}>Generate</button>
+                          <button onClick={copyCode} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors" style={{ border: `1px solid ${borderColor}`, color: copied ? bgPrimary : textLight, backgroundColor: copied ? cyanColor : 'transparent' }}>{copied ? 'Copied!' : 'Copy'}</button>
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="p-4 rounded-lg text-center" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
-                          <div className="text-2xl font-bold hover-shine-green" style={{ color: greenColor }}>+15</div>
+                          <div className="text-2xl font-bold hover-shine-cyan" style={{ color: cyanColor }}>+15</div>
                           <div className="text-xs" style={{ color: textMuted }}>Extra Days Free</div>
                         </div>
                         <div className="p-4 rounded-lg text-center" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
@@ -432,7 +432,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="pricing" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
                 Simple Pricing
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>How Access Works</h2>
@@ -443,18 +443,18 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               {/* Course Only */}
               <div className="p-6 rounded-xl transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2 hover-shine-green" style={{ color: greenColor }}>Course Access</h3>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: cyanColor }}>Course Access</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>Perfect for self-paced learners</p>
                 </div>
                 <div className="mb-6">
                   <span className="line-through" style={{ color: textMuted }}>INR 3000</span>
-                  <span className="text-4xl font-bold ml-2 hover-shine-green" style={{ color: greenColor }}>INR 1499</span>
+                  <span className="text-4xl font-bold ml-2 hover-shine-cyan" style={{ color: cyanColor }}>INR 1499</span>
                   <div className="text-sm" style={{ color: textMuted }}>one-time payment</div>
                 </div>
                 <ul className="space-y-3 mb-6">
                   {["10 video modules", "Lifetime course access", "Certificate of completion"].map((feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-green" style={{ color: greenColor }} />
+                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-cyan" style={{ color: cyanColor }} />
                       <span style={{ color: textLight }}>{feature}</span>
                     </li>
                   ))}
@@ -462,7 +462,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 {isAuthenticated ? (
                   hasCourseAccess ? (
                     <Link href="/course" className="w-full">
-                      <button className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: greenColor, color: bgPrimary }}>View Course</button>
+                      <button className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: cyanColor, color: bgPrimary }}>View Course</button>
                     </Link>
                   ) : (
                     <RazorpayCheckout
@@ -487,7 +487,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="text-4xl font-bold hover-shine-purple" style={{ color: purpleColor }}>INR 2000</div>
                   <div className="text-sm" style={{ color: textMuted }}>per month</div>
                 </div>
-                <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium hover-shine-green" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>First month free</div>
+                <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium hover-shine-cyan" style={{ backgroundColor: `${cyanColor}20`, color: cyanColor }}>First month free</div>
                 <ul className="space-y-3 mb-6">
                   {["Live trading sessions", "1-on-1 mentorship", "Professional networking"].map((feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm">
@@ -508,23 +508,23 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               </div>
 
               {/* Complete Package */}
-              <div className="p-6 rounded-xl relative overflow-hidden transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `2px solid ${greenColor}`, boxShadow: `0 25px 50px -12px ${greenColor}40` }}>
+              <div className="p-6 rounded-xl relative overflow-hidden transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `2px solid ${cyanColor}`, boxShadow: `0 25px 50px -12px ${cyanColor}40` }}>
                 <div className="absolute top-4 right-4">
-                  <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: greenColor, color: bgPrimary }}>Most Popular</span>
+                  <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: cyanColor, color: bgPrimary }}>Most Popular</span>
                 </div>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2 hover-shine-green" style={{ color: greenColor }}>Complete Trading Setup</h3>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: cyanColor }}>Complete Trading Setup</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>Course + Community</p>
                 </div>
                 <div className="mb-4">
-                  <div className="text-4xl font-bold hover-shine-green" style={{ color: greenColor }}>INR 2499</div>
+                  <div className="text-4xl font-bold hover-shine-cyan" style={{ color: cyanColor }}>INR 2499</div>
                   <div className="text-sm" style={{ color: textMuted }}>one-time + INR 2000/mo</div>
                 </div>
                 <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium hover-shine-purple" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor }}>Save INR 1000</div>
                 <ul className="space-y-3 mb-6">
                   {["1st month Discord free", "Lifetime course access", "Priority support"].map((feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-green" style={{ color: greenColor }} />
+                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-cyan" style={{ color: cyanColor }} />
                       <span style={{ color: textLight }}>{feature}</span>
                     </li>
                   ))}
@@ -542,7 +542,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <button
                     onClick={() => signIn('google')}
                     className="w-full px-4 py-2 font-medium rounded-lg"
-                    style={{ backgroundColor: greenColor, color: bgPrimary, boxShadow: `0 10px 25px -5px ${greenColor}50` }}
+                    style={{ backgroundColor: cyanColor, color: bgPrimary, boxShadow: `0 10px 25px -5px ${cyanColor}50` }}
                   >
                     Get Full Access
                   </button>
@@ -553,7 +553,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         </motion.section>
 
         {/* CTA Section */}
-        <motion.section {...fadeInUp} className="py-20 md:py-32 relative overflow-hidden" style={{ backgroundImage: `linear-gradient(to bottom right, ${greenColor}, ${purpleColor})` }}>
+        <motion.section {...fadeInUp} className="py-20 md:py-32 relative overflow-hidden" style={{ backgroundImage: `linear-gradient(to bottom right, ${cyanColor}, ${purpleColor})` }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: textLight }}>Learn Trading in Real Time</h2>
@@ -570,10 +570,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div className="grid md:grid-cols-4 gap-8 mb-8">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: `2px solid ${greenColor}` }}>
+                  <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: `2px solid ${cyanColor}` }}>
                     <img src="fxclogo.webp" alt="FourXclub Logo" className="w-full h-full object-cover" />
                   </div>
-                  <span className="font-bold text-xl hover-shine-green" style={{ color: greenColor }}>FourXclub</span>
+                  <span className="font-bold text-xl hover-shine-cyan" style={{ color: cyanColor }}>FourXclub</span>
                 </div>
                 <p className="text-sm" style={{ color: textMuted }}>Live trading • Real discussions • No signals • No hype</p>
               </div>
@@ -620,14 +620,14 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div className="relative z-10 max-w-5xl w-full rounded-xl shadow-xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
               <div className="flex items-center justify-between p-6" style={{ borderBottom: `1px solid ${borderColor}` }}>
                 <div>
-                  <h2 className="text-xl font-bold hover-shine-green" style={{ color: greenColor }}>FourXclub Core Course</h2>
+                  <h2 className="text-xl font-bold hover-shine-cyan" style={{ color: cyanColor }}>FourXclub Core Course</h2>
                   <p className="text-sm" style={{ color: textMuted }}>10 secure, encrypted videos</p>
                 </div>
                 <div className="flex gap-3 items-center">
                   {!hasCourseAccess ? (
                     <span className="px-3 py-1 rounded-full text-sm font-medium hover-shine-purple" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor }}>Locked</span>
                   ) : (
-                    <span className="px-3 py-1 rounded-full text-sm font-medium hover-shine-green" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>Access granted</span>
+                    <span className="px-3 py-1 rounded-full text-sm font-medium hover-shine-cyan" style={{ backgroundColor: `${cyanColor}20`, color: cyanColor }}>Access granted</span>
                   )}
                   <button onClick={() => setShowCourseModal(false)} className="text-sm px-3 py-1 rounded" style={{ color: textLight }}>Close</button>
                 </div>
@@ -641,7 +641,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       {videos.map((v) => (
                         <li key={v.id} className="flex items-center justify-between px-4 py-3 rounded-lg" style={{ backgroundColor: bgPrimary, border: `1px solid ${borderColor}` }}>
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded flex items-center justify-center text-xs font-medium hover-shine-green" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>{v.id}</div>
+                            <div className="w-8 h-8 rounded flex items-center justify-center text-xs font-medium hover-shine-cyan" style={{ backgroundColor: `${cyanColor}20`, color: cyanColor }}>{v.id}</div>
                             <div className="text-sm font-medium" style={{ color: textLight }}>{v.title}</div>
                           </div>
                           <div className="flex items-center gap-3 text-sm" style={{ color: textMuted }}>
@@ -660,10 +660,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         <Link key={v.id} href="/course" className="block outline-none">
                           <li className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" style={{ backgroundColor: bgPrimary, border: `1px solid ${borderColor}` }}>
                             <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded flex items-center justify-center text-xs font-medium hover-shine-green" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>{v.id}</div>
+                              <div className="w-8 h-8 rounded flex items-center justify-center text-xs font-medium hover-shine-cyan" style={{ backgroundColor: `${cyanColor}20`, color: cyanColor }}>{v.id}</div>
                               <div className="text-sm font-medium" style={{ color: textLight }}>{v.title}</div>
                             </div>
-                            <div className="flex items-center gap-3 text-sm hover-shine-green" style={{ color: greenColor }}>
+                            <div className="flex items-center gap-3 text-sm hover-shine-cyan" style={{ color: cyanColor }}>
                               <ArrowRight className="w-4 h-4" />
                               <span>Watch</span>
                             </div>
@@ -680,7 +680,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="flex items-center gap-4 w-full justify-between">
                     <div>
                       <div className="text-sm" style={{ color: textMuted }}>Course price</div>
-                      <div className="text-xl font-bold hover-shine-green" style={{ color: greenColor }}>INR 1499</div>
+                      <div className="text-xl font-bold hover-shine-cyan" style={{ color: cyanColor }}>INR 1499</div>
                     </div>
                     {isAuthenticated ? (
                       <RazorpayCheckout
@@ -694,7 +694,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       <button
                         onClick={() => signIn('google')}
                         className="px-4 py-2 rounded-lg"
-                        style={{ backgroundColor: greenColor, color: bgPrimary }}
+                        style={{ backgroundColor: cyanColor, color: bgPrimary }}
                       >
                         Sign in to Purchase
                       </button>
@@ -704,7 +704,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="flex items-center justify-between w-full">
                     <div className="text-sm" style={{ color: textMuted }}>You now have access to all course videos.</div>
                     <Link href="/course">
-                      <button className="px-4 py-2 rounded-lg" style={{ backgroundColor: greenColor, color: bgPrimary }}>Go to Course Player</button>
+                      <button className="px-4 py-2 rounded-lg" style={{ backgroundColor: cyanColor, color: bgPrimary }}>Go to Course Player</button>
                     </Link>
                   </div>
                 )}

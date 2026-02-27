@@ -198,7 +198,7 @@ html {
 
 /* ── Shine / Glow hover animations ── */
 
-@keyframes shine-green {
+@keyframes shine-cyan {
 
   0%,
   100% {
@@ -206,7 +206,7 @@ html {
   }
 
   50% {
-    text-shadow: 0 0 8px #2E7D2E, 0 0 22px #2E7D2E99, 0 0 45px #2E7D2E44;
+    text-shadow: 0 0 8px #00c9ff, 0 0 22px #00c9ff99, 0 0 45px #00c9ff44;
   }
 }
 
@@ -218,11 +218,11 @@ html {
   }
 
   50% {
-    text-shadow: 0 0 8px #8B4FE0, 0 0 22px #8B4FE099, 0 0 45px #8B4FE044;
+    text-shadow: 0 0 8px #8b5cf6, 0 0 22px #8b5cf699, 0 0 45px #8b5cf644;
   }
 }
 
-@keyframes shine-blush-text {
+@keyframes shine-warning-text {
 
   0%,
   100% {
@@ -231,12 +231,12 @@ html {
   }
 
   50% {
-    text-shadow: 0 0 10px #FFB6C1, 0 0 24px #FFB6C199;
+    text-shadow: 0 0 10px #f43f5e, 0 0 24px #f43f5e99;
     filter: brightness(1.25);
   }
 }
 
-@keyframes shine-blush-box {
+@keyframes shine-warning-box {
 
   0%,
   100% {
@@ -244,18 +244,18 @@ html {
   }
 
   50% {
-    box-shadow: 0 0 14px #FFB6C180, 0 0 30px #FFB6C140;
+    box-shadow: 0 0 14px #f43f5e80, 0 0 30px #f43f5e40;
   }
 }
 
 /* Apply on hover */
-.hover-shine-green {
+.hover-shine-cyan {
   cursor: default;
   transition: text-shadow 0.3s ease;
 }
 
-.hover-shine-green:hover {
-  animation: shine-green 1.6s ease-in-out infinite;
+.hover-shine-cyan:hover {
+  animation: shine-cyan 1.6s ease-in-out infinite;
 }
 
 .hover-shine-purple {
@@ -268,20 +268,20 @@ html {
 }
 
 /* For inline text spans (No signals…) */
-.hover-shine-blush-text {
+.hover-shine-warning-text {
   cursor: default;
   transition: text-shadow 0.3s ease, filter 0.3s ease;
 }
 
-.hover-shine-blush-text:hover {
-  animation: shine-blush-text 1.6s ease-in-out infinite;
+.hover-shine-warning-text:hover {
+  animation: shine-warning-text 1.6s ease-in-out infinite;
 }
 
 /* For pill/badge divs */
-.hover-shine-blush-box {
+.hover-shine-warning-box {
   transition: box-shadow 0.3s ease;
 }
 
-.hover-shine-blush-box:hover {
-  animation: shine-blush-box 1.6s ease-in-out infinite;
+.hover-shine-warning-box:hover {
+  animation: shine-warning-box 1.6s ease-in-out infinite;
 }
