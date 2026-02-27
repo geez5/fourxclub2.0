@@ -180,7 +180,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <p className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto text-center leading-relaxed" style={{ color: textLight }}>
                 Understand value, acceptance and imbalance using Auction Market Theory<br />
                 and execute with professional risk discipline.<br />
-                <span className="hover-shine-warning-text" style={{ color: '#00ff88', fontSize: '1.15em', fontStyle: 'italic', fontWeight: '400' }}>No signals, no hype, just skill.</span>
+                <span className="hover-shine-warning-text" style={{ color: textLight, fontSize: '1.15em', fontStyle: 'italic', fontWeight: '400' }}>No signals, no hype, just skill.</span>
               </p>
               <div className="flex items-center justify-center gap-4">
                 <button

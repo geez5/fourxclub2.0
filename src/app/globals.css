@@ -236,7 +236,7 @@ html {
   }
 
   50% {
-    text-shadow: 0 0 10px #f43f5e, 0 0 24px #f43f5e99;
+    text-shadow: 0 0 10px #ffb6c1, 0 0 24px #ffb6c199;
     filter: brightness(1.25);
   }
 }
@@ -249,7 +249,7 @@ html {
   }
 
   50% {
-    box-shadow: 0 0 14px #f43f5e80, 0 0 30px #f43f5e40;
+    box-shadow: 0 0 14px #ffb6c180, 0 0 30px #ffb6c140;
   }
 }
 
@@ -301,4 +301,21 @@ html {
   h6 {
     font-family: var(--font-heading);
   }
+}
+@keyframes shine-steel {
+  0%, 100% {
+    text-shadow: none;
+  }
+  50% {
+    text-shadow: 0 0 10px #cbd5e1, 0 0 25px #cbd5e180;
+  }
+}
+
+.hover-shine-steel {
+  cursor: default;
+  transition: text-shadow 0.3s ease;
+}
+
+.hover-shine-steel:hover {
+  animation: shine-steel 1.6s ease-in-out infinite;
 }
