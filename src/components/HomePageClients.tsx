@@ -91,7 +91,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
   const bgPrimary = '#0b1026';
   const bgCard = '#0f1738';
   const cyanColor = '#00c9ff';
-  const purpleColor = '#8b5cf6';
+  const purpleColor = '#a78bfa';
   const textLight = '#e0e7ff';
   const textMuted = '#94a3b8';
   const borderColor = 'rgba(224, 231, 255, 0.1)';
@@ -171,7 +171,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 <Sparkles className="w-3 h-3" />
                 Now Live: Transform Your Skills
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight hover-shine-cyan" style={{ color: cyanColor }}>
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight hover-shine-cyan" style={{ color: textLight }}>
                 Built on Analysis.<br />
                 <span className="bg-clip-text text-transparent hover-shine-purple" style={{ backgroundImage: `linear-gradient(to right, ${purpleColor}, ${purpleColor})`, color: purpleColor }}>
                   Backed by Experience.
@@ -245,7 +245,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
                 Mission &amp; Vision
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-cyan" style={{ color: cyanColor }}>A Trading Ecosystem</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-cyan" style={{ color: textLight }}>A Trading Ecosystem</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
                 At FourXclub, our aim is simple: to educate traders the right way.
                 We are a transparent, skill-focused trading community built by professionals with 7+ years of real market experience.
@@ -299,7 +299,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: cyanColor }}>Professional Trading Program</h3>
+                    <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Professional Trading Program</h3>
                     <p className="mb-4 leading-relaxed" style={{ color: textMuted }}>Market structure, strategy logic, risk management, and trading psychology.</p>
                     <div className="flex items-center justify-between gap-4 mb-4">
                       <div className="flex items-center gap-4 text-sm" style={{ color: textMuted }}>
@@ -368,7 +368,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 <Users className="w-3 h-3" />
                 Exclusive Community
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-cyan" style={{ color: cyanColor }}>Join the FourXclub Trading Community</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-cyan" style={{ color: textLight }}>Join the FourXclub Trading Community</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
                 A private, well-moderated trading community for serious traders.
               </p>
@@ -402,7 +402,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="p-8 md:p-10 flex flex-col justify-center" style={{ backgroundColor: `${purpleColor}10` }}>
                     <div className="space-y-6">
                       <div className="p-6 rounded-xl" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
-                        <h4 className="font-bold text-xl mb-2 hover-shine-cyan" style={{ color: cyanColor }}>Refer &amp; Earn Free Access</h4>
+                        <h4 className="font-bold text-xl mb-2 hover-shine-cyan" style={{ color: textLight }}>Refer &amp; Earn Free Access</h4>
                         <p className="text-sm mb-4 leading-relaxed" style={{ color: textMuted }}>Share your referral code. Both get 15 extra days free.</p>
                         <div className="flex items-center gap-3">
                           <div className="flex-1 p-3 rounded-lg font-mono text-sm hover-shine-purple" style={{ backgroundColor: bgPrimary, color: purpleColor }}>{refCode}</div>
@@ -443,7 +443,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               {/* Course Only */}
               <div className="p-6 rounded-xl transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: cyanColor }}>Course Access</h3>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Course Access</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>Perfect for self-paced learners</p>
                 </div>
                 <div className="mb-6">
@@ -513,7 +513,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: cyanColor, color: bgPrimary }}>Most Popular</span>
                 </div>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: cyanColor }}>Complete Trading Setup</h3>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Complete Trading Setup</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>Course + Community</p>
                 </div>
                 <div className="mb-4">
@@ -620,7 +620,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div className="relative z-10 max-w-5xl w-full rounded-xl shadow-xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
               <div className="flex items-center justify-between p-6" style={{ borderBottom: `1px solid ${borderColor}` }}>
                 <div>
-                  <h2 className="text-xl font-bold hover-shine-cyan" style={{ color: cyanColor }}>FourXclub Core Course</h2>
+                  <h2 className="text-xl font-bold hover-shine-cyan" style={{ color: textLight }}>FourXclub Core Course</h2>
                   <p className="text-sm" style={{ color: textMuted }}>10 secure, encrypted videos</p>
                 </div>
                 <div className="flex gap-3 items-center">
