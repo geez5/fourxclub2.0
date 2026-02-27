@@ -130,9 +130,9 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <span className="font-bold text-xl hover-shine-blush-text" style={{ color: '#FFB6C1' }}>FourXclub</span>
                 </div>
                 <div className="hidden md:flex items-center gap-6">
-                  <a href="#course" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: purpleColor }}>Course</a>
-                  <a href="#community" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: purpleColor }}>Community</a>
-                  <a href="#pricing" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: purpleColor }}>Pricing</a>
+                  <a href="#course" className="text-sm font-medium transition-colors hover:opacity-80 hover-shine-purple" style={{ color: purpleColor }}>Course</a>
+                  <a href="#community" className="text-sm font-medium transition-colors hover:opacity-80 hover-shine-purple" style={{ color: purpleColor }}>Community</a>
+                  <a href="#pricing" className="text-sm font-medium transition-colors hover:opacity-80 hover-shine-purple" style={{ color: purpleColor }}>Pricing</a>
                 </div>
               </div>
 
@@ -167,7 +167,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full text-sm" style={{ backgroundColor: `#E8829A20`, color: '#E8829A', border: `1px solid #E8829A50` }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full text-sm hover-shine-blush-box" style={{ backgroundColor: `#E8829A20`, color: '#E8829A', border: `1px solid #E8829A50` }}>
                 <Sparkles className="w-3 h-3" />
                 Now Live: Transform Your Skills
               </div>
@@ -228,7 +228,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               >
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <div className="h-px flex-1" style={{ background: `linear-gradient(to right, transparent, ${greenColor}40)` }} />
-                  <span className="text-xs font-mono px-3 py-1 rounded-full" style={{ color: greenColor, border: `1px solid ${greenColor}30`, backgroundColor: `${greenColor}10` }}>LIVE MARKET SIMULATION</span>
+                  <span className="text-xs font-mono px-3 py-1 rounded-full hover-shine-green" style={{ color: greenColor, border: `1px solid ${greenColor}30`, backgroundColor: `${greenColor}10` }}>LIVE MARKET SIMULATION</span>
                   <div className="h-px flex-1" style={{ background: `linear-gradient(to left, transparent, ${purpleColor}40)` }} />
                 </div>
                 <CandlestickChart />
@@ -261,9 +261,9 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               ].map((item, i) => (
                 <div key={i} className="p-6 rounded-xl transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgPrimary, border: `1px solid ${borderColor}` }}>
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: `${greenColor}20` }}>
-                    <item.icon className="w-6 h-6" style={{ color: greenColor }} />
+                    <item.icon className="w-6 h-6 hover-shine-green" style={{ color: greenColor }} />
                   </div>
-                  <h3 className="text-xl font-bold mb-2" style={{ color: purpleColor }}>{item.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 hover-shine-purple" style={{ color: purpleColor }}>{item.title}</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>{item.desc}</p>
                 </div>
               ))}
@@ -291,15 +291,15 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="relative aspect-video p-8 flex items-center justify-center" style={{ backgroundImage: `linear-gradient(to bottom right, ${greenColor}, ${purpleColor})` }}>
                     <div className="relative">
                       <div className="w-20 h-20 rounded-2xl flex items-center justify-center backdrop-blur-sm" style={{ backgroundColor: `${bgPrimary}ee` }}>
-                        <Lock className="w-10 h-10" style={{ color: greenColor }} />
+                        <Lock className="w-10 h-10 hover-shine-green" style={{ color: greenColor }} />
                       </div>
                     </div>
                     <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: `${bgPrimary}ee`, color: greenColor }}>Encrypted</span>
+                      <span className="px-3 py-1 rounded-full text-sm font-medium hover-shine-green" style={{ backgroundColor: `${bgPrimary}ee`, color: greenColor }}>Encrypted</span>
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="text-2xl font-bold mb-2" style={{ color: greenColor }}>Professional Trading Program</h3>
+                    <h3 className="text-2xl font-bold mb-2 hover-shine-green" style={{ color: greenColor }}>Professional Trading Program</h3>
                     <p className="mb-4 leading-relaxed" style={{ color: textMuted }}>Market structure, strategy logic, risk management, and trading psychology.</p>
                     <div className="flex items-center justify-between gap-4 mb-4">
                       <div className="flex items-center gap-4 text-sm" style={{ color: textMuted }}>
@@ -309,7 +309,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         </div>
                         <div className="flex items-center gap-1">
                           <span className="line-through">Rs.3499</span>
-                          <span className="ml-2 font-semibold" style={{ color: greenColor }}>Rs.1499</span>
+                          <span className="ml-2 font-semibold hover-shine-green" style={{ color: greenColor }}>Rs.1499</span>
                         </div>
                       </div>
                       {isAuthenticated ? (
@@ -338,7 +338,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
 
                 {/* Course Features */}
                 <div className="space-y-6">
-                  <h3 className="text-2xl font-bold mb-6" style={{ color: purpleColor }}>What You Will Get</h3>
+                  <h3 className="text-2xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>What You Will Get</h3>
                   {[
                     "10 structured, high-quality trading videos",
                     "Beginner-to-advanced learning path",
@@ -349,7 +349,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   ].map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: `${greenColor}20` }}>
-                        <Check className="w-4 h-4" style={{ color: greenColor }} />
+                        <Check className="w-4 h-4 hover-shine-green" style={{ color: greenColor }} />
                       </div>
                       <span className="text-lg leading-relaxed" style={{ color: textLight }}>{feature}</span>
                     </div>
@@ -382,7 +382,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       <Zap className="w-4 h-4" />
                       First Month Free
                     </div>
-                    <h3 className="text-3xl font-bold" style={{ color: purpleColor }}>Live Trading Discord</h3>
+                    <h3 className="text-3xl font-bold hover-shine-purple" style={{ color: purpleColor }}>Live Trading Discord</h3>
                     <p className="leading-relaxed" style={{ color: textMuted }}>Exclusive Discord where traders learn together and stay disciplined.</p>
                     <div className="space-y-3">
                       {[
@@ -393,7 +393,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         "No signals, no spam, no hype",
                       ].map((feature, i) => (
                         <div key={i} className="flex items-center gap-2">
-                          <Check className="w-5 h-5 flex-shrink-0" style={{ color: greenColor }} />
+                          <Check className="w-5 h-5 flex-shrink-0 hover-shine-green" style={{ color: greenColor }} />
                           <span style={{ color: textLight }}>{feature}</span>
                         </div>
                       ))}
@@ -402,21 +402,21 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="p-8 md:p-10 flex flex-col justify-center" style={{ backgroundColor: `${purpleColor}10` }}>
                     <div className="space-y-6">
                       <div className="p-6 rounded-xl" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
-                        <h4 className="font-bold text-xl mb-2" style={{ color: greenColor }}>Refer &amp; Earn Free Access</h4>
+                        <h4 className="font-bold text-xl mb-2 hover-shine-green" style={{ color: greenColor }}>Refer &amp; Earn Free Access</h4>
                         <p className="text-sm mb-4 leading-relaxed" style={{ color: textMuted }}>Share your referral code. Both get 15 extra days free.</p>
                         <div className="flex items-center gap-3">
-                          <div className="flex-1 p-3 rounded-lg font-mono text-sm" style={{ backgroundColor: bgPrimary, color: purpleColor }}>{refCode}</div>
+                          <div className="flex-1 p-3 rounded-lg font-mono text-sm hover-shine-purple" style={{ backgroundColor: bgPrimary, color: purpleColor }}>{refCode}</div>
                           <button onClick={generateCode} className="px-4 py-2 text-sm font-medium rounded-lg" style={{ backgroundColor: greenColor, color: bgPrimary }}>Generate</button>
                           <button onClick={copyCode} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors" style={{ border: `1px solid ${borderColor}`, color: copied ? bgPrimary : textLight, backgroundColor: copied ? greenColor : 'transparent' }}>{copied ? 'Copied!' : 'Copy'}</button>
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="p-4 rounded-lg text-center" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
-                          <div className="text-2xl font-bold" style={{ color: greenColor }}>+15</div>
+                          <div className="text-2xl font-bold hover-shine-green" style={{ color: greenColor }}>+15</div>
                           <div className="text-xs" style={{ color: textMuted }}>Extra Days Free</div>
                         </div>
                         <div className="p-4 rounded-lg text-center" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
-                          <Heart className="w-6 h-6 mx-auto mb-1" style={{ color: purpleColor }} />
+                          <Heart className="w-6 h-6 mx-auto mb-1 hover-shine-purple" style={{ color: purpleColor }} />
                           <div className="text-xs" style={{ color: textMuted }}>Per Referral</div>
                         </div>
                       </div>
@@ -443,18 +443,18 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               {/* Course Only */}
               <div className="p-6 rounded-xl transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2" style={{ color: greenColor }}>Course Access</h3>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-green" style={{ color: greenColor }}>Course Access</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>Perfect for self-paced learners</p>
                 </div>
                 <div className="mb-6">
                   <span className="line-through" style={{ color: textMuted }}>INR 3000</span>
-                  <span className="text-4xl font-bold ml-2" style={{ color: greenColor }}>INR 1499</span>
+                  <span className="text-4xl font-bold ml-2 hover-shine-green" style={{ color: greenColor }}>INR 1499</span>
                   <div className="text-sm" style={{ color: textMuted }}>one-time payment</div>
                 </div>
                 <ul className="space-y-3 mb-6">
                   {["10 video modules", "Lifetime course access", "Certificate of completion"].map((feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 flex-shrink-0" style={{ color: greenColor }} />
+                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-green" style={{ color: greenColor }} />
                       <span style={{ color: textLight }}>{feature}</span>
                     </li>
                   ))}
@@ -480,18 +480,18 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               {/* Community Only */}
               <div className="p-6 rounded-xl transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2" style={{ color: purpleColor }}>Community Access</h3>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-purple" style={{ color: purpleColor }}>Community Access</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>Join the Discord family</p>
                 </div>
                 <div className="mb-4">
-                  <div className="text-4xl font-bold" style={{ color: purpleColor }}>INR 2000</div>
+                  <div className="text-4xl font-bold hover-shine-purple" style={{ color: purpleColor }}>INR 2000</div>
                   <div className="text-sm" style={{ color: textMuted }}>per month</div>
                 </div>
-                <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>First month free</div>
+                <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium hover-shine-green" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>First month free</div>
                 <ul className="space-y-3 mb-6">
                   {["Live trading sessions", "1-on-1 mentorship", "Professional networking"].map((feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 flex-shrink-0" style={{ color: purpleColor }} />
+                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-purple" style={{ color: purpleColor }} />
                       <span style={{ color: textLight }}>{feature}</span>
                     </li>
                   ))}
@@ -513,18 +513,18 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: greenColor, color: bgPrimary }}>Most Popular</span>
                 </div>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2" style={{ color: greenColor }}>Complete Trading Setup</h3>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-green" style={{ color: greenColor }}>Complete Trading Setup</h3>
                   <p className="leading-relaxed" style={{ color: textMuted }}>Course + Community</p>
                 </div>
                 <div className="mb-4">
-                  <div className="text-4xl font-bold" style={{ color: greenColor }}>INR 2499</div>
+                  <div className="text-4xl font-bold hover-shine-green" style={{ color: greenColor }}>INR 2499</div>
                   <div className="text-sm" style={{ color: textMuted }}>one-time + INR 2000/mo</div>
                 </div>
-                <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor }}>Save INR 1000</div>
+                <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium hover-shine-purple" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor }}>Save INR 1000</div>
                 <ul className="space-y-3 mb-6">
                   {["1st month Discord free", "Lifetime course access", "Priority support"].map((feature, i) => (
                     <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 flex-shrink-0" style={{ color: greenColor }} />
+                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-green" style={{ color: greenColor }} />
                       <span style={{ color: textLight }}>{feature}</span>
                     </li>
                   ))}
@@ -573,12 +573,12 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: `2px solid ${greenColor}` }}>
                     <img src="fxclogo.webp" alt="FourXclub Logo" className="w-full h-full object-cover" />
                   </div>
-                  <span className="font-bold text-xl" style={{ color: greenColor }}>FourXclub</span>
+                  <span className="font-bold text-xl hover-shine-green" style={{ color: greenColor }}>FourXclub</span>
                 </div>
                 <p className="text-sm" style={{ color: textMuted }}>Live trading • Real discussions • No signals • No hype</p>
               </div>
               <div>
-                <h4 className="font-semibold mb-4" style={{ color: purpleColor }}>Product</h4>
+                <h4 className="font-semibold mb-4 hover-shine-purple" style={{ color: purpleColor }}>Product</h4>
                 <ul className="space-y-2 text-sm">
                   <li><a href="#course" style={{ color: textMuted }}>Courses</a></li>
                   <li><a href="#community" style={{ color: textMuted }}>Community</a></li>
@@ -586,7 +586,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-4" style={{ color: purpleColor }}>Contact</h4>
+                <h4 className="font-semibold mb-4 hover-shine-purple" style={{ color: purpleColor }}>Contact</h4>
                 <ul className="space-y-2 text-sm">
                   <li><a href="https://www.instagram.com/fourxclub" target="_blank" rel="noopener noreferrer" style={{ color: textMuted }}>Instagram</a></li>
                   <li><a href="https://discord.gg/aAUk8d73KD" target="_blank" rel="noopener noreferrer" style={{ color: textMuted }}>Discord</a></li>
@@ -594,7 +594,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-4" style={{ color: purpleColor }}>Legal</h4>
+                <h4 className="font-semibold mb-4 hover-shine-purple" style={{ color: purpleColor }}>Legal</h4>
                 <ul className="space-y-2 text-sm">
                   <li><Link href="/terms" className="transition-opacity hover:opacity-80" style={{ color: textMuted }}>Terms & Conditions</Link></li>
                   <li><Link href="/privacy" className="transition-opacity hover:opacity-80" style={{ color: textMuted }}>Privacy Policy</Link></li>
@@ -620,14 +620,14 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div className="relative z-10 max-w-5xl w-full rounded-xl shadow-xl overflow-hidden" style={{ backgroundColor: 'transparent' }}>
               <div className="flex items-center justify-between p-6" style={{ borderBottom: `1px solid ${borderColor}` }}>
                 <div>
-                  <h2 className="text-xl font-bold" style={{ color: greenColor }}>FourXclub Core Course</h2>
+                  <h2 className="text-xl font-bold hover-shine-green" style={{ color: greenColor }}>FourXclub Core Course</h2>
                   <p className="text-sm" style={{ color: textMuted }}>10 secure, encrypted videos</p>
                 </div>
                 <div className="flex gap-3 items-center">
                   {!hasCourseAccess ? (
-                    <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor }}>Locked</span>
+                    <span className="px-3 py-1 rounded-full text-sm font-medium hover-shine-purple" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor }}>Locked</span>
                   ) : (
-                    <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>Access granted</span>
+                    <span className="px-3 py-1 rounded-full text-sm font-medium hover-shine-green" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>Access granted</span>
                   )}
                   <button onClick={() => setShowCourseModal(false)} className="text-sm px-3 py-1 rounded" style={{ color: textLight }}>Close</button>
                 </div>
@@ -641,7 +641,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                       {videos.map((v) => (
                         <li key={v.id} className="flex items-center justify-between px-4 py-3 rounded-lg" style={{ backgroundColor: bgPrimary, border: `1px solid ${borderColor}` }}>
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded flex items-center justify-center text-xs font-medium" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>{v.id}</div>
+                            <div className="w-8 h-8 rounded flex items-center justify-center text-xs font-medium hover-shine-green" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>{v.id}</div>
                             <div className="text-sm font-medium" style={{ color: textLight }}>{v.title}</div>
                           </div>
                           <div className="flex items-center gap-3 text-sm" style={{ color: textMuted }}>
@@ -660,10 +660,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                         <Link key={v.id} href="/course" className="block outline-none">
                           <li className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" style={{ backgroundColor: bgPrimary, border: `1px solid ${borderColor}` }}>
                             <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded flex items-center justify-center text-xs font-medium" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>{v.id}</div>
+                              <div className="w-8 h-8 rounded flex items-center justify-center text-xs font-medium hover-shine-green" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>{v.id}</div>
                               <div className="text-sm font-medium" style={{ color: textLight }}>{v.title}</div>
                             </div>
-                            <div className="flex items-center gap-3 text-sm" style={{ color: greenColor }}>
+                            <div className="flex items-center gap-3 text-sm hover-shine-green" style={{ color: greenColor }}>
                               <ArrowRight className="w-4 h-4" />
                               <span>Watch</span>
                             </div>
@@ -680,7 +680,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="flex items-center gap-4 w-full justify-between">
                     <div>
                       <div className="text-sm" style={{ color: textMuted }}>Course price</div>
-                      <div className="text-xl font-bold" style={{ color: greenColor }}>INR 1499</div>
+                      <div className="text-xl font-bold hover-shine-green" style={{ color: greenColor }}>INR 1499</div>
                     </div>
                     {isAuthenticated ? (
                       <RazorpayCheckout
