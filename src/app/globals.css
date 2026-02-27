@@ -302,10 +302,14 @@ html {
     font-family: var(--font-heading);
   }
 }
+
 @keyframes shine-steel {
-  0%, 100% {
+
+  0%,
+  100% {
     text-shadow: none;
   }
+
   50% {
     text-shadow: 0 0 10px #cbd5e1, 0 0 25px #cbd5e180;
   }
@@ -318,4 +322,48 @@ html {
 
 .hover-shine-steel:hover {
   animation: shine-steel 1.6s ease-in-out infinite;
+}
+
+@keyframes shine-btn-cyan {
+
+  0%,
+  100% {
+    box-shadow: none;
+    filter: brightness(1);
+  }
+
+  50% {
+    box-shadow: 0 0 15px #00c9ff, 0 0 30px #00c9ff80;
+    filter: brightness(1.1);
+  }
+}
+
+.hover-shine-btn-cyan {
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.hover-shine-btn-cyan:hover {
+  animation: shine-btn-cyan 1.5s ease-in-out infinite;
+}
+
+@keyframes shine-btn-purple {
+
+  0%,
+  100% {
+    box-shadow: none;
+    filter: brightness(1);
+  }
+
+  50% {
+    box-shadow: 0 0 15px #8b5cf6, 0 0 30px #8b5cf680;
+    filter: brightness(1.1);
+  }
+}
+
+.hover-shine-btn-purple {
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.hover-shine-btn-purple:hover {
+  animation: shine-btn-purple 1.5s ease-in-out infinite;
 }

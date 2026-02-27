@@ -145,7 +145,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                     <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:opacity-80" style={{ color: textLight }}>
                       Sign In
                     </button>
-                    <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2" style={{ backgroundColor: cyanColor, color: bgPrimary }}>
+                    <button onClick={() => signIn('google')} className="px-4 py-2 text-sm font-medium rounded-lg hover-shine-btn-cyan transition-colors flex items-center gap-2" style={{ backgroundColor: cyanColor, color: bgPrimary }}>
                       Get Started <ArrowRight className="w-4 h-4" />
                     </button>
                   </>
@@ -465,12 +465,12 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                     <RazorpayCheckout
                       type="course"
                       buttonText="Get Started"
-                      className="w-full px-4 py-2 font-medium rounded-lg"
+                      className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-cyan"
                       onSuccess={() => setHasCourseAccess(true)}
                     />
                   )
                 ) : (
-                  <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Get Started</button>
+                  <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-purple" style={{ backgroundColor: purpleColor, color: textLight }}>Get Started</button>
                 )}
               </div>
 
@@ -497,10 +497,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <RazorpayCheckout
                     type="discord_subscription"
                     buttonText="Access Community"
-                    className="w-full px-4 py-2 font-medium rounded-lg"
+                    className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-purple"
                   />
                 ) : (
-                  <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg" style={{ backgroundColor: purpleColor, color: textLight }}>Access Community</button>
+                  <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-purple" style={{ backgroundColor: purpleColor, color: textLight }}>Access Community</button>
                 )}
               </div>
 
@@ -530,7 +530,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <RazorpayCheckout
                     type="combo"
                     buttonText="Get Full Access"
-                    className="w-full px-4 py-2 font-medium rounded-lg"
+                    className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-cyan"
                     onSuccess={() => {
                       setHasCourseAccess(true);
                     }}
@@ -538,7 +538,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 ) : (
                   <button
                     onClick={() => signIn('google')}
-                    className="w-full px-4 py-2 font-medium rounded-lg"
+                    className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-cyan"
                     style={{ backgroundColor: cyanColor, color: bgPrimary, boxShadow: `0 10px 25px -5px ${cyanColor}50` }}
                   >
                     Get Full Access
