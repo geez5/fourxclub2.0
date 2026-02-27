@@ -124,10 +124,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-8">
                 <div className="flex items-center gap-2">
-                  <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg" style={{ border: `2px solid ${cyanColor}` }}>
-                    <img src="fxclogo.webp" alt="FourXclub Logo" className="w-full h-full object-cover" />
-                  </div>
-                  <span className="font-bold text-xl hover-shine-warning-text" style={{ color: '#f43f5e' }}>FourXclub</span>
+                  <span className="font-bold text-xl hover-shine-warning-text" style={{ color: '#B0C4DE', textShadow: '0 0 10px rgba(176, 196, 222, 0.7), 0 0 20px rgba(176, 196, 222, 0.5)' }}>FXC</span>
                 </div>
                 <div className="hidden md:flex items-center gap-6">
                   <a href="#course" className="text-sm font-medium transition-colors hover:opacity-80 hover-shine-purple" style={{ color: purpleColor }}>Course</a>
@@ -167,7 +164,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full text-sm hover-shine-warning-box" style={{ backgroundColor: `#E8829A20`, color: '#f43f5e', border: `1px solid #E8829A50` }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full text-sm hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 <Sparkles className="w-3 h-3" />
                 Now Live: Transform Your Skills
               </div>
@@ -242,7 +239,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="about" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Mission &amp; Vision
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-cyan" style={{ color: textLight }}>A Trading Ecosystem</h2>
@@ -275,7 +272,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="course" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Premium Course
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>FourXclub Core Trading Course</h2>
@@ -364,7 +361,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="community" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 <Users className="w-3 h-3" />
                 Exclusive Community
               </div>
@@ -378,7 +375,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <div className="overflow-hidden rounded-xl shadow-2xl" style={{ backgroundColor: bgPrimary, border: `2px solid ${cyanColor}50` }}>
                 <div className="grid md:grid-cols-2">
                   <div className="p-8 md:p-10 space-y-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e' }}>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1' }}>
                       <Zap className="w-4 h-4" />
                       First Month Free
                     </div>
@@ -432,7 +429,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="pricing" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#f43f5e', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Simple Pricing
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>How Access Works</h2>
@@ -570,10 +567,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
             <div className="grid md:grid-cols-4 gap-8 mb-8">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-10 h-10 rounded-full overflow-hidden" style={{ border: `2px solid ${cyanColor}` }}>
-                    <img src="fxclogo.webp" alt="FourXclub Logo" className="w-full h-full object-cover" />
-                  </div>
-                  <span className="font-bold text-xl hover-shine-cyan" style={{ color: cyanColor }}>FourXclub</span>
+                  <span className="font-bold text-xl hover-shine-cyan" style={{ color: '#B0C4DE', textShadow: '0 0 10px rgba(176, 196, 222, 0.7), 0 0 20px rgba(176, 196, 222, 0.5)' }}>FXC</span>
                 </div>
                 <p className="text-sm" style={{ color: textMuted }}>Live trading • Real discussions • No signals • No hype</p>
               </div>
