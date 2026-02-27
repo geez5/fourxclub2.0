@@ -127,7 +127,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg" style={{ border: `2px solid ${greenColor}` }}>
                     <img src="fxclogo.webp" alt="FourXclub Logo" className="w-full h-full object-cover" />
                   </div>
-                  <span className="font-bold text-xl" style={{ color: greenColor }}>FourXclub</span>
+                  <span className="font-bold text-xl" style={{ color: '#FFB6C1' }}>FourXclub</span>
                 </div>
                 <div className="hidden md:flex items-center gap-6">
                   <a href="#course" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: purpleColor }}>Course</a>
@@ -180,7 +180,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <p className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto text-center leading-relaxed" style={{ color: textLight }}>
                 Understand value, acceptance and imbalance using Auction Market Theory<br />
                 and execute with professional risk discipline.<br />
-                <span style={{ color: purpleColor }}>No signals, no hype, just skill.</span>
+                <span style={{ color: '#C0715A', fontSize: '1.15em', fontStyle: 'italic', fontWeight: '400' }}>No signals, no hype, just skill.</span>
               </p>
               <div className="flex items-center justify-center gap-4">
                 <button
@@ -242,7 +242,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="about" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor, border: `1px solid ${purpleColor}50` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Mission &amp; Vision
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: greenColor }}>A Trading Ecosystem</h2>
@@ -275,7 +275,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="course" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `${greenColor}20`, color: greenColor, border: `1px solid ${greenColor}50` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Premium Course
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: purpleColor }}>FourXclub Core Trading Course</h2>
@@ -364,7 +364,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="community" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor, border: `1px solid ${purpleColor}50` }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 <Users className="w-3 h-3" />
                 Exclusive Community
               </div>
@@ -378,7 +378,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <div className="overflow-hidden rounded-xl shadow-2xl" style={{ backgroundColor: bgPrimary, border: `2px solid ${greenColor}50` }}>
                 <div className="grid md:grid-cols-2">
                   <div className="p-8 md:p-10 space-y-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1' }}>
                       <Zap className="w-4 h-4" />
                       First Month Free
                     </div>
@@ -432,7 +432,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="pricing" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `${greenColor}20`, color: greenColor, border: `1px solid ${greenColor}50` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Simple Pricing
               </div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: purpleColor }}>How Access Works</h2>
@@ -556,8 +556,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} className="py-20 md:py-32 relative overflow-hidden" style={{ backgroundImage: `linear-gradient(to bottom right, ${greenColor}, ${purpleColor})` }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: bgPrimary }}>Learn Trading in Real Time</h2>
-              <p className="text-xl mb-10 leading-relaxed" style={{ color: bgPrimary }}>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: textLight }}>Learn Trading in Real Time</h2>
+              <p className="text-xl mb-10 leading-relaxed" style={{ color: textLight }}>
                 A focused trading community where learning happens live in the market.
               </p>
             </div>
