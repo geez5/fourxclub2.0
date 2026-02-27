@@ -90,8 +90,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
   // Color scheme
   const bgPrimary = '#000000';
   const bgCard = 'rgba(10, 10, 10, 0.8)';
-  const greenColor = '#0B3D0B';
-  const purpleColor = '#3B1266';
+  const greenColor = '#2E7D2E';
+  const purpleColor = '#6B2DB8';
   const textLight = '#ffffff';
   const textMuted = '#888888';
   const borderColor = 'rgba(255, 255, 255, 0.1)';
@@ -127,7 +127,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg" style={{ border: `2px solid ${greenColor}` }}>
                     <img src="fxclogo.webp" alt="FourXclub Logo" className="w-full h-full object-cover" />
                   </div>
-                  <span className="font-bold text-xl" style={{ color: '#FFB6C1' }}>FourXclub</span>
+                  <span className="font-bold text-xl hover-shine-blush-text" style={{ color: '#FFB6C1' }}>FourXclub</span>
                 </div>
                 <div className="hidden md:flex items-center gap-6">
                   <a href="#course" className="text-sm font-medium transition-colors hover:opacity-80" style={{ color: purpleColor }}>Course</a>
@@ -171,16 +171,16 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 <Sparkles className="w-3 h-3" />
                 Now Live: Transform Your Skills
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight" style={{ color: greenColor }}>
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight hover-shine-green" style={{ color: greenColor }}>
                 Built on Analysis.<br />
-                <span className="bg-clip-text text-transparent" style={{ backgroundImage: `linear-gradient(to right, ${purpleColor}, ${purpleColor})`, color: purpleColor }}>
+                <span className="bg-clip-text text-transparent hover-shine-purple" style={{ backgroundImage: `linear-gradient(to right, ${purpleColor}, ${purpleColor})`, color: purpleColor }}>
                   Backed by Experience.
                 </span>
               </h1>
               <p className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto text-center leading-relaxed" style={{ color: textLight }}>
                 Understand value, acceptance and imbalance using Auction Market Theory<br />
                 and execute with professional risk discipline.<br />
-                <span style={{ color: '#C0715A', fontSize: '1.15em', fontStyle: 'italic', fontWeight: '400' }}>No signals, no hype, just skill.</span>
+                <span className="hover-shine-blush-text" style={{ color: '#C0715A', fontSize: '1.15em', fontStyle: 'italic', fontWeight: '400' }}>No signals, no hype, just skill.</span>
               </p>
               <div className="flex items-center justify-center gap-4">
                 <button
@@ -242,10 +242,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="about" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Mission &amp; Vision
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: greenColor }}>A Trading Ecosystem</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-green" style={{ color: greenColor }}>A Trading Ecosystem</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
                 At FourXclub, our aim is simple: to educate traders the right way.
                 We are a transparent, skill-focused trading community built by professionals with 7+ years of real market experience.
@@ -275,10 +275,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="course" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Premium Course
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: purpleColor }}>FourXclub Core Trading Course</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>FourXclub Core Trading Course</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
                 10 structured video lessons, designed to take you from basics to professional-level thinking.
               </p>
@@ -364,11 +364,11 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="community" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 <Users className="w-3 h-3" />
                 Exclusive Community
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: greenColor }}>Join the FourXclub Trading Community</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-green" style={{ color: greenColor }}>Join the FourXclub Trading Community</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
                 A private, well-moderated trading community for serious traders.
               </p>
@@ -378,7 +378,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <div className="overflow-hidden rounded-xl shadow-2xl" style={{ backgroundColor: bgPrimary, border: `2px solid ${greenColor}50` }}>
                 <div className="grid md:grid-cols-2">
                   <div className="p-8 md:p-10 space-y-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1' }}>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1' }}>
                       <Zap className="w-4 h-4" />
                       First Month Free
                     </div>
@@ -432,10 +432,10 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
         <motion.section {...fadeInUp} id="pricing" className="py-20 md:py-32" style={{ backgroundColor: 'transparent' }}>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
+              <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-blush-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Simple Pricing
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{ color: purpleColor }}>How Access Works</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>How Access Works</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>Pay only for what you need. Learn at your pace.</p>
             </div>
 
