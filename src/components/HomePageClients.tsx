@@ -24,6 +24,8 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
   const [showCourseModal, setShowCourseModal] = useState(false);
   const [hasCourseAccess, setHasCourseAccess] = useState(false);
 
+  const [pdfStatus, setPdfStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+
   const { scrollY } = useScroll();
   const backgroundY = useTransform(scrollY, [0, 1500], ['0%', '30%']);
   const backgroundOpacity = useTransform(scrollY, [0, 800], [0.6, 0.0]);
@@ -79,6 +81,28 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch { }
+  };
+
+  const handleClaimPdf = async () => {
+    if (!isAuthenticated) {
+      signIn('google');
+      return;
+    }
+    setPdfStatus('sending');
+    try {
+      const res = await fetch('/api/send-pdf', { method: 'POST', credentials: 'include' });
+      const data = await res.json();
+      if (data.success) {
+        setPdfStatus('sent');
+        setTimeout(() => setPdfStatus('idle'), 5000);
+      } else {
+        setPdfStatus('error');
+        setTimeout(() => setPdfStatus('idle'), 4000);
+      }
+    } catch {
+      setPdfStatus('error');
+      setTimeout(() => setPdfStatus('idle'), 4000);
+    }
   };
 
   const videos = Array.from({ length: 10 }).map((_, i) => ({
@@ -189,12 +213,20 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => signIn('google')}
+                  onClick={handleClaimPdf}
+                  disabled={pdfStatus === 'sending'}
                   className="inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-medium transition-colors"
-                  style={{ backgroundColor: cyanColor, color: bgPrimary }}
+                  style={{
+                    backgroundColor: pdfStatus === 'sent' ? '#22c55e' : pdfStatus === 'error' ? '#ef4444' : cyanColor,
+                    color: pdfStatus === 'sent' || pdfStatus === 'error' ? '#fff' : bgPrimary,
+                    opacity: pdfStatus === 'sending' ? 0.7 : 1,
+                  }}
                 >
-                  Claim your 1st FREE PDF to kickstart your journey
-                  <ArrowRight className="w-4 h-4" />
+                  {pdfStatus === 'sending' ? 'Sending PDF to your email...' :
+                    pdfStatus === 'sent' ? '✓ PDF sent! Check your email' :
+                      pdfStatus === 'error' ? 'Failed to send. Try again.' :
+                        'Claim your 1st FREE PDF to kickstart your journey'}
+                  {pdfStatus === 'idle' && <ArrowRight className="w-4 h-4" />}
                 </button>
               </div>
 

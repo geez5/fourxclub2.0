@@ -32,55 +32,72 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60,
     },
+    pages: {
+        error: '/auth/error', // Redirect to custom error page
+    },
     callbacks: {
-        async signIn({ user, account }) {
-            console.log("[AUTH] SignIn callback:", user.email)
+        async signIn({ user, account, profile }) {
+            console.log("[AUTH] SignIn callback started for:", user.email);
+            
+            if (!user.email) {
+                console.error("[AUTH] No email provided by OAuth provider");
+                return false;
+            }
 
-            // Check if user is signing in for the first time
-            if (user.email) {
-                try {
-                    const existingUser = await prisma.user.findUnique({
-                        where: { email: user.email },
-                    })
+            try {
+                // Check if user exists safely
+                const existingUser = await prisma.user.findUnique({
+                    where: { email: user.email },
+                });
 
-                    if (!existingUser) {
-                        // New user — send welcome email after a short delay
-                        // to allow PrismaAdapter to create the user record first
-                        console.log("[AUTH] New user detected, will send welcome email to:", user.email)
-                        const email = user.email
-                        const name = user.name || "Trader"
+                if (!existingUser) {
+                    console.log("[AUTH] New user detected, will send welcome email to:", user.email);
+                    const email = user.email;
+                    const name = user.name || "Trader";
 
-                        // Import and send email asynchronously (don't block sign-in)
-                        import("./email").then(({ sendWelcomeEmail }) => {
-                            sendWelcomeEmail(email, name).catch(err => {
-                                console.error("[AUTH] Failed to send welcome email:", err)
-                            })
-                        }).catch(err => {
-                            console.error("[AUTH] Failed to import email module:", err)
-                        })
-                    }
-                } catch (err) {
-                    // Don't block sign-in if email check fails
-                    console.error("[AUTH] Error checking for existing user:", err)
+                    // Import and send email asynchronously
+                    import("./email").then(({ sendWelcomeEmail }) => {
+                        sendWelcomeEmail(email, name).catch(err => {
+                            console.error("[AUTH] Failed to send welcome email:", err);
+                        });
+                    }).catch(err => {
+                        console.error("[AUTH] Failed to import email module:", err);
+                    });
                 }
+                
+                console.log("[AUTH] SignIn callback successful");
+                return true;
+            } catch (err) {
+                // Log the exact error for debugging
+                console.error("[AUTH] Database error during signIn callback:", err);
+                
+                // Return true anyway if it's a known adapter issue so they still get a JWT session
+                // The adapter might throw on account linking but we can still sign them in
+                if (err instanceof Error && err.message.includes('Unique constraint')) {
+                     console.log("[AUTH] Recovered from unique constraint error");
+                     return true;
+                }
+                
+                // Let other errors fail gracefully to the error page
+                return false;
             }
-
-            return true
         },
-        async jwt({ token, user }) {
+        async jwt({ token, user, account }) {
             if (user) {
-                token.id = user.id
-                token.email = user.email
-                token.name = user.name
-                token.picture = user.image
+                token.id = user.id;
+                token.email = user.email;
+                token.name = user.name;
+                token.picture = user.image;
             }
-            return token
+            return token;
         },
         async session({ session, token }) {
-            if (session.user) {
-                session.user.id = (token.sub || token.id) as string
+            if (session.user && token.sub) {
+                session.user.id = token.sub;
+            } else if (session.user && token.id) {
+                session.user.id = token.id as string;
             }
-            return session
+            return session;
         },
     },
     debug: process.env.NODE_ENV === "development",
