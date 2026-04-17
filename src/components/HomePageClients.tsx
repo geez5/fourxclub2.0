@@ -305,11 +305,11 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
-                Premium Course
+                Pro Mentorship
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>FourXclub Core Trading Course</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>Pro Mentorship — ₹4,999</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
-                10 structured video lessons, designed to take you from basics to professional-level thinking.
+                For serious traders aiming for consistency.
               </p>
             </div>
 
@@ -328,17 +328,16 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Professional Trading Program</h3>
-                    <p className="mb-4 leading-relaxed" style={{ color: textMuted }}>Market structure, strategy logic, risk management, and trading psychology.</p>
+                    <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Pro Mentorship Program</h3>
+                    <p className="mb-4 leading-relaxed" style={{ color: textMuted }}>Everything in Base + Intermediate. 8 intensive 1-on-1 mentoring sessions. 3 Months Live Trading Floor Access.</p>
                     <div className="flex items-center justify-between gap-4 mb-4">
                       <div className="flex items-center gap-4 text-sm" style={{ color: textMuted }}>
                         <div className="flex items-center gap-1">
                           <Video className="w-4 h-4" />
-                          <span className="ml-2 font-semibold" style={{ color: textLight }}>10 videos</span>
+                          <span className="ml-2 font-semibold" style={{ color: textLight }}>Full Access</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <span className="line-through">Rs.3499</span>
-                          <span className="ml-2 font-semibold hover-shine-cyan" style={{ color: cyanColor }}>Rs.1499</span>
+                          <span className="ml-2 font-semibold hover-shine-cyan" style={{ color: cyanColor }}>₹4,999</span>
                         </div>
                       </div>
                       {isAuthenticated ? (
@@ -369,12 +368,11 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 <div className="space-y-6">
                   <h3 className="text-2xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>What You Will Get</h3>
                   {[
-                    "10 structured, high-quality trading videos",
-                    "Beginner-to-advanced learning path",
-                    "Strategy logic, not signals or tips",
-                    "Real-market examples and chart breakdowns",
-                    "Lifetime access to all course videos",
-                    "Certificate of completion",
+                    "Everything in Base + Intermediate",
+                    "8 intensive 1-on-1 mentoring sessions",
+                    "3 Months Live Trading Floor Access",
+                    "Personal mentorship focused on clearing prop firm challenges",
+                    "Access to all future add-ons & updates (lifetime value)",
                   ].map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: `${cyanColor}20` }}>
