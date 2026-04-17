@@ -462,28 +462,31 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
-                Simple Pricing
+                Choose Your Path
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>How Access Works</h2>
-              <p className="text-lg leading-relaxed" style={{ color: textLight }}>Pay only for what you need. Learn at your pace.</p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>Plans &amp; Pricing</h2>
+              <p className="text-lg leading-relaxed" style={{ color: textLight }}>Pick the plan that matches your trading goals.</p>
             </div>
 
             <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
-              {/* Course Only */}
+              {/* Base Course — ₹1,499 */}
               <div className="p-6 rounded-xl transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Course Access</h3>
-                  <p className="leading-relaxed" style={{ color: textMuted }}>Perfect for self-paced learners</p>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Base Course</h3>
+                  <p className="leading-relaxed text-sm" style={{ color: textMuted }}>Perfect for beginners starting their trading journey.</p>
                 </div>
                 <div className="mb-6">
-                  <span className="line-through" style={{ color: textMuted }}>INR 3000</span>
-                  <span className="text-4xl font-bold ml-2 hover-shine-cyan" style={{ color: cyanColor }}>INR 1499</span>
+                  <span className="text-4xl font-bold hover-shine-cyan" style={{ color: cyanColor }}>₹1,499</span>
                   <div className="text-sm" style={{ color: textMuted }}>one-time payment</div>
                 </div>
                 <ul className="space-y-3 mb-6">
-                  {["10 video modules", "Lifetime course access", "Certificate of completion"].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-cyan" style={{ color: cyanColor }} />
+                  {[
+                    "Structured pre-recorded lessons (learn at your own pace)",
+                    "Access to a private trading community",
+                    "1 personalized 1-on-1 session",
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      <Check className="w-4 h-4 flex-shrink-0 mt-0.5 hover-shine-cyan" style={{ color: cyanColor }} />
                       <span style={{ color: textLight }}>{feature}</span>
                     </li>
                   ))}
@@ -496,7 +499,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   ) : (
                     <RazorpayCheckout
                       type="course"
-                      buttonText="Get Started"
+                      buttonText="Get Started — ₹1,499"
                       className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-cyan"
                       onSuccess={() => setHasCourseAccess(true)}
                     />
@@ -506,54 +509,27 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 )}
               </div>
 
-              {/* Community Only */}
-              <div className="p-6 rounded-xl transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2 hover-shine-purple" style={{ color: purpleColor }}>Community Access</h3>
-                  <p className="leading-relaxed" style={{ color: textMuted }}>Join the Discord family</p>
-                </div>
-                <div className="mb-4">
-                  <div className="text-4xl font-bold hover-shine-purple" style={{ color: purpleColor }}>INR 2000</div>
-                  <div className="text-sm" style={{ color: textMuted }}>per month</div>
-                </div>
-                <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium hover-shine-cyan" style={{ backgroundColor: `${cyanColor}20`, color: cyanColor }}>First month free</div>
-                <ul className="space-y-3 mb-6">
-                  {["Live trading sessions", "1-on-1 mentorship", "Professional networking"].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-purple" style={{ color: purpleColor }} />
-                      <span style={{ color: textLight }}>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                {isAuthenticated ? (
-                  <RazorpayCheckout
-                    type="discord_subscription"
-                    buttonText="Access Community"
-                    className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-purple"
-                  />
-                ) : (
-                  <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-purple" style={{ backgroundColor: purpleColor, color: textLight }}>Access Community</button>
-                )}
-              </div>
-
-              {/* Complete Package */}
-              <div className="p-6 rounded-xl relative overflow-hidden transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `2px solid ${cyanColor}`, boxShadow: `0 25px 50px -12px ${cyanColor}40` }}>
+              {/* Intermediate — ₹2,499 */}
+              <div className="p-6 rounded-xl relative overflow-hidden transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `2px solid ${purpleColor}`, boxShadow: `0 25px 50px -12px ${purpleColor}30` }}>
                 <div className="absolute top-4 right-4">
-                  <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: cyanColor, color: bgPrimary }}>Most Popular</span>
+                  <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: purpleColor, color: textLight }}>Popular</span>
                 </div>
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Complete Trading Setup</h3>
-                  <p className="leading-relaxed" style={{ color: textMuted }}>Course + Community</p>
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-purple" style={{ color: purpleColor }}>Intermediate</h3>
+                  <p className="leading-relaxed text-sm" style={{ color: textMuted }}>For traders ready to level up with guidance and live market exposure.</p>
                 </div>
-                <div className="mb-4">
-                  <div className="text-4xl font-bold hover-shine-cyan" style={{ color: cyanColor }}>INR 2499</div>
-                  <div className="text-sm" style={{ color: textMuted }}>one-time + INR 2000/mo</div>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold hover-shine-purple" style={{ color: purpleColor }}>₹2,499</span>
+                  <div className="text-sm" style={{ color: textMuted }}>one-time payment</div>
                 </div>
-                <div className="inline-block px-3 py-1 mb-6 rounded-full text-sm font-medium hover-shine-purple" style={{ backgroundColor: `${purpleColor}20`, color: purpleColor }}>Save INR 1000</div>
                 <ul className="space-y-3 mb-6">
-                  {["1st month Discord free", "Lifetime course access", "Priority support"].map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="w-4 h-4 flex-shrink-0 hover-shine-cyan" style={{ color: cyanColor }} />
+                  {[
+                    "Everything in the Base Course",
+                    "3 personalized 1-on-1 sessions",
+                    "1 Month Live Trading Floor Access (watch real trades, real decisions)",
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      <Check className="w-4 h-4 flex-shrink-0 mt-0.5 hover-shine-purple" style={{ color: purpleColor }} />
                       <span style={{ color: textLight }}>{feature}</span>
                     </li>
                   ))}
@@ -561,11 +537,48 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 {isAuthenticated ? (
                   <RazorpayCheckout
                     type="combo"
-                    buttonText="Get Full Access"
+                    buttonText="Level Up — ₹2,499"
+                    className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-purple"
+                    onSuccess={() => setHasCourseAccess(true)}
+                  />
+                ) : (
+                  <button onClick={() => signIn('google')} className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-purple" style={{ backgroundColor: purpleColor, color: textLight }}>Level Up</button>
+                )}
+              </div>
+
+              {/* Pro Mentorship — ₹4,999 */}
+              <div className="p-6 rounded-xl relative overflow-hidden transition-all duration-300 hover:scale-105" style={{ backgroundColor: bgCard, border: `2px solid ${cyanColor}`, boxShadow: `0 25px 50px -12px ${cyanColor}40` }}>
+                <div className="absolute top-4 right-4">
+                  <span className="px-3 py-1 rounded-full text-sm font-medium" style={{ backgroundColor: cyanColor, color: bgPrimary }}>Best Value</span>
+                </div>
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Pro Mentorship</h3>
+                  <p className="leading-relaxed text-sm" style={{ color: textMuted }}>For serious traders aiming for consistency.</p>
+                </div>
+                <div className="mb-6">
+                  <span className="text-4xl font-bold hover-shine-cyan" style={{ color: cyanColor }}>₹4,999</span>
+                  <div className="text-sm" style={{ color: textMuted }}>one-time payment</div>
+                </div>
+                <ul className="space-y-3 mb-6">
+                  {[
+                    "Everything in Base + Intermediate",
+                    "8 intensive 1-on-1 mentoring sessions",
+                    "3 Months Live Trading Floor Access",
+                    "Personal mentorship for clearing prop firm challenges",
+                    "Access to all future add-ons & updates (lifetime value)",
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      <Check className="w-4 h-4 flex-shrink-0 mt-0.5 hover-shine-cyan" style={{ color: cyanColor }} />
+                      <span style={{ color: textLight }}>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                {isAuthenticated ? (
+                  <RazorpayCheckout
+                    type="pro"
+                    buttonText="Go Pro — ₹4,999"
                     className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-cyan"
-                    onSuccess={() => {
-                      setHasCourseAccess(true);
-                    }}
+                    onSuccess={() => setHasCourseAccess(true)}
                   />
                 ) : (
                   <button
@@ -573,7 +586,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                     className="w-full px-4 py-2 font-medium rounded-lg hover-shine-btn-cyan"
                     style={{ backgroundColor: cyanColor, color: bgPrimary, boxShadow: `0 10px 25px -5px ${cyanColor}50` }}
                   >
-                    Get Full Access
+                    Go Pro
                   </button>
                 )}
               </div>

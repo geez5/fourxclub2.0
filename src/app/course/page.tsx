@@ -53,7 +53,7 @@ const PurchaseModal = ({
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                 </div>
-                <h2 className="text-2xl font-bold mb-4" style={{ color: greenColor }}>Unlock Full Course</h2>
+                <h2 className="text-2xl font-bold mb-4" style={{ color: greenColor }}>Unlock Base Course</h2>
                 <p className="mb-6" style={{ color: textMuted }}>
                     Get lifetime access to all 10 professional trading lessons and start your journey to becoming a successful trader.
                 </p>
@@ -63,7 +63,7 @@ const PurchaseModal = ({
                 </div>
                 <RazorpayCheckout
                     type="course"
-                    buttonText="Buy Course - ₹1,499"
+                    buttonText="Buy Base Course — ₹1,499"
                     className="w-full py-4 rounded-xl font-semibold text-lg mb-4"
                     onSuccess={onSuccess}
                 />
@@ -197,7 +197,7 @@ export default function CoursePage() {
                                             className="px-8 py-3 rounded-xl font-bold transition-all hover:scale-105 active:scale-95"
                                             style={{ backgroundColor: greenColor, color: bgPrimary }}
                                         >
-                                            Unlock Now - ₹1,499
+                                            Unlock Now — ₹1,499
                                         </button>
                                     </div>
                                 </div>

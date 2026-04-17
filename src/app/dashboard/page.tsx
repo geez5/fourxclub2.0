@@ -137,10 +137,10 @@ function DashboardContent() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="rounded-xl p-6" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                         <div className="flex justify-between mb-4">
-                            <h2 style={{ color: purpleColor }}>Course</h2>
+                            <h2 style={{ color: purpleColor }}>Base Course</h2>
                             <span className="px-3 py-1 rounded-full text-sm" style={userStatus?.courseAccess.hasAccess ? { backgroundColor: `${greenColor}20`, color: greenColor } : { backgroundColor: `${purpleColor}20`, color: purpleColor }}>{userStatus?.courseAccess.hasAccess ? 'Active' : 'Locked'}</span>
                         </div>
-                        <p className="mb-4" style={{ color: textMuted }}>10 premium video lessons</p>
+                        <p className="mb-4" style={{ color: textMuted }}>Structured lessons + 1 session</p>
                         {userStatus?.courseAccess.hasAccess ? (
                             <Link href="/course" className="px-4 py-2 rounded-lg inline-block" style={{ backgroundColor: greenColor, color: bgPrimary }}>View</Link>
                         ) : (
@@ -154,16 +154,16 @@ function DashboardContent() {
                     </div>
                     <div className="rounded-xl p-6" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                         <div className="flex justify-between mb-4">
-                            <h2 style={{ color: purpleColor }}>Community</h2>
-                            <span className="px-3 py-1 rounded-full text-sm" style={userStatus?.communityAccess.hasAccess ? { backgroundColor: `${greenColor}20`, color: greenColor } : { backgroundColor: `${textMuted}30`, color: textMuted }}>{userStatus?.communityAccess.hasAccess ? 'Active' : 'Inactive'}</span>
+                            <h2 style={{ color: purpleColor }}>Intermediate</h2>
+                            <span className="px-3 py-1 rounded-full text-sm" style={userStatus?.communityAccess.hasAccess ? { backgroundColor: `${greenColor}20`, color: greenColor } : { backgroundColor: `${textMuted}30`, color: textMuted }}>{userStatus?.communityAccess.hasAccess ? 'Active' : 'Locked'}</span>
                         </div>
-                        <p className="mb-4" style={{ color: textMuted }}>Discord access</p>
+                        <p className="mb-4" style={{ color: textMuted }}>Base + 3 sessions + 1 month live access</p>
                         {userStatus?.communityAccess.hasAccess ? (
                             <a href="https://discord.gg/aAUk8d73KD" target="_blank" className="px-4 py-2 rounded-lg inline-block" style={{ backgroundColor: purpleColor, color: textLight }}>Discord</a>
                         ) : (
                             <RazorpayCheckout
-                                type="discord_subscription"
-                                buttonText="₹2,000/mo"
+                                type="combo"
+                                buttonText="₹2,499"
                                 className="px-4 py-2 rounded-lg font-bold"
                                 onSuccess={fetchUserStatus}
                             />
@@ -171,17 +171,16 @@ function DashboardContent() {
                     </div>
                     <div className="rounded-xl p-6" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                         <div className="flex justify-between mb-4">
-                            <h2 style={{ color: purpleColor }}>Referrals</h2>
-                            <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>{userStatus?.referrals.count || 0}</span>
+                            <h2 style={{ color: purpleColor }}>Pro Mentorship</h2>
+                            <span className="px-3 py-1 rounded-full text-sm" style={{ backgroundColor: `${greenColor}20`, color: greenColor }}>{userStatus?.referrals.count || 0} referrals</span>
                         </div>
-                        <div className="mb-4 p-3 rounded-lg" style={{ backgroundColor: bgPrimary }}>
-                            <p className="text-xs" style={{ color: textMuted }}>Your Code:</p>
-                            <div className="flex items-center gap-2">
-                                <span className="font-mono font-bold" style={{ color: greenColor }}>{userStatus?.referrals.code || '...'}</span>
-                                <button onClick={copyReferralCode} className="text-sm" style={{ color: purpleColor }}>Copy</button>
-                            </div>
-                        </div>
-                        <button onClick={() => setShowReferralModal(true)} className="px-4 py-2 rounded-lg text-sm" style={{ border: `1px solid ${borderColor}`, color: textLight }}>Use Code</button>
+                        <p className="mb-4" style={{ color: textMuted }}>All access + 8 sessions + 3 months live</p>
+                        <RazorpayCheckout
+                            type="pro"
+                            buttonText="₹4,999"
+                            className="px-4 py-2 rounded-lg font-bold"
+                            onSuccess={fetchUserStatus}
+                        />
                     </div>
                 </div>
             </main>

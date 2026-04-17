@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         } = body;
 
         let verified = false;
-        let type: 'course' | 'discord_subscription' | 'combo' = 'course';
+        let type: 'course' | 'discord_subscription' | 'combo' | 'pro' = 'course';
 
         // Verify Signature
         if (razorpay_subscription_id) {
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
             try {
                 const order = await razorpay.orders.fetch(razorpay_order_id);
                 const orderType = (order.notes as Record<string, string>)?.type;
-                if (orderType === 'combo' || orderType === 'discord_subscription' || orderType === 'course') {
+                if (orderType === 'combo' || orderType === 'discord_subscription' || orderType === 'course' || orderType === 'pro') {
                     type = orderType;
                 }
             } catch {
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         await prisma.$transaction(async (tx) => {
 
             // 1. Record the Payment
-            const amountMap = { course: 1499.00, discord_subscription: 2000.00, combo: 2499.00 };
+            const amountMap = { course: 1499.00, discord_subscription: 2000.00, combo: 2499.00, pro: 4999.00 };
             await tx.payment.create({
                 data: {
                     userId: session.user.id,
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
             });
 
             // 2. Grant Access
-            if (type === 'course' || type === 'combo') {
+            if (type === 'course' || type === 'combo' || type === 'pro') {
                 await tx.courseAccess.upsert({
                     where: { userId: session.user.id },
                     update: {
@@ -98,10 +98,10 @@ export async function POST(req: Request) {
                 });
             }
 
-            if (type === 'discord_subscription' || type === 'combo') {
-                // Calculate expiry (1 month from now)
+            if (type === 'discord_subscription' || type === 'combo' || type === 'pro') {
+                // Calculate expiry based on plan type
                 const expiresAt = new Date();
-                expiresAt.setMonth(expiresAt.getMonth() + 1);
+                expiresAt.setMonth(expiresAt.getMonth() + (type === 'pro' ? 3 : 1));
 
                 await tx.communityAccess.upsert({
                     where: { userId: session.user.id },
