@@ -307,7 +307,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
               <div className="inline-block px-4 py-2 mb-4 rounded-full text-sm font-medium hover-shine-warning-box" style={{ backgroundColor: `#FFB6C120`, color: '#FFB6C1', border: `1px solid #FFB6C150` }}>
                 Pro Mentorship
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>Pro Mentorship — ₹4,999</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>Pro Mentorship — ₹14,999</h2>
               <p className="text-lg leading-relaxed" style={{ color: textLight }}>
                 For serious traders aiming for consistency.
               </p>
@@ -329,7 +329,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                   </div>
                   <div className="p-6">
                     <h3 className="text-2xl font-bold mb-2 hover-shine-cyan" style={{ color: textLight }}>Pro Mentorship Program</h3>
-                    <p className="mb-4 leading-relaxed" style={{ color: textMuted }}>Everything in Base + Intermediate. 8 intensive 1-on-1 mentoring sessions. 3 Months Live Trading Floor Access.</p>
+                    <p className="mb-4 leading-relaxed" style={{ color: textMuted }}>Everything in Base Course. 8 intensive 1-on-1 mentoring sessions. 3 Months Live Trading Floor Access.</p>
                     <div className="flex items-center justify-between gap-4 mb-4">
                       <div className="flex items-center gap-4 text-sm" style={{ color: textMuted }}>
                         <div className="flex items-center gap-1">
@@ -337,7 +337,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                           <span className="ml-2 font-semibold" style={{ color: textLight }}>Full Access</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <span className="ml-2 font-semibold hover-shine-cyan" style={{ color: cyanColor }}>₹4,999</span>
+                          <span className="ml-2 font-semibold hover-shine-cyan" style={{ color: cyanColor }}>₹14,999</span>
                         </div>
                       </div>
                       {isAuthenticated ? (
@@ -368,7 +368,7 @@ export default function HomePageClient({ isAuthenticated }: HomePageClientProps)
                 <div className="space-y-6">
                   <h3 className="text-2xl font-bold mb-6 hover-shine-purple" style={{ color: purpleColor }}>What You Will Get</h3>
                   {[
-                    "Everything in Base + Intermediate",
+                    "Everything in Base Course",
                     "8 intensive 1-on-1 mentoring sessions",
                     "3 Months Live Trading Floor Access",
                     "Personal mentorship focused on clearing prop firm challenges",
