@@ -37,7 +37,7 @@ export async function POST(req: Request) {
 
         // Course Payment (One-time)
         if (type === "course") {
-            const amount = 1499 * 100; // INR 1499 in paise
+            const amount = 5999 * 100; // INR 5999 in paise
             const options = {
                 amount: amount.toString(),
                 currency: "INR",
@@ -97,7 +97,7 @@ export async function POST(req: Request) {
 
         // Combo Package (Course + Discord, One-time)
         if (type === "combo") {
-            const amount = 2499 * 100; // INR 2499 in paise
+            const amount = 5999 * 100; // INR 5999 in paise
             const options = {
                 amount: amount.toString(),
                 currency: "INR",
@@ -125,9 +125,9 @@ export async function POST(req: Request) {
             });
         }
 
-        // Pro Mentorship (One-time ₹4,999)
+        // Pro Mentorship (One-time ₹14,999)
         if (type === "pro") {
-            const amount = 4999 * 100; // INR 4999 in paise
+            const amount = 14999 * 100; // INR 14999 in paise
             const options = {
                 amount: amount.toString(),
                 currency: "INR",

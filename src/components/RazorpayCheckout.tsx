@@ -70,7 +70,7 @@ export default function RazorpayCheckout({
         }
     }, [])
 
-    const defaultButtonText = type === 'course' ? 'Get Started — ₹1,499' : type === 'combo' ? 'Level Up — ₹2,499' : type === 'pro' ? 'Go Pro — ₹4,999' : 'Subscribe — ₹2,000/month'
+    const defaultButtonText = type === 'course' ? 'Get Started — ₹5,999' : type === 'combo' ? 'Get Started — ₹5,999' : type === 'pro' ? 'Go Pro — ₹14,999' : 'Subscribe — ₹2,000/month'
 
     const handlePayment = async () => {
         // Double check script availability

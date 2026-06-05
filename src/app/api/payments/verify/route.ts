@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         await prisma.$transaction(async (tx) => {
 
             // 1. Record the Payment
-            const amountMap = { course: 1499.00, discord_subscription: 2000.00, combo: 2499.00, pro: 4999.00 };
+            const amountMap = { course: 5999.00, discord_subscription: 2000.00, combo: 5999.00, pro: 14999.00 };
             await tx.payment.create({
                 data: {
                     userId: session.user.id,

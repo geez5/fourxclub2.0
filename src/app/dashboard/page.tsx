@@ -134,36 +134,19 @@ function DashboardContent() {
                     <h1 className="text-3xl font-bold" style={{ color: greenColor }}>Welcome, {userStatus?.user.name || session?.user?.name || session?.user?.email?.split('@')[0]}!</h1>
                     <p className="mt-2" style={{ color: textMuted }}>Your dashboard</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="rounded-xl p-6" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
                         <div className="flex justify-between mb-4">
                             <h2 style={{ color: purpleColor }}>Base Course</h2>
                             <span className="px-3 py-1 rounded-full text-sm" style={userStatus?.courseAccess.hasAccess ? { backgroundColor: `${greenColor}20`, color: greenColor } : { backgroundColor: `${purpleColor}20`, color: purpleColor }}>{userStatus?.courseAccess.hasAccess ? 'Active' : 'Locked'}</span>
                         </div>
-                        <p className="mb-4" style={{ color: textMuted }}>Structured lessons + 1 session</p>
+                        <p className="mb-4" style={{ color: textMuted }}>Lessons + 3 sessions + 1 month live access</p>
                         {userStatus?.courseAccess.hasAccess ? (
                             <Link href="/course" className="px-4 py-2 rounded-lg inline-block" style={{ backgroundColor: greenColor, color: bgPrimary }}>View</Link>
                         ) : (
                             <RazorpayCheckout
                                 type="course"
-                                buttonText="₹1,499"
-                                className="px-4 py-2 rounded-lg font-bold"
-                                onSuccess={fetchUserStatus}
-                            />
-                        )}
-                    </div>
-                    <div className="rounded-xl p-6" style={{ backgroundColor: bgCard, border: `1px solid ${borderColor}` }}>
-                        <div className="flex justify-between mb-4">
-                            <h2 style={{ color: purpleColor }}>Intermediate</h2>
-                            <span className="px-3 py-1 rounded-full text-sm" style={userStatus?.communityAccess.hasAccess ? { backgroundColor: `${greenColor}20`, color: greenColor } : { backgroundColor: `${textMuted}30`, color: textMuted }}>{userStatus?.communityAccess.hasAccess ? 'Active' : 'Locked'}</span>
-                        </div>
-                        <p className="mb-4" style={{ color: textMuted }}>Base + 3 sessions + 1 month live access</p>
-                        {userStatus?.communityAccess.hasAccess ? (
-                            <a href="https://discord.gg/aAUk8d73KD" target="_blank" className="px-4 py-2 rounded-lg inline-block" style={{ backgroundColor: purpleColor, color: textLight }}>Discord</a>
-                        ) : (
-                            <RazorpayCheckout
-                                type="combo"
-                                buttonText="₹2,499"
+                                buttonText="₹5,999"
                                 className="px-4 py-2 rounded-lg font-bold"
                                 onSuccess={fetchUserStatus}
                             />
@@ -177,7 +160,7 @@ function DashboardContent() {
                         <p className="mb-4" style={{ color: textMuted }}>All access + 8 sessions + 3 months live</p>
                         <RazorpayCheckout
                             type="pro"
-                            buttonText="₹4,999"
+                            buttonText="₹14,999"
                             className="px-4 py-2 rounded-lg font-bold"
                             onSuccess={fetchUserStatus}
                         />

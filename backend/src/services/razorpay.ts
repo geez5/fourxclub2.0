@@ -9,9 +9,9 @@ export const razorpay = new Razorpay({
 
 // Prices in paise
 export const PRICES = {
-    course: 149900, // ₹1,499
-    combo: 249900, // ₹2,499 (Intermediate)
-    pro: 499900, // ₹4,999 (Pro Mentorship)
+    course: 599900, // ₹5,999 (Base Course)
+    combo: 599900, // ₹5,999 (Base Course - legacy)
+    pro: 1499900, // ₹14,999 (Pro Mentorship)
     discord_subscription: 200000, // ₹2,000
 }
 

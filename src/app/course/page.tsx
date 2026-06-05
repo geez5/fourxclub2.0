@@ -58,12 +58,12 @@ const PurchaseModal = ({
                     Get lifetime access to all 10 professional trading lessons and start your journey to becoming a successful trader.
                 </p>
                 <div className="mb-6 p-4 rounded-xl" style={{ backgroundColor: bgPrimary }}>
-                    <div className="text-3xl font-bold" style={{ color: textLight }}>₹1,499</div>
+                    <div className="text-3xl font-bold" style={{ color: textLight }}>₹5,999</div>
                     <div className="text-sm" style={{ color: textMuted }}>One-time payment • Lifetime access</div>
                 </div>
                 <RazorpayCheckout
                     type="course"
-                    buttonText="Buy Base Course — ₹1,499"
+                    buttonText="Buy Base Course — ₹5,999"
                     className="w-full py-4 rounded-xl font-semibold text-lg mb-4"
                     onSuccess={onSuccess}
                 />
